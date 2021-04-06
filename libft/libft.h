@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 13:28:50 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/06 14:30:38 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/06 16:09:20 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int				ft_toupper(int c);
 int				ft_tolower(int c);
 int				ft_memcmp(const void *s1, const void *s2, size_t size);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
+int				ft_strcmp(const char *s1, const char *s2);
 char			*ft_strcpy(char *dest, char *src);
 char			*ft_itoa(int n);
 char			*ft_strjoin(char const *s1, char const *s2);

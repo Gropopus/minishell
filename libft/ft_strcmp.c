@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/06 11:08:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/06 17:38:57 by thsembel         ###   ########.fr       */
+/*   Created: 2021/04/06 16:07:07 by thsembel          #+#    #+#             */
+/*   Updated: 2021/04/06 16:09:42 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "libft.h"
-# define NC "\033[0m"
-# define RED "\033[0;91m"
-# define YELLOW "\033[93m"
-# define GREEN "\033[0;92m"
-# define PURPLE "\033[0;95m"
-# define BLUE "\033[0;34m"
-# define BOLD "\033[1m"
-# define CYAN "\033[0;36m"
-
-typedef	struct	s_info
+int		ft_strcmp(const char *s1, const char *s2)
 {
-	char **cmd;
-}				t_info;
+	int i;
 
-char		**ft_split_str(char *str, char *charsep);
-
-# endif
+	i = 0;
+	if (!s1 || !s2)
+		return (0);
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (s1[i] - s2[i]);
+}

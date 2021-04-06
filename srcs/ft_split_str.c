@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 15:03:03 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/06 15:16:35 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/06 16:20:11 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	ft_transfert(char **tab, char *str, char *charsep)
 			tab[word] = malloc(sizeof(char) * (j + 1));
 			ft_copy_word(tab[word], str + i, charsep);
 			i = i + j;
-			ft_printf("%s\n", tab[word]);
 			word++;
 		}
 	}
