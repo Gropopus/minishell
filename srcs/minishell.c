@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/07 16:47:10 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/08 00:33:57 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # include "../includes/ft_printf.h"
 # include "../includes/minishell.h"
 
-void		exec_built_in(char **cmds)
+/*void		exec_built_in(char **cmds)
 {
 	if (!ft_strcmp(cmds[0], "pwd"))
 		ft_printf("%s\n", get_env_var("PWD="));
@@ -22,7 +22,7 @@ void		exec_built_in(char **cmds)
 		built_in_cd(cmds[1]);
 	else if (!ft_strcmp(cmds[0], "env"))
 		built_in_env();
-}
+}*/
 
 int			is_in_builtin(char **cmds)
 {
@@ -46,16 +46,13 @@ int			is_in_builtin(char **cmds)
 		return (0);
 }
 
-void		ft_minishell(void)
+int		ft_minishell(void)
 {
 	char **cmds;
 	char *line;
 	int i;
-	t_list *caps;
 
 	i = 0;
-	if (!(caps = (t_list *)malloc(sizeof(t_list))))
-		return ;
 	while (1)
 	{
 		ft_printf("%s%sMyZsh$>%s", BOLD, CYAN, NC);
@@ -68,13 +65,16 @@ void		ft_minishell(void)
 		ft_free_tab(cmds);
 		free(line);
 	}
-}
-
-int		main(int ac, char **av, char **env)
-{
-	(void)ac;
-	(void)av;
-	(void)env;
-	ft_minishell();
 	return (0);
 }
+
+int		main(int ac, char **av, char **envp)
+{
+	unsigned int	error;
+	t_env			*env;
+	(void)ac;
+	(void)av;
+	if ((env = ft_env_cpy(&error, envp)) == NULL) //envp -> NULL
+		return (ft_error(error));
+}
+

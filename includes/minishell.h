@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:08:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/07 15:23:32 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/07 23:31:07 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,29 @@
 # define BOLD "\033[1m"
 # define CYAN "\033[0;36m"
 
-typedef struct		s_info
+extern char **envp;
+
+typedef struct		s_cmd
 {
-	char	**cmds;
-	char	*line;
-	
-}					t_info;
+	int				ac;
+	char			**av;
+	char			*path;
+	char			**m_env;
+	char			*line;
+}				t_cmd;
 
-void		exec_cmd(char **cmd);
-void		get_absolute_path(char **cmds);
-char		**ft_split_str(char *str, char *charsep);
+typedef struct	s_env
+{
+	char			*var;
+	char			*value;
+	struct s_env	*next;
+}				t_env;
 
+unsigned int	ft_error(unsigned int error);
+void			exec_cmd(char **cmd);
+void			get_absolute_path(char **cmds);
+char			**ft_split_str(char *str, char *charsep);
+char			*ft_dup_to_equal(char *str, char c);
+char			*ft_dup_pass_equal(char *str, char c);
+t_env			*ft_env_cpy(unsigned int *error, char **envp);
 # endif
