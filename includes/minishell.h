@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:08:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/07 23:31:07 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/08 00:47:36 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define PURPLE "\033[0;95m"
 # define BLUE "\033[0;34m"
 # define BOLD "\033[1m"
-# define CYAN "\033[0;36m"
+# define CYAN "\033[38;6;36m"
 
 extern char **envp;
 
