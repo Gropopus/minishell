@@ -6,7 +6,7 @@
 #    By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/08 00:33:14 by thsembel          #+#    #+#              #
-#    Updated: 2021/04/06 16:15:23 by thsembel         ###   ########.fr        #
+#    Updated: 2021/04/07 11:13:22 by thsembel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS		= 		ft_atoi.c\
 					ft_strchr.c\
 					ft_strdup.c\
 					ft_strjoin.c\
+					ft_strcat.c\
 					ft_strlcat.c\
 					ft_strlcpy.c\
 					ft_strlen.c\
@@ -45,6 +46,7 @@ SRCS		= 		ft_atoi.c\
 					ft_substr.c\
 					ft_tolower.c\
 					ft_toupper.c\
+					ft_free_tab.c\
 					get_next_line.c\
 					get_next_line_utils.c\
 					ft_printf_utils.c\

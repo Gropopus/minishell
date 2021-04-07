@@ -6,7 +6,7 @@
 #    By: thsembel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 10:50:45 by thsembel          #+#    #+#              #
-#    Updated: 2021/04/06 15:08:20 by thsembel         ###   ########.fr        #
+#    Updated: 2021/04/07 16:09:23 by thsembel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ BLUE = \033[0;34m
 BOLD = \033[1m
 
 SRCS		=	./srcs/minishell.c\
-				./srcs/ft_split_str.c
+				./srcs/ft_split_str.c\
+				./srcs/get_path.c
 
 INCLUDES	=	./includes/libft.h\
 				./includes/ft_printf.h\
@@ -41,7 +42,7 @@ OBJS		= ${SRCS:.c=.o}
 
 RM			= rm -f
 
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=address
 
 .c.o:
 		@${CC} ${CFLAGS} -I${HEAD} -c $< -o ${<:.c=.o}
@@ -51,7 +52,7 @@ ${NAME}:	${OBJS}
 			@make -C ${LIB_DIR}
 			@make -C ${LIB_DIR} bonus
 			@echo "${GREEN}\nlibft.a		has been created"
-			@${CC} ${CFLAGS} -I${HEAD} ${LIBFT} -o ${NAME} $(OBJS)
+			@${CC} ${CFLAGS} -I${HEAD} ${LIBFT} -lncurses -o ${NAME} $(OBJS)
 			@echo "minishell	has been created${NC}"
 
 all:		${NAME}

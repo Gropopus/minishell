@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/06 22:56:56 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/07 16:47:10 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,50 +14,59 @@
 # include "../includes/ft_printf.h"
 # include "../includes/minishell.h"
 
-void		ft_test_env(char **str)
+void		exec_built_in(char **cmds)
 {
+	if (!ft_strcmp(cmds[0], "pwd"))
+		ft_printf("%s\n", get_env_var("PWD="));
+	else if (!ft_strcmp(cmds[0], "cd"))
+		built_in_cd(cmds[1]);
+	else if (!ft_strcmp(cmds[0], "env"))
+		built_in_env();
+}
+
+int			is_in_builtin(char **cmds)
+{
+	int yes;
 	int i;
-	char *path;
+
+	yes = 0;
 	i = 0;
-	while (str[i])
+	while (cmds[i])
 	{
-		if (ft_strcmp(str[i], "") == 0)
-		{
-			path = ft_strdup(getenv("PATH"));
-			ft_printf("%s", path);
-		}
+		if (ft_strcmp(cmds[i], "cd") == 0 || ft_strcmp(cmds[i], "echo") == 0 ||
+			ft_strcmp(cmds[i], "pwd") == 0 || ft_strcmp(cmds[i], "env") == 0 ||
+			ft_strcmp(cmds[i], "exit") == 0 ||ft_strcmp(cmds[i], "unset") == 0
+			|| ft_strcmp(cmds[i], "export") == 0)
+			yes++;
 		i++;
 	}
+	if (yes > 0)
+		return (1);
+	else
+		return (0);
 }
 
 void		ft_minishell(void)
 {
-	char **tab;
+	char **cmds;
 	char *line;
+	int i;
 	t_list *caps;
 
+	i = 0;
 	if (!(caps = (t_list *)malloc(sizeof(t_list))))
 		return ;
 	while (1)
 	{
-		ft_printf("\n%s%sMyZsh$>%s", BOLD, CYAN, NC);
+		ft_printf("%s%sMyZsh$>%s", BOLD, CYAN, NC);
 		get_next_line(0, &line);
-		if (ft_strcmp(line, "up") == 0)
-		{
-			if (caps->next)
-				caps = caps->next;
-		}
+		cmds = ft_split_str(line, " \t");
+		if (is_in_builtin(cmds))
+			ft_printf("is in !\n");
 		else
-		{
-			caps->content = ft_strdup(line);
-		}
-		ft_printf("acutel:	%s", caps->content);
-		tab = ft_split_str(caps->content, " \t");
-		ft_lstadd_front(&caps, ft_lstnew(caps->content));
+			get_absolute_path(cmds);
+		ft_free_tab(cmds);
 		free(line);
-		//	ft_test_env(tab);
-		if (ft_strcmp(caps->content, "exit") == 0)
-			break ;;
 	}
 }
 
