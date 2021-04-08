@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/08 23:56:09 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/09 00:13:59 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,35 +35,6 @@ int			is_in_builtin(char **cmds)
 	else
 		return (0);
 }
-
-/*static int	input_loop(t_env *env_start)
-{
-	t_command	command;
-	int			ret;
-
-	while (1)
-	{
-		ft_printf(SHELL_PROMPT);
-		command.input = NULL;
-		command.path = NULL;
-		if (get_next_line(0, &(command.input)) == 0)
-		{
-			ret = ft_getstatus(env_start);
-			ft_free_env_list(env_start);
-			free(command.input);
-			return (ret);
-		}
-		if (command.input[0] != '\0')
-		{
-			ret = ft_split_command(env_start, &command);
-			if (ret == 0)
-				ret = ft_handle_command(env_start, command);
-		}
-		else
-			free(command.input);
-	}
-	return (ret);
-}*/
 
 int		ft_minishell(t_env *env)
 {
