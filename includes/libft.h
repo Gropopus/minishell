@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 13:28:50 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/07 11:14:03 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/08 16:44:09 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void			*ft_memcpy(void *dest, const void *src, size_t size);
 void			*ft_memchr(const void *s, int c, size_t size);
 void			*ft_memset(void *str, int c, size_t count);
 void			*ft_memmove(void *dst, const void *src, size_t size);
+size_t			ft_tab_len(char **tab);
 size_t			ft_strlen(const char *str);
 size_t			ft_strlcat(char *dest, const char *src, size_t size);
 size_t			ft_strlcpy(char *dest, const char *src, size_t size);

@@ -6,7 +6,7 @@
 #    By: thsembel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 10:50:45 by thsembel          #+#    #+#              #
-#    Updated: 2021/04/07 20:51:14 by thsembel         ###   ########.fr        #
+#    Updated: 2021/04/08 18:28:59 by thsembel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,12 @@ BOLD = \033[1m
 
 SRCS		=	./srcs/minishell.c\
 				./srcs/ft_split_str.c\
-				./srcs/get_path.c\
 				./srcs/env_cpy.c\
-				./srcs/ft_error.c
+				./srcs/ft_error.c\
+				./srcs/free_functions.c\
+				./srcs/fill_cmds.c\
+				./srcs/find_exec.c\
+				./srcs/cmd_manager.c
 
 INCLUDES	=	./includes/libft.h\
 				./includes/ft_printf.h\

@@ -6,23 +6,13 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/08 00:49:30 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/08 23:56:09 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/libft.h"
 # include "../includes/ft_printf.h"
 # include "../includes/minishell.h"
-
-/*void		exec_built_in(char **cmds)
-{
-	if (!ft_strcmp(cmds[0], "pwd"))
-		ft_printf("%s\n", get_env_var("PWD="));
-	else if (!ft_strcmp(cmds[0], "cd"))
-		built_in_cd(cmds[1]);
-	else if (!ft_strcmp(cmds[0], "env"))
-		built_in_env();
-}*/
 
 int			is_in_builtin(char **cmds)
 {
@@ -46,26 +36,63 @@ int			is_in_builtin(char **cmds)
 		return (0);
 }
 
-int		ft_minishell(void)
+/*static int	input_loop(t_env *env_start)
 {
-	char **cmds;
-	char *line;
-	int i;
+	t_command	command;
+	int			ret;
 
-	i = 0;
+	while (1)
+	{
+		ft_printf(SHELL_PROMPT);
+		command.input = NULL;
+		command.path = NULL;
+		if (get_next_line(0, &(command.input)) == 0)
+		{
+			ret = ft_getstatus(env_start);
+			ft_free_env_list(env_start);
+			free(command.input);
+			return (ret);
+		}
+		if (command.input[0] != '\0')
+		{
+			ret = ft_split_command(env_start, &command);
+			if (ret == 0)
+				ret = ft_handle_command(env_start, command);
+		}
+		else
+			free(command.input);
+	}
+	return (ret);
+}*/
+
+int		ft_minishell(t_env *env)
+{
+	t_cmd	cmds;
+	int		ret;
+
+	ret = 0;
 	while (1)
 	{
 		ft_printf("%s%sMyZsh$>%s", BOLD, CYAN, NC);
-		get_next_line(0, &line);
-		cmds = ft_split_str(line, " \t");
-		if (is_in_builtin(cmds))
-			ft_printf("is in !\n");
+		cmds.path = NULL;
+		if (get_next_line(0, &cmds.line) == 0)
+		{
+			ft_free_env(env);
+			free(cmds.line);
+			return (ret);
+		}
+		else if (cmds.line[0])
+		{
+			ret = ft_fill_cmds(&cmds, env);
+			if (ret == 0)
+				ret = cmd_manager(cmds, env);
+			if (ret != 0)
+				ft_error(ret);
+		}
 		else
-			get_absolute_path(cmds);
-		ft_free_tab(cmds);
-		free(line);
+			free(cmds.line);
 	}
-	return (0);
+	return (ret);
 }
 
 int		main(int ac, char **av, char **envp)
@@ -74,8 +101,13 @@ int		main(int ac, char **av, char **envp)
 	t_env			*env;
 	(void)ac;
 	(void)av;
-	if ((env = ft_env_cpy(&error, envp)) == NULL) //envp -> NULL
+	if ((env = ft_env_cpy(&error, envp)) == NULL)
 		return (ft_error(error));
-	return (ft_minishell());
+	while (env->next)
+	{
+		printf("%s=%s\n", env->var, env->value);
+		env= env->next;
+	}
+	return (ft_minishell(env));
 }
 

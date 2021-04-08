@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:08:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/08 00:47:36 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/08 23:17:09 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ typedef struct		s_cmd
 {
 	int				ac;
 	char			**av;
+	char			*av_cpy;
 	char			*path;
-	char			**m_env;
+	char			**my_env;
 	char			*line;
 }				t_cmd;
 
@@ -45,9 +46,16 @@ typedef struct	s_env
 	struct s_env	*next;
 }				t_env;
 
+int				exec_cmd(t_cmd *cmds);
+int				cmd_manager(t_cmd cmds, t_env *env);
+int				ft_find_exec(t_cmd *cmds, t_env *env);
+int				is_in_builtin(char **cmds);
+int				ft_fill_cmds(t_cmd *cmds, t_env *env);
 unsigned int	ft_error(unsigned int error);
-void			exec_cmd(char **cmd);
-void			get_absolute_path(char **cmds);
+void			ft_free_env(t_env *env);
+void			ft_free_cmd(t_cmd *cmds);
+//void			exec_cmd(char **cmd);
+void			get_absolute_path(t_cmd *cmds);
 char			**ft_split_str(char *str, char *charsep);
 char			*ft_dup_to_equal(char *str, char c);
 char			*ft_dup_pass_equal(char *str, char c);

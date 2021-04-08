@@ -6,7 +6,7 @@
 #    By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/08 00:33:14 by thsembel          #+#    #+#              #
-#    Updated: 2021/04/07 11:13:22 by thsembel         ###   ########.fr        #
+#    Updated: 2021/04/08 16:43:25 by thsembel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRCS		= 		ft_atoi.c\
 					ft_tolower.c\
 					ft_toupper.c\
 					ft_free_tab.c\
+					ft_tab_len.c\
 					get_next_line.c\
 					get_next_line_utils.c\
 					ft_printf_utils.c\
