@@ -6,7 +6,7 @@
 #    By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/08 00:33:14 by thsembel          #+#    #+#              #
-#    Updated: 2021/04/08 16:43:25 by thsembel         ###   ########.fr        #
+#    Updated: 2021/04/09 10:45:19 by thsembel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCS		= 		ft_atoi.c\
 					ft_isalpha.c\
 					ft_isascii.c\
 					ft_isdigit.c\
+					ft_str_is_digit.c\
 					ft_isprint.c\
 					ft_itoa.c\
 					ft_memccpy.c\

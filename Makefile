@@ -6,7 +6,7 @@
 #    By: thsembel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 10:50:45 by thsembel          #+#    #+#              #
-#    Updated: 2021/04/08 18:28:59 by thsembel         ###   ########.fr        #
+#    Updated: 2021/04/09 16:47:56 by thsembel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,11 @@ SRCS		=	./srcs/minishell.c\
 				./srcs/free_functions.c\
 				./srcs/fill_cmds.c\
 				./srcs/find_exec.c\
-				./srcs/cmd_manager.c
+				./srcs/cmd_manager.c\
+				./srcs/env_manager.c\
+				./srcs/exec_exit.c\
+				./srcs/exec_cd.c\
+				./srcs/exec_pwd.c
 
 INCLUDES	=	./includes/libft.h\
 				./includes/ft_printf.h\

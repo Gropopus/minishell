@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/09 00:13:59 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/09 14:13:22 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ int		main(int ac, char **av, char **envp)
 	(void)av;
 	if ((env = ft_env_cpy(&error, envp)) == NULL)
 		return (ft_error(error));
-	while (env->next)
+/*	while (env->next)
 	{
 		printf("%s=%s\n", env->var, env->value);
 		env= env->next;
-	}
+	}*/
 	return (ft_minishell(env));
 }
 
