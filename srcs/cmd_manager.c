@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/09 17:00:25 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/09 18:32:07 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,18 @@ int			builtin_manager(t_cmd *cmds, t_env *env)
 {
 	int	ret;
 
+//	ft_print_tab(cmds->my_env);
 	ret = -1;
 	if (ft_strcmp(cmds->av[0], "cd") == 0)
 		ret = ft_exec_cd(cmds, env);
 //	else if (ft_strcmp(cmds->av[0], "echo") == 0)
 //		ret = ft_exec_echo(cmds, env);
-	if (ft_strcmp(cmds->av[0], "pwd") == 0)
+	else if (ft_strcmp(cmds->av[0], "pwd") == 0)
 		ret = ft_exec_pwd(cmds, env);
-/*	else if (ft_strcmp(cmds->av[0], "env") == 0)
+	else if (ft_strcmp(cmds->av[0], "env") == 0)
 		ret = ft_exec_env(cmds, env);
-	else if (ft_strcmp(cmds->av[0], "unset") == 0)
-		ret = ft_exec_unset(cmds, env);*/
+//	else if (ft_strcmp(cmds->av[0], "unset") == 0)
+//		ret = ft_exec_unset(cmds, env);
 	else if (ft_strcmp(cmds->av[0], "exit") == 0)
 		ft_exec_exit(cmds, env);
 /*	else if (ft_strcmp(cmds->av[0], "export") == 0)

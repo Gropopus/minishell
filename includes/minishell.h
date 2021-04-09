@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:08:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/09 16:57:46 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/09 18:22:59 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct	s_env
 	struct s_env	*next;
 }				t_env;
 
+int				ft_exec_env(t_cmd *cmds, t_env *env);
 int				ft_exec_pwd(t_cmd *cmds, t_env *env);
 int				ft_exec_cd(t_cmd *cmds, t_env *env);
 int				exec_cmd(t_cmd *cmds);
