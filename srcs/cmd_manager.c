@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/09 21:39:59 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/10 18:56:55 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ int			builtin_manager(t_cmd *cmds, t_env *env)
 	ret = -1;
 	if (ft_strcmp(cmds->av[0], "cd") == 0)
 		ret = ft_exec_cd(cmds, env);
-//	else if (ft_strcmp(cmds->av[0], "echo") == 0)
-//		ret = ft_exec_echo(cmds, env);
+	else if (ft_strcmp(cmds->av[0], "echo") == 0)
+		ret = ft_exec_echo(cmds, env);
 	else if (ft_strcmp(cmds->av[0], "pwd") == 0)
 		ret = ft_exec_pwd(cmds, env);
 	else if (ft_strcmp(cmds->av[0], "env") == 0)
