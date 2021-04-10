@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 13:01:02 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/09 15:42:59 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/10 19:34:20 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	ft_cd_error(char *path, int error)
 {
 	if (error == ENOTDIR)
 	{
-		ft_putstr_fd("cd : ", 2);
+		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putstr_fd(": Not a directory\n", 2);
 	}
 	else if (error == ENOENT)
 	{
-		ft_putstr_fd("cd : ", 2);
+		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
 	}
