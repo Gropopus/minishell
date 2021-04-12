@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 10:04:12 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/12 16:00:43 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/12 22:46:03 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		ft_is_to_count(char *str, int i, int start)
 
 	j = i - 1;
 	count = 0;
-	ft_printf("start %d, j  %d\n", start, j);
+//	ft_printf("start %d, j  %d\n", start, j);
 	while (j > start)
 	{
 		if (str[j] == '\\')
@@ -62,9 +62,7 @@ int		ft_is_char_in_str(char *str, char c, int *j)
 int		cmd_line_isvalid(char *str)
 {
 	int i;
-	char buff[100];
 
-	ft_bzero(buff, 100);
 	i = 0;
 	while (str[i])
 	{
@@ -80,29 +78,62 @@ int		cmd_line_isvalid(char *str)
 		}
 		i++;
 	}
-/*	int j = 0;
-	int k = 0;
-	while (str[j] != '\"')
-		j++;
-	j++;
-	while (j < i)
-	{
-		buff[k] = str[j];
-		j++;
-		k++;
-	}
-*/
-	ft_printf("%s", buff);
 	return (1);
 }
-void	ft(char *str)
-{
-	int s_quote;
-	int d_quote;
 
-	//d_quote = ft_is_char_in_str(str, '\"');
-	//s_quote = ft_is_char_in_str(str, '\'');
-	ft_printf("\n->%d\n", cmd_line_isvalid(str));
+void	copy_quotes_content(char *str, char buff, int *i, int *j)
+{
+	int quotes;
+	int	k = *i;
+	int l = k;
+	int end;
+	quotes = 0;
+	while (str[k])
+	{
+		if (str[k] == '\'' && str[k - 1] != '\\')
+			break;
+		else if (str[i] == '\'' && str[i - 1] == '\\' && ft_is_to_count(str, k, l);
+			break;
+		k++;
+	}
+	while (*i < k)
+	{
+		if (str[*i] == '\\')
+			quotes++;)
+		buff[*j] = str[*i];
+	}
+
+}
+
+int		ft(char *str)
+{
+	int i = 0;
+	int j = 0;
+	char buff[500];
+
+	ft_bzero(buff, 500);
+	if ((cmd_line_isvalid(str)) == 0)
+		return (0);
+	else
+	{
+		while (str[i] && str[i] != '\'' && str[i] != '\"')
+		{
+			if (str[i] == ' ' && (str[i + 1] == '\'' || str[i + 1] == '\"'))
+			{
+				i += 2;
+				break;
+			}
+			buff[j] = str[i];
+			i++;
+			j++;
+		}
+		//if (str[i] == '\''')
+
+		//else if (str[i] == '\"')
+			
+		ft_printf("c->%c\n%s", str[i], buff);
+	}
+	return (0);
 }
 
 int		main(void)
