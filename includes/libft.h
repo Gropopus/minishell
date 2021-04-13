@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 13:28:50 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/09 18:15:50 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/13 15:09:50 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char			*ft_strrchr(const char *str, int c);
 char			*ft_strtrim(char const *s1, char const *set);
 char			*ft_strnstr(const char *big, const char *little, size_t len);
 char			*ft_strdup(const char *src);
+char			*ft_strndup(const char *string, size_t len);
 char			**ft_split(char const *str, char c);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));

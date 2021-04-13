@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:08:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/10 18:57:36 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/13 15:28:49 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef struct	s_env
 	struct s_env	*next;
 }				t_env;
 
+int				ft_extansions(char **cmd_av, t_env *env);
+int				ft_env_str_len(char *string);
 int				ft_exec_echo(t_cmd *cmds, t_env *env);
 int				ft_exec_unset(t_cmd *cmds, t_env *env);
 int				ft_exec_env(t_cmd *cmds, t_env *env);
@@ -62,6 +64,7 @@ unsigned int	ft_error(unsigned int error);
 void			ft_free_env(t_env *env);
 void			ft_free_cmd(t_cmd *cmds);
 void			ft_exec_exit(t_cmd *cmds, t_env *env);
+void			ft_str_expand_triple(char **src, char *add1, char *add2);
 //void			exec_cmd(char **cmd);
 void			get_absolute_path(t_cmd *cmds);
 char			*ft_env_chr(t_env *env, char *var);

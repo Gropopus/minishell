@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/10 19:48:31 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/13 19:04:02 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int		is_accessible(t_cmd *cmds)
 		ft_putchar_fd(' ', 2);
 		ft_putstr_fd(cmds->av_cpy, 2);
 		ft_putstr_fd(": ", 2);
-		free(cmds->av_cpy);
+		if (cmds->av_cpy)
+			free(cmds->av_cpy);
 		cmds->av_cpy = NULL;
 		return (ft_error(9));
 	}
@@ -32,7 +33,8 @@ int		is_accessible(t_cmd *cmds)
 		ft_putchar_fd(' ', 2);
 		ft_putstr_fd(cmds->av_cpy, 2);
 		ft_putstr_fd(": ", 2);
-		free(cmds->av_cpy);
+		if (cmds->av_cpy)
+			free(cmds->av_cpy);
 		cmds->av_cpy = NULL;
 		return (ft_error(2));
 	}
@@ -91,20 +93,23 @@ int			builtin_manager(t_cmd *cmds, t_env *env)
 int			cmd_manager(t_cmd cmds, t_env *env)
 {
 	int ret;
-
-	//les expansions a gerer ici ret = ft_expansions
-	ret = ft_find_exec(&cmds, env);
-	if (ret != 0)
+//	ft_print_tab(cmds.av);
+	ret = ft_extansions(cmds.av, env);
+	if (ret == 0)
 	{
-		ft_error(ret);
-		return (1);
-	}
-	else
-	{
-		if (cmds.path[0] == '\0')
-			builtin_manager(&cmds, env);
+		ret = ft_find_exec(&cmds, env);
+		if (ret != 0)
+		{
+			ft_error(ret);
+			return (1);
+		}
 		else
-			exec_cmd(&cmds);
+		{
+			if (cmds.path[0] == '\0')
+				builtin_manager(&cmds, env);
+			else
+				exec_cmd(&cmds);
+		}
 	}
 	ft_free_cmd(&cmds);
 	return (ret);

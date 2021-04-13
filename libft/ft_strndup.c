@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/07 18:39:13 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/13 16:37:06 by thsembel         ###   ########.fr       */
+/*   Created: 2021/04/13 15:06:44 by thsembel          #+#    #+#             */
+/*   Updated: 2021/04/13 15:08:17 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlen(const char *str)
+char	*ft_strndup(const char *string, size_t len)
 {
-	size_t i;
+	char	*ret;
+	size_t	index;
 
-	i = 0;
-	if (str == NULL)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
+	index = 0;
+	if (string == NULL)
+	{
+		return (NULL);
+	}
+	ret = (char *)malloc(sizeof(char) * (len + 1));
+	if (ret != NULL)
+	{
+		while (index < len)
+		{
+			ret[index] = string[index];
+			index++;
+		}
+		ret[index] = '\0';
+	}
+	return (ret);
 }
