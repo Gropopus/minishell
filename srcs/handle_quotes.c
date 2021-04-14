@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 10:04:12 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/12 22:46:03 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/04/14 10:12:18 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	copy_quotes_content(char *str, char buff, int *i, int *j)
 	while (*i < k)
 	{
 		if (str[*i] == '\\')
-			quotes++;)
+			quotes++;
 		buff[*j] = str[*i];
 	}
 
