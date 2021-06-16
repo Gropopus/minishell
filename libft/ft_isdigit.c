@@ -6,13 +6,13 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 15:55:59 by thsembel          #+#    #+#             */
-/*   Updated: 2020/11/16 13:45:19 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:29:57 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);

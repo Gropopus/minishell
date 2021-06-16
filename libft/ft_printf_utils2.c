@@ -6,16 +6,16 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 11:51:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/01/09 13:17:07 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/24 13:43:02 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_get_hexlen(unsigned long long int nbr)
+int	ft_get_hexlen(unsigned long long int nbr)
 {
-	int								len;
-	unsigned	long	long	int	nb;
+	int						len;
+	unsigned long long int	nb;
 
 	len = 0;
 	nb = nbr;

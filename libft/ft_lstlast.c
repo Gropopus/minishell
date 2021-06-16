@@ -6,13 +6,13 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 17:14:45 by thsembel          #+#    #+#             */
-/*   Updated: 2020/11/16 15:15:01 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:32:28 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list		*ft_lstlast(t_list *lst)
+t_list	*ft_lstlast(t_list *lst)
 {
 	while (lst != NULL && lst->next != NULL)
 		lst = lst->next;

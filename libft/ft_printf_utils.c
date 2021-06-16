@@ -6,13 +6,13 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 11:58:15 by thsembel          #+#    #+#             */
-/*   Updated: 2020/12/02 12:07:28 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:41:28 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		ft_init_buf(t_data *data, size_t *j)
+void	ft_init_buf(t_data *data, size_t *j)
 {
 	write(1, data->buffer, ft_strlen(data->buffer));
 	ft_bzero(data->buffer, 1024);
@@ -20,7 +20,7 @@ void		ft_init_buf(t_data *data, size_t *j)
 	return ;
 }
 
-void		ft_buffcpy(t_data *data, char *str)
+void	ft_buffcpy(t_data *data, char *str)
 {
 	int		i;
 	size_t	j;
@@ -40,7 +40,7 @@ void		ft_buffcpy(t_data *data, char *str)
 	return ;
 }
 
-int			ft_get_tens(long int nbr)
+int	ft_get_tens(long int nbr)
 {
 	int			len;
 	long int	tmp;
@@ -57,9 +57,9 @@ int			ft_get_tens(long int nbr)
 	return (len);
 }
 
-int			ft_find_char(char *str, char c)
+int	ft_find_char(char *str, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && str)
@@ -71,9 +71,9 @@ int			ft_find_char(char *str, char c)
 	return (-1);
 }
 
-void		ft_strcat_char(t_data *data, const char c)
+void	ft_strcat_char(t_data *data, const char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_find_char("c", data->flag) >= 0 && c == '\0')

@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:37:38 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/13 16:45:02 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/16 14:08:34 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../includes/libft.h"
 #include "../includes/minishell.h"
 
-int		ft_expand_dollar(t_env *env, char **cmd_av, char **offset)
+int	ft_expand_dollar(t_env *env, char **cmd_av, char **offset)
 {
 	char	*var;
 	char	*ret;
@@ -30,7 +30,7 @@ int		ft_expand_dollar(t_env *env, char **cmd_av, char **offset)
 		free(var);
 		if (len == 0)
 			(*offset)++;
-		return (len == 0 ? 0 : ft_error(-1));
+		return (0);
 	}
 	value = ft_env_chr(env, var);
 	free(var);
@@ -43,7 +43,7 @@ int		ft_expand_dollar(t_env *env, char **cmd_av, char **offset)
 	return (0);
 }
 
-int		ft_expand_home(char **cmd_av, t_env *env)
+int	ft_expand_home(char **cmd_av, t_env *env)
 {
 	char	*temp;
 	char	*value;
@@ -66,7 +66,7 @@ int		ft_expand_home(char **cmd_av, t_env *env)
 	return (ret);
 }
 
-int		ft_expand(char **cmd_av, t_env *env)
+int	ft_expand(char **cmd_av, t_env *env)
 {
 	int		ret;
 	char	*offset;
@@ -85,14 +85,14 @@ int		ft_expand(char **cmd_av, t_env *env)
 	return (ret);
 }
 
-int		ft_extansions(char **cmd_av, t_env *env)
+int	ft_extansions(char **cmd_av, t_env *env)
 {
 	int		i;
 	int		ret;
 	int		final_ret;
 	char	*var_start;
 
-	i = 0; 
+	i = 0;
 	final_ret = 0;
 	while (cmd_av[i] != NULL)
 	{

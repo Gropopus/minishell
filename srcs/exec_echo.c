@@ -6,17 +6,17 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 18:43:07 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/10 19:08:59 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/16 13:50:17 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
-# include "../includes/libft.h"
-# include "../includes/minishell.h"
+#include "../includes/ft_printf.h"
+#include "../includes/libft.h"
+#include "../includes/minishell.h"
 
-int		ft_echo_av(t_cmd *cmds, int flag)
+int	ft_echo_av(t_cmd *cmds, int flag)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (flag == 1)
@@ -38,7 +38,7 @@ int		ft_echo_av(t_cmd *cmds, int flag)
 	return (-1);
 }
 
-int		ft_exec_echo(t_cmd *cmds, t_env *env)
+int	ft_exec_echo(t_cmd *cmds, t_env *env)
 {
 	int	flag;
 

@@ -6,15 +6,15 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 19:26:24 by thsembel          #+#    #+#             */
-/*   Updated: 2020/11/18 17:18:34 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:51:37 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlcpy(char *dest, const char *src, size_t size)
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	size_t i;
+	size_t	i;
 
 	if (!dest || !src)
 		return (0);

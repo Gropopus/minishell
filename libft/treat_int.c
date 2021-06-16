@@ -6,20 +6,20 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 09:05:12 by thsembel          #+#    #+#             */
-/*   Updated: 2020/12/02 12:08:16 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 14:30:41 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		ft_intobuff(t_data *data, long int nbr)
+void	ft_intobuff(t_data *data, long int nbr)
 {
 	int		len;
 	int		np;
 	char	str[33];
 
 	if (nbr == 0 && ((data->b_precision && data->precision == 0)
-	|| data->b_prec_no_value))
+			|| data->b_prec_no_value))
 		return ;
 	ft_bzero(str, 33);
 	len = ft_get_tens(nbr);
@@ -41,9 +41,9 @@ void		ft_intobuff(t_data *data, long int nbr)
 	ft_buffcpy(data, str);
 }
 
-int			ft_end(t_data *data, long int nbr, int len)
+int	ft_end(t_data *data, long int nbr, int len)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (data->b_precision)
@@ -58,13 +58,13 @@ int			ft_end(t_data *data, long int nbr, int len)
 	}
 	if (data->width > len)
 		i = data->width - len;
-	if (nbr == 0 && (data->b_prec_no_value ||
-	(data->b_precision && data->precision == 0)))
+	if (nbr == 0 && (data->b_prec_no_value
+			|| (data->b_precision && data->precision == 0)))
 		++i;
 	return (i);
 }
 
-int			ft_int_width(t_data *data, long int nbr, int len)
+int	ft_int_width(t_data *data, long int nbr, int len)
 {
 	int	i;
 	int	np;
@@ -74,15 +74,15 @@ int			ft_int_width(t_data *data, long int nbr, int len)
 	if (data->b_minus && data->b_zero)
 		data->b_zero = 0;
 	if (nbr < 0 && data->b_zero && data->b_precision == 0
-	&& data->b_prec_no_value == 0)
+		&& data->b_prec_no_value == 0)
 	{
 		ft_buffcpy(data, "-");
 		np = (-1);
 	}
 	while (i > 0)
 	{
-		if (data->b_zero && data->b_precision == 0 &&
-		data->b_prec_no_value == 0)
+		if (data->b_zero && data->b_precision == 0
+			&& data->b_prec_no_value == 0)
 			ft_buffcpy(data, "0");
 		else
 			ft_buffcpy(data, " ");
@@ -91,7 +91,7 @@ int			ft_int_width(t_data *data, long int nbr, int len)
 	return (np);
 }
 
-int			ft_int_precision(t_data *data, long int nbr, int len)
+int	ft_int_precision(t_data *data, long int nbr, int len)
 {
 	int	sign;
 	int	end;
@@ -115,7 +115,7 @@ int			ft_int_precision(t_data *data, long int nbr, int len)
 	return (sign);
 }
 
-int			ft_treat_int(t_data *data)
+int	ft_treat_int(t_data *data)
 {
 	long int	nbr;
 	int			len;

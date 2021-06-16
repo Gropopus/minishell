@@ -6,13 +6,13 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 19:42:41 by thsembel          #+#    #+#             */
-/*   Updated: 2020/11/16 14:59:24 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:57:41 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_tolower(int c)
+int	ft_tolower(int c)
 {
 	if (c >= 'A' && c <= 'Z')
 		c = c + 32;

@@ -6,13 +6,13 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 15:42:59 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/08 23:53:44 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/16 14:16:12 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
-# include "../includes/libft.h"
-# include "../includes/minishell.h"
+#include "../includes/ft_printf.h"
+#include "../includes/libft.h"
+#include "../includes/minishell.h"
 
 void	ft_free_cmd(t_cmd *cmds)
 {
@@ -39,11 +39,10 @@ void	ft_free_cmd(t_cmd *cmds)
 	cmds->ac = 0;
 }
 
-
 void	ft_free_env(t_env *env)
 {
-	t_env *actual;
-	t_env *previous;
+	t_env	*actual;
+	t_env	*previous;
 
 	actual = env;
 	while (actual != NULL)

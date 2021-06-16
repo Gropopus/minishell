@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 14:15:52 by thsembel          #+#    #+#             */
-/*   Updated: 2020/11/16 13:41:07 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:23:06 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_bzero(void *s, size_t n)
 	char	*str;
 
 	i = 0;
-	str = (char*)s;
+	str = (char *)s;
 	if (n != 0)
 	{
 		while (i < n)

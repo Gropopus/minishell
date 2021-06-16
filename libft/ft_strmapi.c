@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 00:25:24 by thsembel          #+#    #+#             */
-/*   Updated: 2020/11/18 17:17:15 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:52:22 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	i = 0;
 	if (!f || !s)
 		return (NULL);
-	if ((str = malloc(sizeof(char) * (ft_strlen(s) + 1))) == NULL)
+	str = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (str == NULL)
 		return (NULL);
 	str[ft_strlen(s)] = '\0';
 	while (s[i])

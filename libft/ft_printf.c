@@ -6,15 +6,15 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 10:50:57 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/06 14:30:04 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:38:33 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int			ft_switch_format(t_data *data, char c)
+static int	ft_switch_format(t_data *data, char c)
 {
-	int						ret;
+	int	ret;
 
 	ret = 0;
 	data->flag = c;
@@ -37,7 +37,7 @@ static int			ft_switch_format(t_data *data, char c)
 	return (1);
 }
 
-static int			ft_init_flags(t_data *data, char *str)
+static int	ft_init_flags(t_data *data, char *str)
 {
 	ft_reset_bool(data);
 	if (ft_set_flags(data, str) < 0)
@@ -49,9 +49,9 @@ static int			ft_init_flags(t_data *data, char *str)
 	return (1);
 }
 
-static int			ft_set_data(t_data *data, const char *str, size_t *i)
+static int	ft_set_data(t_data *data, const char *str, size_t *i)
 {
-	size_t j;
+	size_t	j;
 
 	j = 0;
 	ft_bzero(data->copy, 100);
@@ -71,12 +71,12 @@ static int			ft_set_data(t_data *data, const char *str, size_t *i)
 	}
 	data->copy[j] = '\0';
 	if (ft_init_flags(data, data->copy) < 0
-	|| ft_switch_format(data, str[*i]) < 0)
+		|| ft_switch_format(data, str[*i]) < 0)
 		return (-1);
 	return (1);
 }
 
-int					ft_printf(const char *str, ...)
+int	ft_printf(const char *str, ...)
 {
 	t_data	data;
 

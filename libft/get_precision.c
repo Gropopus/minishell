@@ -6,13 +6,13 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 17:56:15 by thsembel          #+#    #+#             */
-/*   Updated: 2020/12/02 11:58:10 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 14:17:56 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_get_precision(t_data *data, char *str, int i)
+int	ft_get_precision(t_data *data, char *str, int i)
 {
 	while (str && str[i] && str[i - 1] != '.')
 		++i;

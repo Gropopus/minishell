@@ -6,15 +6,15 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 10:40:41 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/09 10:42:43 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:48:11 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libft.h"
+#include "libft.h"
 
-int		ft_str_is_digit(char *str)
+int	ft_str_is_digit(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

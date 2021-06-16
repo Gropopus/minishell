@@ -6,17 +6,17 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 10:24:22 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/09 11:30:07 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/16 13:51:58 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
-# include "../includes/libft.h"
-# include "../includes/minishell.h"
+#include "../includes/ft_printf.h"
+#include "../includes/libft.h"
+#include "../includes/minishell.h"
 
-void			ft_exec_exit(t_cmd *cmds, t_env *env)
+void	ft_exec_exit(t_cmd *cmds, t_env *env)
 {
-	int ret;
+	int	ret;
 
 	ret = 1;
 	if (cmds->ac > 2)

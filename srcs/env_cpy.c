@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 19:25:01 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/07 23:28:38 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/16 13:33:36 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../includes/libft.h"
 #include "../includes/minishell.h"
 
-char		*ft_dup_to_equal(char *str,	char c)
+char	*ft_dup_to_equal(char *str,	char c)
 {
 	int		i;
 	int		j;
@@ -26,10 +26,11 @@ char		*ft_dup_to_equal(char *str,	char c)
 	while (str[i])
 	{
 		if (str[i] == c)
-			break;
+			break ;
 		i++;
 	}
-	if (!(dest = malloc(sizeof(char) * i + 1)))
+	dest = malloc(sizeof(char) * i + 1);
+	if (dest == NULL)
 		return (NULL);
 	j = 0;
 	while (j < i)
@@ -41,8 +42,7 @@ char		*ft_dup_to_equal(char *str,	char c)
 	return (dest);
 }
 
-
-char		*ft_dup_pass_equal(char *str, char c)
+char	*ft_dup_pass_equal(char *str, char c)
 {
 	int		i;
 	int		j;
@@ -54,10 +54,11 @@ char		*ft_dup_pass_equal(char *str, char c)
 	while (str[i])
 	{
 		if (str[i] == c)
-			j = i + 1; 
+			j = i + 1;
 		i++;
 	}
-	if (!(dest = malloc(sizeof(char) * (i - j + 1))))
+	dest = malloc(sizeof(char) * (i - j + 1));
+	if (dest == NULL)
 		return (NULL);
 	i = 0;
 	while (str[j])
@@ -72,9 +73,10 @@ char		*ft_dup_pass_equal(char *str, char c)
 
 t_env	*ft_env_new(char *envp, unsigned int *error)
 {
-	t_env		*new;
+	t_env	*new;
 
-	if ((new = (t_env *)malloc(sizeof(t_env) * 1)) == NULL)
+	new = (t_env *)malloc(sizeof(t_env) * 1);
+	if (new == NULL)
 		*error = 1;
 	else
 	{
@@ -96,7 +98,8 @@ t_env	*init_empty_env(unsigned int *error)
 {
 	t_env	*new;
 
-	if ((new = (t_env *)malloc(sizeof(t_env) * 1)) == NULL)
+	new = (t_env *)malloc(sizeof(t_env) * 1);
+	if (new == NULL)
 	{
 		*error = 1;
 		return (NULL);
@@ -114,7 +117,7 @@ t_env	*init_empty_env(unsigned int *error)
 	return (new);
 }
 
-t_env		*ft_env_cpy(unsigned int *error, char **envp)
+t_env	*ft_env_cpy(unsigned int *error, char **envp)
 {
 	int		i;
 	t_env	*env;
@@ -125,7 +128,8 @@ t_env		*ft_env_cpy(unsigned int *error, char **envp)
 		env = init_empty_env(error);
 		return (env);
 	}
-	if ((actual = ft_env_new(envp[0], error)) == NULL)
+	actual = ft_env_new(envp[0], error);
+	if (actual == NULL)
 		return (NULL);
 	env = actual;
 	i = 1;

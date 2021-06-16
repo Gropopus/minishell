@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 20:21:34 by thsembel          #+#    #+#             */
-/*   Updated: 2020/11/16 13:41:58 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:24:07 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	*ft_calloc(size_t count, size_t size)
 		count = 1;
 		size = 1;
 	}
-	if ((str = malloc(count * size)) == NULL)
+	str = malloc(count * size);
+	if (str == NULL)
 		return (NULL);
 	ft_bzero(str, count * size);
 	return (str);

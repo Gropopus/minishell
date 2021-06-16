@@ -6,17 +6,17 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:47:15 by thsembel          #+#    #+#             */
-/*   Updated: 2020/12/02 12:05:00 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/25 14:25:47 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_get_xuint_len(t_data *data, unsigned long int nbr)
+int	ft_get_xuint_len(t_data *data, unsigned long int nbr)
 {
-	unsigned	long	int	nb;
-	int						len;
-	unsigned	long	int	base;
+	unsigned long int	nb;
+	int					len;
+	unsigned long int	base;
 
 	nb = nbr;
 	len = 0;
@@ -27,7 +27,7 @@ int			ft_get_xuint_len(t_data *data, unsigned long int nbr)
 	else
 		return (-1);
 	if (nb == 0 && data->b_prec_no_value == 0
-	&& (!(data->b_precision && data->precision == 0)))
+		&& (!(data->b_precision && data->precision == 0)))
 		return (1);
 	while (nb)
 	{
@@ -37,7 +37,7 @@ int			ft_get_xuint_len(t_data *data, unsigned long int nbr)
 	return (len);
 }
 
-void		ft_xuint_width(t_data *data, int len)
+void	ft_xuint_width(t_data *data, int len)
 {
 	int	end;
 
@@ -52,7 +52,7 @@ void		ft_xuint_width(t_data *data, int len)
 	while (end > 0)
 	{
 		if (data->b_zero && data->b_precision == 0
-		&& data->b_prec_no_value == 0)
+			&& data->b_prec_no_value == 0)
 			ft_buffcpy(data, "0");
 		else
 			ft_buffcpy(data, " ");
@@ -60,7 +60,7 @@ void		ft_xuint_width(t_data *data, int len)
 	}
 }
 
-void		ft_xuint_precision(t_data *data, int len)
+void	ft_xuint_precision(t_data *data, int len)
 {
 	int	end;
 
@@ -74,11 +74,11 @@ void		ft_xuint_precision(t_data *data, int len)
 	}
 }
 
-void		ft_xuint_base_to_buff(t_data *data, unsigned long int nbr, int len)
+void	ft_xuint_base_to_buff(t_data *data, unsigned long int nbr, int len)
 {
-	unsigned	long	int	base;
-	char					str[30];
-	char					base_x[17];
+	unsigned long int	base;
+	char				str[30];
+	char				base_x[17];
 
 	ft_bzero(str, 30);
 	ft_bzero(base_x, 17);
@@ -102,17 +102,18 @@ void		ft_xuint_base_to_buff(t_data *data, unsigned long int nbr, int len)
 	ft_buffcpy(data, str);
 }
 
-int			ft_treat_xuint(t_data *data, int len, unsigned long int nbr)
+int	ft_treat_xuint(t_data *data, int len, unsigned long int nbr)
 {
 	nbr = (unsigned long int)va_arg(data->args, unsigned int);
-	if ((len = ft_get_xuint_len(data, nbr)) < 0)
+	len = ft_get_xuint_len(data, nbr);
+	if (len < 0)
 		return (-1);
 	if (data->b_minus)
 	{
 		if (data->b_precision)
 			ft_xuint_precision(data, len);
 		if (!(nbr == 0 && (data->b_prec_no_value
-		|| (data->b_precision && data->precision == 0))))
+					|| (data->b_precision && data->precision == 0))))
 			ft_xuint_base_to_buff(data, nbr, len);
 		if (data->b_width)
 			ft_xuint_width(data, len);
@@ -123,7 +124,7 @@ int			ft_treat_xuint(t_data *data, int len, unsigned long int nbr)
 	if (data->b_precision)
 		ft_xuint_precision(data, len);
 	if (!(nbr == 0 && (data->b_prec_no_value
-	|| (data->b_precision && data->precision == 0))))
+				|| (data->b_precision && data->precision == 0))))
 		ft_xuint_base_to_buff(data, nbr, len);
 	return (1);
 }

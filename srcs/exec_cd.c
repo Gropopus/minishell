@@ -6,13 +6,13 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 13:01:02 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/10 19:34:20 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/16 14:30:31 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
-# include "../includes/libft.h"
-# include "../includes/minishell.h"
+#include "../includes/ft_printf.h"
+#include "../includes/libft.h"
+#include "../includes/minishell.h"
 
 void	ft_cd_error(char *path, int error)
 {
@@ -32,7 +32,7 @@ void	ft_cd_error(char *path, int error)
 
 char	*ft_env_chr(t_env *env, char *var)
 {
-	t_env *actual;
+	t_env	*actual;
 
 	actual = env;
 	while (actual)
@@ -46,25 +46,24 @@ char	*ft_env_chr(t_env *env, char *var)
 	return (NULL);
 }
 
-char		*ft_find_path(t_cmd *cmds, t_env *env)
+char	*ft_find_path(t_cmd *cmds, t_env *env)
 {
 	int		ret;
 	char	*path;
-	char	*previous_path;
 
 	ret = 0;
-	path = NULL;
-	previous_path = NULL;
 	if (cmds->ac < 2)
 	{
-		if ((path = ft_env_chr(env, "HOME")) == NULL)
+		path = ft_env_chr(env, "HOME");
+		if (path == NULL)
 			ft_putstr_fd("cd : HOME not set\n", 2);
 	}
 	else
 	{
 		if (cmds->av[1][0] == '-' && cmds->av[1][1] == '\0')
 		{
-			if ((path = ft_env_chr(env, "OLDPWD")) == NULL)
+			path = ft_env_chr(env, "OLDPWD");
+			if (path == NULL)
 				ft_putstr_fd("cd : OLDPWD not set\n", 2);
 			else
 				ft_printf("%s\n", path);
@@ -75,27 +74,26 @@ char		*ft_find_path(t_cmd *cmds, t_env *env)
 	return (path);
 }
 
-int			ft_exec_cd(t_cmd *cmds, t_env *env)
+int	ft_exec_cd(t_cmd *cmds, t_env *env)
 {
-	int		error;
 	int		ret;
 	char	*previous_path;
 	char	*path;
 
-	if ((path = ft_find_path(cmds, env)) == NULL)
+	path = ft_find_path(cmds, env);
+	if (path == NULL)
 		return (4);
 	previous_path = getcwd(NULL, 0);
-	if ((ret = chdir(path)) != 0)
-	{
-		error = errno;
-		ft_cd_error(path, error);
-	}
+	ret = chdir(path);
+	if (ret != 0)
+		ft_cd_error(path, errno);
 	else
 	{
 		if (previous_path)
 			env_manager("OLDPWD", previous_path, env);
-		if ((path = getcwd(NULL, 0)) == NULL)
-				return (4);
+		path = getcwd(NULL, 0);
+		if (path == NULL)
+			return (4);
 		env_manager("PWD", path, env);
 		free(path);
 	}

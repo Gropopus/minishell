@@ -6,17 +6,17 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 15:03:03 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/07 15:48:32 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/16 14:45:10 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
-# include "../includes/minishell.h"
-# include "../includes/libft.h"
+#include "../includes/ft_printf.h"
+#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-int		ft_find_charsep(char c, char *charsep)
+int	ft_find_charsep(char c, char *charsep)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (charsep[i] != '\0')
@@ -30,17 +30,17 @@ int		ft_find_charsep(char c, char *charsep)
 	return (0);
 }
 
-int		ft_count_words(char *str, char *charsep)
+int	ft_count_words(char *str, char *charsep)
 {
-	int i;
-	int word;
+	int	i;
+	int	word;
 
 	i = 0;
 	word = 0;
 	while (str[i] != '\0')
 	{
-		if ((ft_find_charsep(str[i + 1], charsep) == 1 &&
-				ft_find_charsep(str[i], charsep) == 0))
+		if ((ft_find_charsep(str[i + 1], charsep) == 1
+				&& ft_find_charsep(str[i], charsep) == 0))
 			word++;
 		i++;
 	}
@@ -49,7 +49,7 @@ int		ft_count_words(char *str, char *charsep)
 
 void	ft_copy_word(char *dest, char *from, char *charsep)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (ft_find_charsep(from[i], charsep) == 0)
@@ -62,9 +62,9 @@ void	ft_copy_word(char *dest, char *from, char *charsep)
 
 void	ft_transfert(char **strs, char *str, char *charsep)
 {
-	int i;
-	int word;
-	int j;
+	int	i;
+	int	word;
+	int	j;
 
 	word = 0;
 	i = 0;
@@ -91,7 +91,8 @@ char	**ft_split_str(char *str, char *charset)
 	int		word;
 
 	word = ft_count_words(str, charset);
-	if ((strs = (char**)malloc(sizeof(char*) * (word + 1))) == NULL)
+	strs = (char **)malloc(sizeof(char *) * (word + 1));
+	if (strs == NULL)
 		return (NULL);
 	strs[word] = NULL;
 	ft_transfert(strs, str, charset);

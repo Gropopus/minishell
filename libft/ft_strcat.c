@@ -6,16 +6,16 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 11:06:31 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/07 11:06:51 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:48:35 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libft.h"
+#include "libft.h"
 
 char	*ft_strcat(char *dest, char *src)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (dest[i])

@@ -6,13 +6,13 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 19:21:33 by thsembel          #+#    #+#             */
-/*   Updated: 2020/12/02 12:01:14 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 14:34:32 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void			ft_precision_width(t_data *data, char *str)
+void	ft_precision_width(t_data *data, char *str)
 {
 	int		i;
 	int		end;
@@ -38,7 +38,7 @@ void			ft_precision_width(t_data *data, char *str)
 	data->buffer[j] = '\0';
 }
 
-int				ft_minus(t_data *data, char *str)
+int	ft_minus(t_data *data, char *str)
 {
 	int		len;
 	int		end;
@@ -48,7 +48,7 @@ int				ft_minus(t_data *data, char *str)
 	if (data->b_width)
 		end = data->width;
 	if ((data->precision > (int)ft_strlen(str) || data->b_precision == 0)
-	&& data->b_prec_no_value == 0)
+		&& data->b_prec_no_value == 0)
 		len = (int)ft_strlen(str);
 	else if (data->b_prec_no_value == 0)
 		len = data->precision;
@@ -61,7 +61,7 @@ int				ft_minus(t_data *data, char *str)
 	return (1);
 }
 
-static	int		ft_do_convert_string(t_data *data, char *str)
+static int	ft_do_convert_string(t_data *data, char *str)
 {
 	int		len;
 	int		end;
@@ -88,12 +88,13 @@ static	int		ft_do_convert_string(t_data *data, char *str)
 	return (1);
 }
 
-int				ft_treat_string(t_data *data)
+int	ft_treat_string(t_data *data)
 {
 	char	*str;
 
 	str = NULL;
-	if ((str = va_arg(data->args, char *)) == NULL)
+	str = va_arg(data->args, char *);
+	if (str == NULL)
 		return (ft_do_convert_string(data, "(null)"));
 	if (ft_do_convert_string(data, str) <= 0)
 		return (-1);

@@ -6,18 +6,18 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:08:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/13 15:28:49 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/16 14:57:52 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINISHELL_H
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "libft.h"
-#include <errno.h>
-#include <curses.h>
-#include <term.h>
-#include <signal.h>
+# include "libft.h"
+# include <errno.h>
+# include <curses.h>
+# include <term.h>
+# include <signal.h>
 
 # define NC "\033[0m"
 # define RED "\033[0;91m"
@@ -28,9 +28,9 @@
 # define BOLD "\033[1m"
 # define CYAN "\033[38;6;36m"
 
-extern char **envp;
+//extern char	**envp;
 
-typedef struct		s_cmd
+typedef struct s_cmd
 {
 	int				ac;
 	char			**av;
@@ -40,7 +40,7 @@ typedef struct		s_cmd
 	char			*line;
 }				t_cmd;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*var;
 	char			*value;
@@ -65,11 +65,11 @@ void			ft_free_env(t_env *env);
 void			ft_free_cmd(t_cmd *cmds);
 void			ft_exec_exit(t_cmd *cmds, t_env *env);
 void			ft_str_expand_triple(char **src, char *add1, char *add2);
-//void			exec_cmd(char **cmd);
 void			get_absolute_path(t_cmd *cmds);
 char			*ft_env_chr(t_env *env, char *var);
 char			**ft_split_str(char *str, char *charsep);
 char			*ft_dup_to_equal(char *str, char c);
 char			*ft_dup_pass_equal(char *str, char c);
 t_env			*ft_env_cpy(unsigned int *error, char **envp);
-# endif
+
+#endif

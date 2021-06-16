@@ -6,13 +6,13 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 20:09:35 by thsembel          #+#    #+#             */
-/*   Updated: 2020/11/17 13:24:45 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:47:41 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_find_charsep(char str, char c)
+static int	ft_find_charsep(char str, char c)
 {
 	if (c == str)
 		return (1);
@@ -21,26 +21,26 @@ static int		ft_find_charsep(char str, char c)
 	return (0);
 }
 
-static int		ft_count_words(const char *str, char c)
+static int	ft_count_words(const char *str, char c)
 {
-	int i;
-	int word;
+	int	i;
+	int	word;
 
 	i = 0;
 	word = 0;
 	while (str[i] != '\0')
 	{
-		if ((ft_find_charsep(str[i + 1], c) == 1 &&
-				ft_find_charsep(str[i], c) == 0))
+		if ((ft_find_charsep(str[i + 1], c) == 1
+				&& ft_find_charsep(str[i], c) == 0))
 			word++;
 		i++;
 	}
 	return (word);
 }
 
-static void		ft_copy_word(char *dest, const char *from, char c)
+static void	ft_copy_word(char *dest, const char *from, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (ft_find_charsep(from[i], c) == 0)
@@ -51,11 +51,11 @@ static void		ft_copy_word(char *dest, const char *from, char c)
 	dest[i] = '\0';
 }
 
-static void		ft_transfert(char **tab, const char *str, char c)
+static void	ft_transfert(char **tab, const char *str, char c)
 {
-	int i;
-	int word;
-	int j;
+	int	i;
+	int	word;
+	int	j;
 
 	word = 0;
 	i = 0;
@@ -76,7 +76,7 @@ static void		ft_transfert(char **tab, const char *str, char c)
 	}
 }
 
-char			**ft_split(char const *str, char c)
+char	**ft_split(char const *str, char c)
 {
 	char	**tab;
 	int		word;
@@ -84,7 +84,8 @@ char			**ft_split(char const *str, char c)
 	if (!str)
 		return (NULL);
 	word = ft_count_words(str, c);
-	if ((tab = (char**)malloc(sizeof(char*) * (word + 1))) == NULL)
+	tab = malloc(sizeof(char *) * (word + 1));
+	if (tab == NULL)
 		return (NULL);
 	tab[word] = 0;
 	ft_transfert(tab, str, c);

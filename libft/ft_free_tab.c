@@ -6,15 +6,15 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/07 16:02:54 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:24:39 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libft.h"
+#include "libft.h"
 
 void	ft_free_tab(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str)

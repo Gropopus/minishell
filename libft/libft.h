@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 13:28:50 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/13 15:08:53 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 15:33:21 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-typedef struct	s_list
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }				t_list;
 
 int				get_next_line(int fd, char **line);
+int				ft_end_gnl(char **str);
 int				ft_strlen_null(char *str);
 int				ft_check_c(char *str, int c);
 int				ft_free_and_exit(char **str, char **new_line);

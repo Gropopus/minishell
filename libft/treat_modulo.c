@@ -6,13 +6,13 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 13:34:55 by thsembel          #+#    #+#             */
-/*   Updated: 2020/12/02 12:00:27 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 14:31:24 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void			ft_is_minus(t_data *data)
+void	ft_is_minus(t_data *data)
 {
 	int	len;
 
@@ -25,7 +25,7 @@ void			ft_is_minus(t_data *data)
 	}
 }
 
-void			ft_treat_modulo(t_data *data)
+void	ft_treat_modulo(t_data *data)
 {
 	int	len;
 

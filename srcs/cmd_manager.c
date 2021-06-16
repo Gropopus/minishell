@@ -6,15 +6,15 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/13 19:04:02 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/16 14:47:42 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
-# include "../includes/libft.h"
-# include "../includes/minishell.h"
+#include "../includes/ft_printf.h"
+#include "../includes/libft.h"
+#include "../includes/minishell.h"
 
-int		is_accessible(t_cmd *cmds)
+int	is_accessible(t_cmd *cmds)
 {
 	if (access(cmds->av[0], F_OK) != 0)
 	{
@@ -41,14 +41,14 @@ int		is_accessible(t_cmd *cmds)
 	return (0);
 }
 
-int		exec_cmd(t_cmd *cmds)
+int	exec_cmd(t_cmd *cmds)
 {
 	pid_t	pid;
 	int		status;
 	int		ret;
 
 	status = 0;
-	ret	= is_accessible(cmds);
+	ret = is_accessible(cmds);
 	if (ret != 0)
 		return (ret);
 	pid = fork();
@@ -68,7 +68,7 @@ int		exec_cmd(t_cmd *cmds)
 	return (ret);
 }
 
-int			builtin_manager(t_cmd *cmds, t_env *env)
+int	builtin_manager(t_cmd *cmds, t_env *env)
 {
 	int	ret;
 
@@ -85,15 +85,15 @@ int			builtin_manager(t_cmd *cmds, t_env *env)
 		ret = ft_exec_unset(cmds, env);
 	else if (ft_strcmp(cmds->av[0], "exit") == 0)
 		ft_exec_exit(cmds, env);
-/*	else if (ft_strcmp(cmds->av[0], "export") == 0)
+	/*else if (ft_strcmp(cmds->av[0], "export") == 0)
 		ret = ft_exec_export(cmds, env);*/
 	return (ret);
 }
 
-int			cmd_manager(t_cmd cmds, t_env *env)
+int	cmd_manager(t_cmd cmds, t_env *env)
 {
-	int ret;
-//	ft_print_tab(cmds.av);
+	int	ret;
+
 	ret = ft_extansions(cmds.av, env);
 	if (ret == 0)
 	{

@@ -6,17 +6,17 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 21:41:50 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/09 22:14:13 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/16 14:31:23 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
-# include "../includes/libft.h"
-# include "../includes/minishell.h"
+#include "../includes/ft_printf.h"
+#include "../includes/libft.h"
+#include "../includes/minishell.h"
 
 int	remove_if_isfirst(t_env *first)
 {
-	t_env *second;
+	t_env	*second;
 
 	if (first->next == NULL)
 	{
@@ -40,12 +40,22 @@ int	remove_if_isfirst(t_env *first)
 	return (0);
 }
 
-int			unset_env(char *var, t_env *env)
+void	unset_env_next(t_env *actual, t_env *previous)
+{
+	actual = previous->next;
+	free(actual->var);
+	free(actual->value);
+	previous->next = actual->next;
+	free(actual);
+}
+
+int	unset_env(char *var, t_env *env)
 {
 	t_env	*actual;
 	t_env	*previous;
 
 	previous = env;
+	actual = NULL;
 	if (env == NULL)
 		return (ft_error(5));
 	if (ft_strcmp(previous->var, var) == 0)
@@ -55,22 +65,18 @@ int			unset_env(char *var, t_env *env)
 	}
 	while (previous != NULL)
 	{
-		if (previous->next != NULL &&
-			ft_strcmp((previous->next)->var, var) == 0)
+		if (previous->next != NULL
+			&& ft_strcmp((previous->next)->var, var) == 0)
 			break ;
 		previous = previous->next;
 	}
 	if (previous == NULL)
 		return (ft_error(4));
-	actual = previous->next;
-	free(actual->var);
-	free(actual->value);
-	previous->next = actual->next;
-	free(actual);
+	unset_env_next(actual, previous);
 	return (0);
 }
 
-int			ft_exec_unset(t_cmd *cmds, t_env *env)
+int	ft_exec_unset(t_cmd *cmds, t_env *env)
 {
 	int	i;
 	int	ret;
@@ -90,6 +96,5 @@ int			ft_exec_unset(t_cmd *cmds, t_env *env)
 		ft_putstr_fd("unset : Not enough arguments.\n", 2);
 		ret = 1;
 	}
-//	ft_setstatus(env_list, ret);
 	return (ret);
 }

@@ -6,15 +6,15 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 22:52:28 by thsembel          #+#    #+#             */
-/*   Updated: 2020/11/17 13:25:30 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:54:44 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t		ft_check(char c, const char *str)
+static size_t	ft_check(char c, const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -26,7 +26,7 @@ static size_t		ft_check(char c, const char *str)
 	return (0);
 }
 
-char				*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	len;
 	size_t	i;
@@ -40,7 +40,8 @@ char				*ft_strtrim(char const *s1, char const *set)
 	len = ft_strlen(s1);
 	while (len && ft_check((s1[--len]), set))
 		;
-	if ((str = (char *)malloc(sizeof(char) * (len + 2))) == NULL)
+	str = (char *)malloc(sizeof(char) * (len + 2));
+	if (str == NULL)
 		return (NULL);
 	while (i <= len)
 	{

@@ -6,15 +6,15 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 18:05:49 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/09 19:15:11 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/16 13:51:04 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
-# include "../includes/libft.h"
-# include "../includes/minishell.h"
+#include "../includes/ft_printf.h"
+#include "../includes/libft.h"
+#include "../includes/minishell.h"
 
-int			ft_exec_env(t_cmd *cmds, t_env *env)
+int	ft_exec_env(t_cmd *cmds, t_env *env)
 {
 	(void)env;
 	if (cmds->my_env)
@@ -25,4 +25,3 @@ int			ft_exec_env(t_cmd *cmds, t_env *env)
 	else
 		return (ft_error(5));
 }
-

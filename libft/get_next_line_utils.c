@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/09 16:18:30 by thsembel          #+#    #+#             */
-/*   Updated: 2021/01/09 13:08:50 by user42           ###   ########.fr       */
+/*   Created: 2021/05/25 14:26:36 by thsembel          #+#    #+#             */
+/*   Updated: 2021/05/25 14:27:03 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strlen_null(char *str)
+int	ft_strlen_null(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str == NULL)
@@ -26,7 +26,7 @@ int		ft_strlen_null(char *str)
 
 char	*ft_strcpy(char *dest, char *src)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (src[i])
@@ -38,9 +38,9 @@ char	*ft_strcpy(char *dest, char *src)
 	return (dest);
 }
 
-int		ft_check_c(char *str, int c)
+int	ft_check_c(char *str, int c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!str)
@@ -57,7 +57,7 @@ int		ft_check_c(char *str, int c)
 	return (0);
 }
 
-int		ft_free_and_exit(char **str, char **new_line)
+int	ft_free_and_exit(char **str, char **new_line)
 {
 	if (str && *str)
 	{

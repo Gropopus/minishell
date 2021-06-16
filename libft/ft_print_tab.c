@@ -6,18 +6,18 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 18:10:46 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/09 19:08:13 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:36:21 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libft.h"
-# include "ft_printf.h"
+#include "libft.h"
+#include "ft_printf.h"
 
-void		ft_print_tab(char **tab)
+void	ft_print_tab(char **tab)
 {
-	int i;
+	int	i;
 
-	i  = 0;
+	i = 0;
 	if (tab == NULL || tab[0] == NULL)
 		return ;
 	while (tab[i] != NULL)
@@ -26,4 +26,3 @@ void		ft_print_tab(char **tab)
 		i++;
 	}
 }
-

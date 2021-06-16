@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 15:46:34 by thsembel          #+#    #+#             */
-/*   Updated: 2021/01/09 13:17:29 by user42           ###   ########.fr       */
+/*   Updated: 2021/06/16 14:53:18 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-typedef	struct	s_data
+typedef struct s_data
 {
 	va_list		args;
 	size_t		i;

@@ -6,13 +6,13 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 16:55:25 by thsembel          #+#    #+#             */
-/*   Updated: 2020/12/02 11:51:04 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/05/24 13:59:41 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void			ft_reset_bool(t_data *data)
+void	ft_reset_bool(t_data *data)
 {
 	data->sign_minus = 0;
 	data->b_minus = 0;
@@ -28,13 +28,13 @@ void			ft_reset_bool(t_data *data)
 	data->flag_c0 = 0;
 }
 
-static int		ft_check_attribut(t_data *data, char *str)
+static int	ft_check_attribut(t_data *data, char *str)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	while (str[i] && (str[i] <= '0' || str[i] > '9') &&
-	str[i] != '*' && str[i] != '.')
+	while (str[i] && (str[i] <= '0' || str[i] > '9')
+		&& str[i] != '*' && str[i] != '.')
 	{
 		if (str[i] == '#')
 			data->b_diese = 1;
@@ -53,13 +53,13 @@ static int		ft_check_attribut(t_data *data, char *str)
 	return (1);
 }
 
-static int		ft_is_width(t_data *data, char *str)
+static int	ft_is_width(t_data *data, char *str)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	while (str[i] && (str[i] <= '0' || str[i] > '9') &&
-	str[i] != '*' && str[i] != '.')
+	while (str[i] && (str[i] <= '0' || str[i] > '9')
+		&& str[i] != '*' && str[i] != '.')
 		++i;
 	if (str[i] == '*' || (str[i] > '0' && str[i] <= '9'))
 		data->b_width = 1;
@@ -75,9 +75,9 @@ static int		ft_is_width(t_data *data, char *str)
 	return (1);
 }
 
-static int		ft_is_precision(t_data *data, char *str)
+static int	ft_is_precision(t_data *data, char *str)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (str[i] && str[i] != '.')
@@ -102,7 +102,7 @@ static int		ft_is_precision(t_data *data, char *str)
 	return (1);
 }
 
-int				ft_set_flags(t_data *data, char *str)
+int	ft_set_flags(t_data *data, char *str)
 {
 	if (ft_check_attribut(data, str) <= 0)
 		return (-1);

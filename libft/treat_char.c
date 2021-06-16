@@ -6,15 +6,15 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 10:56:42 by thsembel          #+#    #+#             */
-/*   Updated: 2021/01/09 12:31:08 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/24 14:22:07 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void			ft_display_space(t_data *data, char c)
+void	ft_display_space(t_data *data, char c)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (i < data->width - 1)
@@ -25,14 +25,15 @@ void			ft_display_space(t_data *data, char c)
 	}
 }
 
-int				ft_treat_char(t_data *data)
+int	ft_treat_char(t_data *data)
 {
 	char	c;
 	char	space;
 
 	data->flag_c0 = 0;
 	space = ' ';
-	if ((c = (char)va_arg(data->args, int)) == '\0')
+	c = (char)va_arg(data->args, int);
+	if (c == '\0')
 		data->flag_c0 = 1;
 	write(1, data->buffer, ft_strlen(data->buffer));
 	ft_bzero(data->buffer, ft_strlen(data->buffer));

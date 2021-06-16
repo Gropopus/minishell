@@ -6,18 +6,32 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 13:55:01 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/09 16:39:41 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/16 13:42:14 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
-# include "../includes/libft.h"
-# include "../includes/minishell.h"
+#include "../includes/ft_printf.h"
+#include "../includes/libft.h"
+#include "../includes/minishell.h"
 
-int		ft_add_to_env(char *var, char *value, t_env *env)
+t_env	*ft_add_to_env_bis(char *var, char *value)
 {
-	t_env *new;
-	t_env *actual;
+	t_env	*new;
+
+	new = malloc(sizeof(t_env) * 1);
+	if (new == NULL)
+		return (NULL);
+	new->var = ft_strdup(var);
+	new->value = ft_strdup(value);
+	if (new->var == NULL || new->value == NULL)
+		return (NULL);
+	return (new);
+}
+
+int	ft_add_to_env(char *var, char *value, t_env *env)
+{
+	t_env	*new;
+	t_env	*actual;
 
 	actual = env;
 	if (!actual)
@@ -26,15 +40,14 @@ int		ft_add_to_env(char *var, char *value, t_env *env)
 	{
 		free(env->var);
 		free(env->value);
-		if (((env->var = ft_strdup(var)) == NULL)
-			|| ((env->value = ft_strdup(value)) == NULL))
+		env->var = ft_strdup(var);
+		env->value = ft_strdup(value);
+		if (env->var == NULL || env->value == NULL)
 			return (ft_error(1));
 		return (0);
 	}
-	if ((new = malloc(sizeof(t_env) * 1)) == NULL)
-		return (ft_error(1));
-	if (((new->var = ft_strdup(var)) == NULL)
-		|| ((new->value = ft_strdup(value)) == NULL))
+	new = ft_add_to_env_bis(var, value);
+	if (new == NULL)
 		return (ft_error(1));
 	while (actual->next)
 		actual = actual->next;
@@ -42,7 +55,7 @@ int		ft_add_to_env(char *var, char *value, t_env *env)
 	return (0);
 }
 
-int		env_manager(char *var, char *value, t_env *env)
+int	env_manager(char *var, char *value, t_env *env)
 {
 	t_env	*actual;
 
@@ -52,7 +65,8 @@ int		env_manager(char *var, char *value, t_env *env)
 		if (ft_strcmp(actual->var, var) == 0)
 		{
 			free(actual->value);
-			if ((actual->value = ft_strdup(value)) == NULL)
+			actual->value = ft_strdup(value);
+			if (actual->value == NULL)
 				return (ft_error(1));
 			return (0);
 		}

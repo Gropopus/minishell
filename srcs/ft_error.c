@@ -6,13 +6,13 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 20:35:58 by thsembel          #+#    #+#             */
-/*   Updated: 2021/04/08 23:21:47 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/16 14:16:37 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
-# include "../includes/libft.h"
-# include "../includes/minishell.h"
+#include "../includes/ft_printf.h"
+#include "../includes/libft.h"
+#include "../includes/minishell.h"
 
 unsigned int	ft_error(unsigned int error)
 {
