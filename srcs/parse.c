@@ -6,9 +6,13 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/18 11:59:43 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/18 12:35:08 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -17,65 +21,9 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-int ft_strlen(char *s)
-{
-	int i;
-
-	i = 0;
-	while (s && *s)
-	{
-		s++;
-		i++;
-	}
-	return (i);
-}
-
-char *ft_strdup(char *s)
-{
-	char *d;
-
-	d = malloc(ft_strlen(s) + 1);
-	if (d == NULL)
-		exit(0);
-	while (*s)
-	{
-		*d = *s;
-		s++;
-		d++;
-	}
-	*d = 0;
-	return (d);
-}
-
-enum e_redirect_type
-{
-	R_NONE,
-	R_INPUT,
-	R_OUTPUT,
-	RR_INPUT,
-	RR_OUTPUT
-};
-
-typedef struct	s_file_list
-{
-	char			*path;
-	enum e_redirect_type	type;
-	int				fd;
-	struct s_file_list	*next;
-}				t_file_list;
-
-typedef struct s_cmd
-{
-	char			**argv;
-	bool			is_piped;
-	int				pipes[2];
-	t_file_list		*file;
-	struct s_cmd	*prev;
-	struct s_cmd	*next;
-}					t_cmd;
-
 char *get_arg(char *name)
 {
+	(void)name;
 	return "A          B";
 }
 
@@ -208,7 +156,6 @@ void	ft_free_list(t_file_list **list)
 	*list = NULL;
 }
 
-
 void error_clean(t_cmd *list, char *r)
 {
 	int i;
@@ -218,9 +165,9 @@ void error_clean(t_cmd *list, char *r)
 	while (list)
 	{
 		i = 0;
-		while (list->argv[i])
-			free(list->argv[i++]);
-		free(list->argv);
+		while (list->av[i])
+			free(list->av[i++]);
+		free(list->av);
 		ft_free_list(&list->file);
 		list = list->next;
 	}
@@ -235,7 +182,7 @@ t_cmd	*blank_cmd()
 	cmd = malloc(sizeof(t_cmd));
 	//A proteger (tout free depuis une variable global)
 
-	cmd->argv = NULL;
+	cmd->av = NULL;
 	cmd->is_piped = false;
 	cmd->file = NULL;
 	cmd->prev = NULL;
@@ -250,21 +197,21 @@ void	add_arg(t_cmd *cmd, char *arg)
 	char **vnew;
 
 	c = 0;
-	while (cmd->argv && cmd->argv[c])
+	while (cmd->av && cmd->av[c])
 		c++;
 	i = 0;
 	vnew = malloc(sizeof(char*) * (c + 2));
 	//A proteger (tout free depuis une variable global)
 	while (i < c)
 	{
-		vnew[i] = cmd->argv[i];
+		vnew[i] = cmd->av[i];
 		i++;
 	}
 	vnew[i++] = arg;
 	vnew[i] = NULL;
-	if (cmd->argv)
-		free(cmd->argv);
-	cmd->argv = vnew;
+	if (cmd->av)
+		free(cmd->av);
+	cmd->av = vnew;
 }
 
 void add_redirection(t_cmd *cmd, char *arg, enum e_redirect_type type)
@@ -329,9 +276,9 @@ void printf_cmds(t_cmd *cur)
 		printf(" Piped: %s\n", cur->is_piped ? "YES" : "NO");
 
 		i = 0;
-		while (cur->argv[i])
+		while (cur->av[i])
 		{
-			printf("ARG[%i]: %s\n", i, cur->argv[i]);
+			printf("ARG[%i]: %s\n", i, cur->av[i]);
 			i++;
 		}
 
@@ -378,10 +325,10 @@ void read_var(t_cmd *cur, char *var, char **curread)
 	//end_arg(&read, NULL, cur);
 }
 
-int main(int argc, char **argv, char **env)
+t_cmd *parse(char *parse)
 {
 
-	char *parse = "echo \"test\" < file > file test\"test\" | echo $TEST\"$TEST\"$TEST";
+//	char *parse = "echo \"test\" < file > file test\"test\" | echo $TEST\"$TEST\"$TEST";
 	printf("\n\n%s\n\n", parse);
 
 	int i = 0;
@@ -406,7 +353,7 @@ int main(int argc, char **argv, char **env)
 		}
 		if (parse[i] == ';' || parse[i] == '|')
 		{
-			if (cur->argv == NULL)
+			if (cur->av == NULL)
 			{
 				error_clean(list, read);
 			}
@@ -431,9 +378,7 @@ int main(int argc, char **argv, char **env)
 			else if (ft_starts_with(parse + i, ">") && !ft_starts_with(parse + i + 1, "<"))
 				type = R_OUTPUT;
 			else
-			{
 				error_clean(list, read);
-			}
 			i++;
 			continue;
 		}
@@ -472,5 +417,6 @@ int main(int argc, char **argv, char **env)
 		error_clean(list, read);
 	}
 	end_arg(&read, &type, cur);
-	printf_cmds(list);
+	//printf_cmds(list);
+	return list;
 }

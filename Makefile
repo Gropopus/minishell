@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thsembel <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 10:50:45 by thsembel          #+#    #+#              #
-#    Updated: 2021/04/13 15:38:22 by thsembel         ###   ########.fr        #
+#    Updated: 2021/06/18 12:20:59 by ttranche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS		=	./srcs/minishell.c\
 				./srcs/exec_unset.c\
 				./srcs/exec_echo.c\
 				./srcs/extansions.c\
+				./srcs/parse.c\
 				./srcs/utils.c
 
 

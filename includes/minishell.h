@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:08:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/16 14:57:52 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/18 12:26:32 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,23 @@
 
 //extern char	**envp;
 
+enum e_redirect_type
+{
+	R_NONE,
+	R_INPUT,
+	R_OUTPUT,
+	RR_INPUT,
+	RR_OUTPUT
+};
+
+typedef struct	s_file_list
+{
+	char			*path;
+	enum e_redirect_type	type;
+	int				fd;
+	struct s_file_list	*next;
+}				t_file_list;
+
 typedef struct s_cmd
 {
 	int				ac;
@@ -38,6 +55,12 @@ typedef struct s_cmd
 	char			*path;
 	char			**my_env;
 	char			*line;
+	bool			is_piped;
+	int				pipes[2];
+	t_file_list		*file;
+
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
 }				t_cmd;
 
 typedef struct s_env
@@ -71,5 +94,6 @@ char			**ft_split_str(char *str, char *charsep);
 char			*ft_dup_to_equal(char *str, char c);
 char			*ft_dup_pass_equal(char *str, char c);
 t_env			*ft_env_cpy(unsigned int *error, char **envp);
+t_cmd			*parse(char *parse);
 
 #endif
