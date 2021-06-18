@@ -6,7 +6,6 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:08:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 18:00:06 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +17,8 @@
 # include <curses.h>
 # include <term.h>
 # include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define NC "\033[0m"
 # define RED "\033[0;91m"
@@ -94,6 +95,6 @@ char			**ft_split_str(char *str, char *charsep);
 char			*ft_dup_to_equal(char *str, char c);
 char			*ft_dup_pass_equal(char *str, char c);
 t_env			*ft_env_cpy(unsigned int *error, char **envp);
-t_cmd			*parse(char *parse);
+t_cmd			*parse(char *parse, t_env *env);
 
 #endif

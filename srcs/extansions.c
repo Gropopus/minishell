@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:37:38 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/16 14:08:34 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/18 18:22:58 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	ft_extansions(char **cmd_av, t_env *env)
 
 	i = 0;
 	final_ret = 0;
-	while (cmd_av[i] != NULL)
+	while (cmd_av && cmd_av[i] != NULL)
 	{
 		var_start = ft_strchr(cmd_av[i], '$');
 		if (var_start != NULL || cmd_av[i][0] == '~')

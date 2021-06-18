@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/18 15:08:56 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/18 18:19:25 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-char	*get_arg(char *name)
+char	*get_arg(char *name, t_env *env)
 {
-	(void)name;
-	return ("A          B");
+	char *path;
+
+	path = ft_env_chr(env, name);
+	if (path == NULL)
+		return ("");
+	return (path);
 }
 
 char	*ft_strnewcat(char *s, char *o, int len)
@@ -100,13 +104,15 @@ int	read_marks_2(char mark, char *parse, int *i, int *cur)
 	return (1);
 }
 
-char	*read_marks(char *parse, int *cur, char mark, int i)
+char	*read_marks(char *parse, int *cur, char mark, t_env *env)
 {
 	char	*read;
 	int		t;
 	char	*name;
 	char	*value;
+	int i;
 
+	i = 1;
 	read = malloc(1);
 	if (read == NULL)
 		return (NULL);
@@ -122,7 +128,7 @@ char	*read_marks(char *parse, int *cur, char mark, int i)
 			if (ft_strlen(name) > 0)
 			{
 				i += t;
-				value = get_arg(name);
+				value = get_arg(name, env);
 				free(name);
 				read = ft_strnewcat(read, value, ft_strlen(value));
 				continue ;
@@ -316,13 +322,13 @@ void	printf_cmds(t_cmd *cur)
 	}
 }
 
-void	read_var(t_cmd *cur, char *var, char **curread)
+void	read_var(t_cmd *cur, char *var, char **curread, t_env *env)
 {
 	int		i;
 	char	*parse;
 	char	*read;
 
-	parse = get_arg(var);
+	parse = get_arg(var, env);
 	i = 0;
 	read = *curread;
 	while (parse[i])
@@ -339,7 +345,7 @@ void	read_var(t_cmd *cur, char *var, char **curread)
 	//end_arg(&read, NULL, cur);
 }
 
-t_cmd	*parse(char *parse)
+t_cmd	*parse(char *parse, t_env *env)
 {
 	int						i;
 	char					*read;
@@ -392,7 +398,7 @@ t_cmd	*parse(char *parse)
 			i++;
 		else if (parse[i] == '"' || parse[i] == '\'')
 		{
-			resp = read_marks(parse + i, &i, parse[i], 1);
+			resp = read_marks(parse + i, &i, parse[i], env);
 			if (resp == NULL)
 				error_clean(list, read);
 			read = ft_strnewcat(read, resp, ft_strlen(resp));
@@ -406,7 +412,7 @@ t_cmd	*parse(char *parse)
 			if (ft_strlen(name) > 0)
 			{
 				i += t;
-				read_var(cur, name, &read);
+				read_var(cur, name, &read, env);
 				continue;
 			}
 			free(name);

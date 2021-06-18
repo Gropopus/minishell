@@ -6,7 +6,7 @@
 #    By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 10:50:45 by thsembel          #+#    #+#              #
-#    Updated: 2021/06/18 13:30:35 by thsembel         ###   ########.fr        #
+#    Updated: 2021/06/18 18:23:08 by ttranche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ OBJS		= ${SRCS:.c=.o}
 
 RM			= rm -f
 
-CFLAGS		= -Wall -Wextra -Werror -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -g
 
 .c.o:
 		@${CC} ${CFLAGS} -I${HEAD} -c $< -o ${<:.c=.o}
@@ -68,7 +68,7 @@ ${NAME}:	${OBJS}
 			@make -C ${LIB_DIR}
 			@make -C ${LIB_DIR} bonus
 			@echo "${GREEN}\nlibft.a		has been created"
-			@${CC} ${CFLAGS} -I${HEAD} ${LIBFT} -lncurses -o ${NAME} $(OBJS)
+			@${CC} ${CFLAGS} -I${HEAD} ${LIBFT} -lreadline -lncurses -o ${NAME} $(OBJS)
 			@echo "minishell	has been created${NC}"
 
 all:		${NAME}

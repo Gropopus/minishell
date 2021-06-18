@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 15:46:15 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/18 18:25:28 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_accessible(t_cmd *cmds)
 {
 	if (access(cmds->av[0], F_OK) != 0)
 	{
-		ft_printf("\n%s%sMyZsh$>%s", BOLD, CYAN, NC);
+		ft_printf("%s%sMinishell:%s", BOLD, CYAN, NC);
 		ft_putchar_fd(' ', 2);
 		ft_putstr_fd(cmds->av_cpy, 2);
 		ft_putstr_fd(": ", 2);
@@ -29,7 +29,7 @@ int	is_accessible(t_cmd *cmds)
 	}
 	else if (access(cmds->av[0], X_OK) != 0)
 	{
-		ft_printf("\n%s%sMyZsh$>%s", BOLD, CYAN, NC);
+		ft_printf("%s%sMinishell:%s", BOLD, CYAN, NC);
 		ft_putchar_fd(' ', 2);
 		ft_putstr_fd(cmds->av_cpy, 2);
 		ft_putstr_fd(": ", 2);
@@ -97,7 +97,7 @@ int	cmd_manager(t_cmd *cmds, t_env *env)
 	while (cmds != NULL)
 	{
 		ret = ft_extansions(cmds->av, env);
-		if (ret == 0)
+		if (ret == 0 && cmds->av)
 		{
 			ret = ft_find_exec(cmds, env);
 			if (ret != 0)
