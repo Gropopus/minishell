@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 15:42:59 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 15:44:42 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/18 15:49:21 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_free_cmd(t_cmd *cmds)
 			cmds->path = NULL;
 		}
 		cmds->ac = 0;
-//		cmds = cmds->next;
+		cmds = cmds->next;
 	}
 }
 

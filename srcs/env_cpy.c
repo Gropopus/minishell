@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 19:25:01 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/16 13:33:36 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/18 18:12:11 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*ft_dup_pass_equal(char *str, char c)
 	return (dest);
 }
 
-t_env	*ft_env_new(char *envp, unsigned int *error)
+t_env	*ft_env_new(char *envp, unsigned int *error, int shlvl)
 {
 	t_env	*new;
 
@@ -88,6 +88,12 @@ t_env	*ft_env_new(char *envp, unsigned int *error)
 			free(new->value);
 			free(new->var);
 			return (NULL);
+		}
+		if (ft_strcmp(new->var, "SHLVL") == 0)
+		{
+			shlvl = ft_atoi(new->value) + 1;
+			free(new->value);
+			new->value = ft_strdup(ft_itoa(shlvl));
 		}
 	}
 	new->next = NULL;
@@ -128,14 +134,14 @@ t_env	*ft_env_cpy(unsigned int *error, char **envp)
 		env = init_empty_env(error);
 		return (env);
 	}
-	actual = ft_env_new(envp[0], error);
+	actual = ft_env_new(envp[0], error, 0);
 	if (actual == NULL)
 		return (NULL);
 	env = actual;
 	i = 1;
 	while (envp[i])
 	{
-		actual->next = ft_env_new(envp[i], error);
+		actual->next = ft_env_new(envp[i], error, 0);
 		actual = actual->next;
 		if (actual == NULL)
 			return (NULL);
