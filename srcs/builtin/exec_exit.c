@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 10:24:22 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/16 13:51:58 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/18 15:24:48 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,13 @@ void	ft_exec_exit(t_cmd *cmds, t_env *env)
 	}
 	else
 		ret = 0;
-	ft_free_cmd(cmds);
 	ft_free_env(env);
+	while (cmds != NULL)
+	{
+		ft_free_cmd(cmds);
+	//		ft_free_env(env);
+		cmds = cmds->next;
+	}
 	ft_printf("exit");
 	exit(ret);
 }

@@ -6,10 +6,9 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/18 12:35:08 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/18 15:08:56 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/minishell.h"
 #include "../includes/libft.h"
@@ -21,20 +20,21 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-char *get_arg(char *name)
+char	*get_arg(char *name)
 {
 	(void)name;
-	return "A          B";
+	return ("A          B");
 }
 
-char *ft_strnewcat(char *s, char *o, int len)
+char	*ft_strnewcat(char *s, char *o, int len)
 {
-	int i;
-	int j;
-	char *n;
+	int		i;
+	int		j;
+	char	*n;
 
 	n = malloc(ft_strlen(s) + len + 2);
-	//A proteger (tout free depuis une variable global)
+	if (n == NULL)
+		return (NULL);
 	i = 0;
 	while (s && s[i])
 	{
@@ -53,70 +53,79 @@ char *ft_strnewcat(char *s, char *o, int len)
 	return (n);
 }
 
-bool is_alpha_num(char c)
+bool	is_alpha_num(char c)
 {
-	return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_');
+	return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z') || c == '_');
 }
 
-char *extract_var_name(char *parse, int *cur)
+char	*extract_var_name(char *parse, int *cur)
 {
-	char *read;
-	int i;
+	char	*read;
+	int		i;
 
 	read = malloc(1);
-	//A proteger (tout free depuis une variable global)
+	if (read == NULL)
+		return (NULL);
 	read[0] = 0;
 	i = 1;
 	if (parse[i] == '?')
 	{
 		*cur += 2;
-		return ft_strnewcat(read, "?", 1);
+		return (ft_strnewcat(read, "?", 1));
 	}
 	while (parse[i])
 	{
 		if (!is_alpha_num(parse[i]))
 		{
 			*cur += i;
-			return read;
+			return (read);
 		}
 		read = ft_strnewcat(read, parse + i++, 1);
 	}
 	*cur += i;
-	return read;
+	return (read);
 }
 
-
-
-char *read_marks(char *parse, int *cur, char mark)
+int	read_marks_2(char mark, char *parse, int *i, int *cur)
 {
-	char *read;
-	int i;
+	if (parse[*i] == mark)
+	{
+		*cur += *i + 1;
+			return (0);
+	}
+	if (mark == '"' && parse[*i] == '\\' && (parse[*i + 1] == '\\'
+			|| parse[*i + 1] == mark || parse[*i + 1] == '$'))
+		*i += 1;
+	return (1);
+}
+
+char	*read_marks(char *parse, int *cur, char mark, int i)
+{
+	char	*read;
+	int		t;
+	char	*name;
+	char	*value;
 
 	read = malloc(1);
-	//A proteger (tout free depuis une variable global)
+	if (read == NULL)
+		return (NULL);
 	read[0] = 0;
-	i = 1;
 	while (parse[i])
 	{
-		if (parse[i] == mark)
-		{
-			*cur += i + 1;
-			return read;
-		}
-		if (mark == '"' && parse[i] == '\\' && (parse[i + 1] == '\\'
-			|| parse[i + 1] == mark || parse[i + 1] == '$'))
-			i++;
+		if (read_marks_2(mark, parse, &i, cur) == 0)
+			return (read);
 		else if (mark == '"' && parse[i] == '$')
 		{
-			int t = 0;
-			char *name = extract_var_name(parse + i, &t);
+			t = 0;
+			name = extract_var_name(parse + i, &t);
 			if (ft_strlen(name) > 0)
 			{
 				i += t;
-				char *value = get_arg(name);
+				value = get_arg(name);
 				free(name);
 				read = ft_strnewcat(read, value, ft_strlen(value));
-				continue;
+				continue ;
 			}
 			free(name);
 		}
@@ -124,7 +133,7 @@ char *read_marks(char *parse, int *cur, char mark)
 	}
 	free(read);
 	read = NULL;
-	return read;
+	return (read);
 }
 
 bool	ft_starts_with(char *s, char *sta)
@@ -156,9 +165,9 @@ void	ft_free_list(t_file_list **list)
 	*list = NULL;
 }
 
-void error_clean(t_cmd *list, char *r)
+void	error_clean(t_cmd *list, char *r)
 {
-	int i;
+	int	i;
 
 	if (r)
 		free(r);
@@ -175,13 +184,14 @@ void error_clean(t_cmd *list, char *r)
 	exit(0);
 }
 
-t_cmd	*blank_cmd()
+t_cmd	*blank_cmd(void)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
+	if (cmd == NULL)
+		return (NULL);
 	//A proteger (tout free depuis une variable global)
-
 	cmd->av = NULL;
 	cmd->is_piped = false;
 	cmd->file = NULL;
@@ -192,15 +202,17 @@ t_cmd	*blank_cmd()
 
 void	add_arg(t_cmd *cmd, char *arg)
 {
-	int c;
-	int i;
-	char **vnew;
+	int		c;
+	int		i;
+	char	**vnew;
 
 	c = 0;
 	while (cmd->av && cmd->av[c])
 		c++;
 	i = 0;
 	vnew = malloc(sizeof(char*) * (c + 2));
+	if (vnew == NULL)
+		return ;
 	//A proteger (tout free depuis une variable global)
 	while (i < c)
 	{
@@ -214,12 +226,14 @@ void	add_arg(t_cmd *cmd, char *arg)
 	cmd->av = vnew;
 }
 
-void add_redirection(t_cmd *cmd, char *arg, enum e_redirect_type type)
+void	add_redirection(t_cmd *cmd, char *arg, enum e_redirect_type type)
 {
-	t_file_list *new;
-	t_file_list *c;
+	t_file_list	*new;
+	t_file_list	*c;
 
 	new = malloc(sizeof(t_file_list));
+	if (new == NULL)
+		return ;
 	//A proteger (tout free depuis une variable global)
 	new->path = arg;
 	new->type = type;
@@ -236,7 +250,7 @@ void add_redirection(t_cmd *cmd, char *arg, enum e_redirect_type type)
 	}
 }
 
-void end_arg(char **a, enum e_redirect_type *type, t_cmd *cmd)
+void	end_arg(char **a, enum e_redirect_type *type, t_cmd *cmd)
 {
 	if (*a && **a)
 	{
@@ -250,7 +264,7 @@ void end_arg(char **a, enum e_redirect_type *type, t_cmd *cmd)
 	}
 }
 
-void next_cmd(t_cmd **cur, bool piped)
+void	next_cmd(t_cmd **cur, bool piped)
 {
 	(*cur)->next = blank_cmd();
 	*cur = (*cur)->next;
@@ -265,9 +279,10 @@ Variable names can contain a sequence of alphanumeric characters and underscores
 */
 
 
-void printf_cmds(t_cmd *cur)
+void	printf_cmds(t_cmd *cur)
 {
-	int i;
+	int		i;
+	char	*rt;
 
 	i = 0;
 	while (cur)
@@ -281,11 +296,10 @@ void printf_cmds(t_cmd *cur)
 			printf("ARG[%i]: %s\n", i, cur->av[i]);
 			i++;
 		}
-
 		t_file_list *c = cur->file;
 		while (c)
 		{
-			char *rt = "Unk";
+			rt = "Unk";
 			if (c->type == R_INPUT)
 				rt = "<";
 			if (c->type == RR_INPUT)
@@ -302,11 +316,11 @@ void printf_cmds(t_cmd *cur)
 	}
 }
 
-void read_var(t_cmd *cur, char *var, char **curread)
+void	read_var(t_cmd *cur, char *var, char **curread)
 {
-	int i;
-	char *parse;
-	char *read;
+	int		i;
+	char	*parse;
+	char	*read;
 
 	parse = get_arg(var);
 	i = 0;
@@ -325,25 +339,19 @@ void read_var(t_cmd *cur, char *var, char **curread)
 	//end_arg(&read, NULL, cur);
 }
 
-t_cmd *parse(char *parse)
+t_cmd	*parse(char *parse)
 {
+	int						i;
+	char					*read;
+	char					*resp;
+	t_cmd					*list;
+	t_cmd					*cur;
+	enum	e_redirect_type	type = R_NONE;
 
-//	char *parse = "echo \"test\" < file > file test\"test\" | echo $TEST\"$TEST\"$TEST";
-	printf("\n\n%s\n\n", parse);
-
-	int i = 0;
-
-	char *read = NULL;
-	char *resp;
-
-	t_cmd *list;
-	t_cmd *cur;
-
+	i = 0;
+	read = NULL;
 	cur = blank_cmd();
 	list = cur;
-
-	enum e_redirect_type type = R_NONE;
-
 	while (parse[i])
 	{
 		while (parse[i] == ' ')
@@ -354,9 +362,7 @@ t_cmd *parse(char *parse)
 		if (parse[i] == ';' || parse[i] == '|')
 		{
 			if (cur->av == NULL)
-			{
 				error_clean(list, read);
-			}
 			end_arg(&read, &type, cur);
 			next_cmd(&cur, parse[i] == '|');
 			i++;
@@ -372,7 +378,7 @@ t_cmd *parse(char *parse)
 			if (ft_starts_with(parse + i, "<<") && ++i)
 				type = RR_INPUT;
 			else if (ft_starts_with(parse + i, ">>") && ++i)
-				type = RR_OUTPUT;
+					type = RR_OUTPUT;
 			else if (ft_starts_with(parse + i, "<") && !ft_starts_with(parse + i + 1, ">"))
 				type = R_INPUT;
 			else if (ft_starts_with(parse + i, ">") && !ft_starts_with(parse + i + 1, "<"))
@@ -386,14 +392,11 @@ t_cmd *parse(char *parse)
 			i++;
 		else if (parse[i] == '"' || parse[i] == '\'')
 		{
-			resp = read_marks(parse + i, &i, parse[i]);
+			resp = read_marks(parse + i, &i, parse[i], 1);
 			if (resp == NULL)
-			{
 				error_clean(list, read);
-			}
 			read = ft_strnewcat(read, resp, ft_strlen(resp));
 			free(resp);
-
 			continue;
 		}
 		else if (parse[i] == '$')
@@ -408,15 +411,12 @@ t_cmd *parse(char *parse)
 			}
 			free(name);
 		}
-
 		if (parse[i])
 			read = ft_strnewcat(read, parse + i++, 1);
 	}
 	if (!read && type != R_NONE)
-	{
 		error_clean(list, read);
-	}
 	end_arg(&read, &type, cur);
 	//printf_cmds(list);
-	return list;
+	return (list);
 }

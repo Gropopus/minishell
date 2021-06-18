@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:08:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 12:26:32 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/18 14:24:22 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int				ft_exec_pwd(t_cmd *cmds, t_env *env);
 int				ft_exec_cd(t_cmd *cmds, t_env *env);
 int				exec_cmd(t_cmd *cmds);
 int				env_manager(char *var, char *value, t_env *env);
-int				cmd_manager(t_cmd cmds, t_env *env);
+int				cmd_manager(t_cmd *cmds, t_env *env);
 int				ft_find_exec(t_cmd *cmds, t_env *env);
 int				is_in_builtin(char **cmds);
 int				ft_fill_cmds(t_cmd *cmds, t_env *env);

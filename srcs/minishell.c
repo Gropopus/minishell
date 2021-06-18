@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 12:27:10 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/18 15:02:34 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,30 @@ int	is_in_builtin(char **cmds)
 
 int	ft_minishell(t_env *env, int ret)
 {
-	t_cmd	cmds;
+	t_cmd	*cmds;
+	char	*line;
 
 	while (1)
 	{
 		ft_printf("%s%sMyZsh$>%s", BOLD, CYAN, NC);
-		cmds.path = NULL;
-		if (get_next_line(0, &cmds.line) == 0)
+	//	cmds.path = NULL;
+		if (get_next_line(0, &line) == 0)
 		{
 			ft_free_env(env);
-			free(cmds.line);
+			free(line);
 			return (ret);
 		}
-		else if (cmds.line[0])
+		else if (line)
 		{
-			ret = ft_fill_cmds(&cmds, env);
-			if (ret == 0)
-				ret = cmd_manager(cmds, env);
-			if (ret != 0)
-				ft_error(ret);
+			cmds = parse(line);
+			ret = ft_fill_cmds(cmds, env);
+			//	if (ret == 0)
+			ret = cmd_manager(cmds, env);
+			//	if (ret != 0)
+		//		ft_error(ret);
 		}
 		else
-			free(cmds.line);
+			free(line);
 	}
 	return (ret);
 }

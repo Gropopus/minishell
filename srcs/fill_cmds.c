@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 15:58:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/16 14:12:35 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/18 15:03:43 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,8 @@ int	ft_fill_cmds(t_cmd *cmds, t_env *env)
 	int	ret;
 
 	ret = 0;
-	if (cmds->line)
+	while (cmds != NULL)
 	{
-		cmds->av = ft_split_str(cmds->line, " \t\n");
 		if (cmds->av)
 		{
 			cmds->my_env = ft_env_to_my_env(env, 0, 0);
@@ -77,11 +76,7 @@ int	ft_fill_cmds(t_cmd *cmds, t_env *env)
 			else
 				cmds->ac = ft_tab_len(cmds->av);
 		}
-	}
-	else
-	{
-		ft_free_cmd(cmds);
-		return (ret);
+		cmds = cmds->next;
 	}
 	return (0);
 }
