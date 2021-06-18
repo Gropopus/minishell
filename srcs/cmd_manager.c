@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 15:32:35 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/18 15:46:15 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	cmd_manager(t_cmd *cmds, t_env *env)
 
 	while (cmds != NULL)
 	{
-		//ft_print_tab(cmds->av);
 		ret = ft_extansions(cmds->av, env);
 		if (ret == 0)
 		{
@@ -116,6 +115,5 @@ int	cmd_manager(t_cmd *cmds, t_env *env)
 		}
 		cmds = cmds->next;
 	}
-	//	ft_free_cmd(&cmds);
 	return (ret);
 }

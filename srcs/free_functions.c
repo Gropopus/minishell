@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 15:42:59 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/16 14:16:12 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/18 15:44:42 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,31 @@
 
 void	ft_free_cmd(t_cmd *cmds)
 {
-	if (cmds->line)
+	while (cmds->next != NULL)
 	{
-		free(cmds->line);
-		cmds->line = NULL;
+		if (cmds->line)
+		{
+			free(cmds->line);
+			cmds->line = NULL;
+		}
+		if (cmds->av)
+		{
+			ft_free_tab(cmds->av);
+			cmds->av = NULL;
+		}
+		if (cmds->my_env)
+		{
+			ft_free_tab(cmds->my_env);
+			cmds->my_env = NULL;
+		}
+		if (cmds->path)
+		{
+			free(cmds->path);
+			cmds->path = NULL;
+		}
+		cmds->ac = 0;
+//		cmds = cmds->next;
 	}
-	if (cmds->av)
-	{
-		ft_free_tab(cmds->av);
-		cmds->av = NULL;
-	}
-	if (cmds->my_env)
-	{
-		ft_free_tab(cmds->my_env);
-		cmds->my_env = NULL;
-	}
-	if (cmds->path)
-	{
-		free(cmds->path);
-		cmds->path = NULL;
-	}
-	cmds->ac = 0;
 }
 
 void	ft_free_env(t_env *env)
