@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 18:25:28 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/18 19:14:25 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,13 @@
 
 int	is_accessible(t_cmd *cmds)
 {
-	if (access(cmds->av[0], F_OK) != 0)
+	if (!cmds->path)
+	{
+		ft_printf("%s%sMinishell:%s", BOLD, CYAN, NC);
+		ft_putchar_fd(' ', 2);
+		return (ft_error(9));
+	}
+	else if (access(cmds->av[0], F_OK) != 0)
 	{
 		ft_printf("%s%sMinishell:%s", BOLD, CYAN, NC);
 		ft_putchar_fd(' ', 2);
@@ -107,7 +113,7 @@ int	cmd_manager(t_cmd *cmds, t_env *env)
 			}
 			else
 			{
-				if (cmds->path[0] == '\0')
+				if (cmds->path && cmds->path[0] == '\0')
 					builtin_manager(cmds, env);
 				else
 					exec_cmd(cmds);

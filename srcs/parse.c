@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/18 18:19:25 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/18 18:48:27 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,12 +180,13 @@ void	error_clean(t_cmd *list, char *r)
 	while (list)
 	{
 		i = 0;
-		while (list->av[i])
+		while (list->av && list->av[i])
 			free(list->av[i++]);
 		free(list->av);
 		ft_free_list(&list->file);
 		list = list->next;
 	}
+
 	printf("Parse error\n");
 	exit(0);
 }

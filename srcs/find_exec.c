@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:29:58 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 18:24:39 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/18 19:09:22 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,15 @@ char	*loop_get_path(t_cmd *cmds, char **splited_paths, char *bin)
 	return (NULL);
 }
 
-void	get_absolute_path(t_cmd *cmds)
+void	get_absolute_path(t_cmd *cmds, t_env *env)
 {
 	char	*bin;
 	char	**splited_paths;
 
 	bin = NULL;
-	cmds->path = ft_strdup(getenv("PATH"));
+	cmds->path = ft_strdup(ft_env_chr(env, "PATH"));
 	if (cmds->path == NULL)
-		cmds->path
-			= ft_strdup("/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin");
+		return ;
 	if (cmds->av[0][0] != '/' && ft_strncmp(cmds->av[0], "./", 2) != 0)
 	{
 		splited_paths = ft_split(cmds->path, ':');
@@ -73,6 +72,6 @@ int	ft_find_exec(t_cmd *cmds, t_env *env)
 	else if (ft_strchr(cmds->av[0], '/') != 0)
 		cmds->path = ft_strdup(cmds->av[0]);
 	else
-		get_absolute_path(cmds);
+		get_absolute_path(cmds, env);
 	return (ret);
 }

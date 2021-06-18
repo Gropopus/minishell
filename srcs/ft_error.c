@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 20:35:58 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/16 14:16:37 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/18 19:12:34 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ unsigned int	ft_error(unsigned int error)
 		ft_putstr_fd("Failure in fork process\n", 2);
 	else if (error == 9)
 		ft_putstr_fd("Command not found\n", 2);
+	else if (error == 127)
+		ft_putstr_fd("Parse error\n", 2);
 	return (error);
 }

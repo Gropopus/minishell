@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 10:24:22 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 15:41:32 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/18 19:14:58 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_exec_exit(t_cmd *cmds, t_env *env)
 		ft_free_cmd(cmds);
 		ft_free_env(env);
 		cmds = cmds->next;
-		ft_printf("exit");
+		ft_printf("exit\n");
 		exit(ret);
 	}
 }

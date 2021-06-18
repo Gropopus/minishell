@@ -89,7 +89,7 @@ void			ft_free_env(t_env *env);
 void			ft_free_cmd(t_cmd *cmds);
 void			ft_exec_exit(t_cmd *cmds, t_env *env);
 void			ft_str_expand_triple(char **src, char *add1, char *add2);
-void			get_absolute_path(t_cmd *cmds);
+void			get_absolute_path(t_cmd *cmds, t_env *env);
 char			*ft_env_chr(t_env *env, char *var);
 char			**ft_split_str(char *str, char *charsep);
 char			*ft_dup_to_equal(char *str, char c);
