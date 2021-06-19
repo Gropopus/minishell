@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/18 18:48:27 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/19 11:00:07 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,6 +321,25 @@ void	printf_cmds(t_cmd *cur)
 		cur = cur->next;
 		printf("\n");
 	}
+}
+
+//https://www.geeksforgeeks.org/wildcard-character-matching/
+//How to deferienciate escaped widcards??
+//Maybe save the first arg string pointer and process from there when we see an
+//Unescaped wildcard
+
+int		wildcard(char *arg, char *file)
+{
+	if (!*arg || !*file)
+		return (1);
+
+	if (ft_strlen(arg) > 1 && *arg == '*' && !*file)
+		return (0);
+	if (*arg == *file)
+		return wildcard(arg + 1, file + 1);
+	if (*arg == '*')
+		return wildcard(arg + 1, file) || wildcard(arg, file + 1);
+	return (0);
 }
 
 void	read_var(t_cmd *cur, char *var, char **curread, t_env *env)
