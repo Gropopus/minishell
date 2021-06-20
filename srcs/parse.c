@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/19 11:16:33 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/20 11:45:21 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ void	ft_free_list(t_file_list **list)
 	*list = NULL;
 }
 
-void	error_clean(t_cmd *list, char *r)
+t_cmd	*error_clean(t_cmd *list, char *r)
 {
 	int	i;
 
@@ -188,7 +188,7 @@ void	error_clean(t_cmd *list, char *r)
 	}
 
 	printf("Parse error\n");
-	exit(0);
+	return (NULL);
 }
 
 t_cmd	*blank_cmd(void)
@@ -388,7 +388,7 @@ t_cmd	*parse(char *parse, t_env *env)
 		if (parse[i] == ';' || parse[i] == '|')
 		{
 			if (cur->av == NULL)
-				error_clean(list, read);
+				return error_clean(list, read);
 			end_arg(&read, &type, cur);
 			next_cmd(&cur, parse[i] == '|');
 			i++;
@@ -398,9 +398,7 @@ t_cmd	*parse(char *parse, t_env *env)
 		{
 			end_arg(&read, &type, cur);
 			if (type != R_NONE)
-			{
-				error_clean(list, read);
-			}
+				return error_clean(list, read);
 			if (ft_starts_with(parse + i, "<<") && ++i)
 				type = RR_INPUT;
 			else if (ft_starts_with(parse + i, ">>") && ++i)
@@ -410,7 +408,7 @@ t_cmd	*parse(char *parse, t_env *env)
 			else if (ft_starts_with(parse + i, ">") && !ft_starts_with(parse + i + 1, "<"))
 				type = R_OUTPUT;
 			else
-				error_clean(list, read);
+				return error_clean(list, read);
 			i++;
 			continue;
 		}
@@ -420,7 +418,7 @@ t_cmd	*parse(char *parse, t_env *env)
 		{
 			resp = read_marks(parse + i, &i, parse[i], env);
 			if (resp == NULL)
-				error_clean(list, read);
+				return error_clean(list, read);
 			read = ft_strnewcat(read, resp, ft_strlen(resp));
 			free(resp);
 			continue;
@@ -441,7 +439,7 @@ t_cmd	*parse(char *parse, t_env *env)
 			read = ft_strnewcat(read, parse + i++, 1);
 	}
 	if (!read && type != R_NONE)
-		error_clean(list, read);
+		return error_clean(list, read);
 	end_arg(&read, &type, cur);
 	//printf_cmds(list);
 	return (list);
