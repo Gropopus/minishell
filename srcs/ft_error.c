@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 20:35:58 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/20 12:10:06 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/20 19:25:02 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ unsigned int	ft_nice_error(unsigned int error, char *msg)
 		ft_putstr_fd(": ", 2);
 	}
 	return (ft_error(error));
+}
+
+void	ft_syntax_error(char token)
+{
+	ft_printf("%s%sMinishell:%s", BOLD, CYAN, NC);
+	ft_putchar_fd(' ', 2);
+	ft_putstr_fd("Syntax error near unexpected token '", 2);
+	write(2, &token, 1);
+	ft_putstr_fd("'\n", 2);
 }
 
 unsigned int	ft_error(unsigned int error)
@@ -50,6 +59,6 @@ unsigned int	ft_error(unsigned int error)
 	else if (error == 9)
 		ft_putstr_fd("Command not found\n", 2);
 	else if (error == 127)
-		ft_putstr_fd("Parse error\n", 2);
+		ft_putstr_fd("Syntax error\n", 2);
 	return (error);
 }

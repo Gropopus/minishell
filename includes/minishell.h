@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:26:29 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/20 12:04:30 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/20 19:25:26 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@
 # define CYAN "\033[38;6;36m"
 
 //extern char	**envp;
+
+/**
+	TODO:
+	When starting a shell with no SHLVL in env, it gets set to 1 by default
+	_ in env
+	Pipes
+	Redirections
+	Export
+	RM with CD
+	CTRL C D \
+	$? signals
+	Remove ACCESS function
+*/
+
 
 enum e_redirect_type
 {
@@ -79,6 +93,7 @@ int				ft_exec_unset(t_cmd *cmds, t_env *env);
 int				ft_exec_env(t_cmd *cmds, t_env *env);
 int				ft_exec_pwd(t_cmd *cmds, t_env *env);
 int				ft_exec_cd(t_cmd *cmds, t_env *env);
+int				ft_exec_export(t_cmd *cmds, t_env *env);
 int				exec_cmd(t_cmd *cmds);
 int				env_manager(char *var, char *value, t_env *env);
 int				cmd_manager(t_cmd *cmds, t_env *env);
@@ -86,6 +101,7 @@ int				ft_find_exec(t_cmd *cmds, t_env *env);
 int				is_in_builtin(char **cmds);
 int				ft_fill_cmds(t_cmd *cmds, t_env *env);
 unsigned int	ft_error(unsigned int error);
+void			ft_syntax_error(char token);
 unsigned int	ft_nice_error(unsigned int error, char *msg);
 void			ft_free_env(t_env *env);
 void			ft_free_cmd(t_cmd *cmds);

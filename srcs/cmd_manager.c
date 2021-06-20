@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/20 16:42:40 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/20 18:44:14 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int	builtin_manager(t_cmd *cmds, t_env *env)
 		ret = ft_exec_unset(cmds, env);
 	else if (ft_strcmp(cmds->av[0], "exit") == 0)
 		ft_exec_exit(cmds, env);
-	/*else if (ft_strcmp(cmds->av[0], "export") == 0)
-		ret = ft_exec_export(cmds, env);*/
+	else if (ft_strcmp(cmds->av[0], "export") == 0)
+		ret = ft_exec_export(cmds, env);
 	return (ret);
 }
 
