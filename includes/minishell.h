@@ -5,7 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/06 11:08:51 by thsembel          #+#    #+#             */
+/*   Created: 2021/04/06 11:26:29 by thsembel          #+#    #+#             */
+/*   Updated: 2021/06/20 11:26:55 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +72,7 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
-int				ft_extansions(char **cmd_av, t_env *env);
+int				ft_extensions(char **cmd_av, t_env *env);
 int				ft_env_str_len(char *string);
 int				ft_exec_echo(t_cmd *cmds, t_env *env);
 int				ft_exec_unset(t_cmd *cmds, t_env *env);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extansions.c                                       :+:      :+:    :+:   */
+/*   extensions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:37:38 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 18:22:58 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/20 11:25:56 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_expand(char **cmd_av, t_env *env)
 	return (ret);
 }
 
-int	ft_extansions(char **cmd_av, t_env *env)
+int	ft_extensions(char **cmd_av, t_env *env)
 {
 	int		i;
 	int		ret;

@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 19:25:01 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 18:12:11 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/20 11:25:37 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,10 @@ t_env	*ft_env_new(char *envp, unsigned int *error, int shlvl)
 		if (new->var == NULL || new->value == NULL)
 		{
 			*error = 1;
-			free(new->value);
-			free(new->var);
+			if (new->value)
+				free(new->value);
+			if (new->var)
+				free(new->var);
 			return (NULL);
 		}
 		if (ft_strcmp(new->var, "SHLVL") == 0)
@@ -115,8 +117,10 @@ t_env	*init_empty_env(unsigned int *error)
 	if (new->var == NULL || new->value == NULL)
 	{
 		*error = 1;
-		free(new->value);
-		free(new->var);
+		if (new->value)
+			free(new->value);
+		if (new->var)
+			free(new->var);
 		return (NULL);
 	}
 	new->next = NULL;

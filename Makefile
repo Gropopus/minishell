@@ -6,7 +6,7 @@
 #    By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 10:50:45 by thsembel          #+#    #+#              #
-#    Updated: 2021/06/18 19:11:32 by ttranche         ###   ########.fr        #
+#    Updated: 2021/06/20 11:27:08 by ttranche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRCS		=	./srcs/minishell.c\
 				./srcs/builtin/exec_env.c\
 				./srcs/builtin/exec_unset.c\
 				./srcs/builtin/exec_echo.c\
-				./srcs/extansions.c\
+				./srcs/extensions.c\
 				./srcs/parse.c\
 				./srcs/utils.c
 
