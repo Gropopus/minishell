@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:26:29 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/20 11:57:24 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/20 12:04:30 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void			ft_exec_exit(t_cmd *cmds, t_env *env);
 void			ft_str_expand_triple(char **src, char *add1, char *add2);
 void			get_absolute_path(t_cmd *cmds, t_env *env);
 char			*ft_env_chr(t_env *env, char *var);
-char			**ft_split_str(char *str, char *charsep);
 char			*ft_dup_to_equal(char *str, char c);
 char			*ft_dup_pass_equal(char *str, char c);
 t_env			*ft_env_cpy(unsigned int *error, char **envp);

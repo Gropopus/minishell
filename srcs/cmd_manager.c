@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/20 11:58:48 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/20 16:42:40 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	cmd_manager(t_cmd *cmds, t_env *env)
 
 	while (cmds != NULL)
 	{
-		ret = ft_extensions(cmds->av, env);
 		if (ret == 0 && cmds->av)
 		{
 			ret = ft_find_exec(cmds, env);

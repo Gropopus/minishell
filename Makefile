@@ -6,7 +6,7 @@
 #    By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 10:50:45 by thsembel          #+#    #+#              #
-#    Updated: 2021/06/20 11:27:08 by ttranche         ###   ########.fr        #
+#    Updated: 2021/06/20 12:07:38 by ttranche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ BLUE = \033[0;34m
 BOLD = \033[1m
 
 SRCS		=	./srcs/minishell.c\
-				./srcs/ft_split_str.c\
 				./srcs/env_cpy.c\
 				./srcs/ft_error.c\
 				./srcs/free_functions.c\
@@ -33,7 +32,6 @@ SRCS		=	./srcs/minishell.c\
 				./srcs/builtin/exec_env.c\
 				./srcs/builtin/exec_unset.c\
 				./srcs/builtin/exec_echo.c\
-				./srcs/extensions.c\
 				./srcs/parse.c\
 				./srcs/utils.c
 

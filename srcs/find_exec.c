@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:29:58 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 19:09:22 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/20 16:37:18 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	ft_find_exec(t_cmd *cmds, t_env *env)
 
 	(void)env;
 	ret = 0;
+	cmds->av_cpy = NULL;
 	if (is_in_builtin(cmds->av) != 0)
 		cmds->path = ft_strdup("\0");
 	else if (ft_strchr(cmds->av[0], '/') != 0)
