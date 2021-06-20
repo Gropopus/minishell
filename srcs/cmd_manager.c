@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/20 11:25:51 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/20 11:58:48 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,19 @@
 
 int	is_accessible(t_cmd *cmds)
 {
+	int ret;
+
+	ret = 0;
 	if (!cmds->path)
-	{
-		ft_printf("%s%sMinishell:%s", BOLD, CYAN, NC);
-		ft_putchar_fd(' ', 2);
-		return (ft_error(9));
-	}
+		ret = (ft_nice_error(9, NULL));
 	else if (access(cmds->av[0], F_OK) != 0)
-	{
-		ft_printf("%s%sMinishell:%s", BOLD, CYAN, NC);
-		ft_putchar_fd(' ', 2);
-		ft_putstr_fd(cmds->av_cpy, 2);
-		ft_putstr_fd(": ", 2);
-		if (cmds->av_cpy)
-			free(cmds->av_cpy);
-		cmds->av_cpy = NULL;
-		return (ft_error(9));
-	}
+		ret = (ft_nice_error(9, cmds->av_cpy));
 	else if (access(cmds->av[0], X_OK) != 0)
-	{
-		ft_printf("%s%sMinishell:%s", BOLD, CYAN, NC);
-		ft_putchar_fd(' ', 2);
-		ft_putstr_fd(cmds->av_cpy, 2);
-		ft_putstr_fd(": ", 2);
-		if (cmds->av_cpy)
-			free(cmds->av_cpy);
-		cmds->av_cpy = NULL;
-		return (ft_error(2));
-	}
-	return (0);
+		ret = (ft_nice_error(2, cmds->av_cpy));
+	if (cmds->av_cpy)
+		free(cmds->av_cpy);
+	cmds->av_cpy = NULL;
+	return (ret);
 }
 
 int	exec_cmd(t_cmd *cmds)

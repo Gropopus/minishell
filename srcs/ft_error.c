@@ -6,13 +6,26 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 20:35:58 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 19:12:34 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/20 11:57:29 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 #include "../includes/libft.h"
 #include "../includes/minishell.h"
+
+
+unsigned int	ft_nice_error(unsigned int error, char *msg)
+{
+	ft_printf("%s%sMinishell:%s", BOLD, CYAN, NC);
+	ft_putchar_fd(' ', 2);
+	if (msg)
+	{
+		ft_putstr_fd(msg, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	return (ft_error(error));
+}
 
 unsigned int	ft_error(unsigned int error)
 {

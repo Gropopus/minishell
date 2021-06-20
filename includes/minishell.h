@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:26:29 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/20 11:26:55 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/20 11:57:24 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int				ft_find_exec(t_cmd *cmds, t_env *env);
 int				is_in_builtin(char **cmds);
 int				ft_fill_cmds(t_cmd *cmds, t_env *env);
 unsigned int	ft_error(unsigned int error);
+unsigned int	ft_nice_error(unsigned int error, char *msg);
 void			ft_free_env(t_env *env);
 void			ft_free_cmd(t_cmd *cmds);
 void			ft_exec_exit(t_cmd *cmds, t_env *env);
