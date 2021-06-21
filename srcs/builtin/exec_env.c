@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 18:05:49 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/21 13:22:28 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/21 23:14:37 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@
 
 int	ft_exec_env(t_cmd *cmds, t_env *env)
 {
-	(void)env;
+	char **tabenv;
+
 	(void)cmds;
-	/*if (cmds->my_env)
+	if (env)
 	{
-		ft_print_tab(cmds->my_env);
+		tabenv = ft_env_to_my_env(env, 0, 0);
+		ft_print_tab(tabenv);
+		ft_free_tab(tabenv);
 		return (0);
 	}
-	else*/
+	else
 		return (ft_error(5));
 }
