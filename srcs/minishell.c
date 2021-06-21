@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 18:26:11 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/21 10:43:56 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,16 @@ int	ft_minishell(t_env *env, int ret)
 			if (ret != 0)
 				ft_error(ret);
 		}
-		add_history(line);
+		if (line)
+		{
+			add_history(line);
+			free(line);
+		}
+		else
+		{
+			ft_putstr_fd("\b\bexit\n", 1);
+			return (0);
+		}
 	}
 	return (ret);
 }

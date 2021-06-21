@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 15:42:59 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 15:49:21 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/21 13:20:46 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void	ft_free_cmd(t_cmd *cmds)
 			ft_free_tab(cmds->av);
 			cmds->av = NULL;
 		}
-		if (cmds->my_env)
+		/*if (cmds->my_env)
 		{
 			ft_free_tab(cmds->my_env);
 			cmds->my_env = NULL;
-		}
+		}*/
 		if (cmds->path)
 		{
 			free(cmds->path);

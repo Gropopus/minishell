@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 15:58:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 15:28:19 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/21 13:16:57 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,13 @@ int	ft_fill_cmds(t_cmd *cmds, t_env *env)
 {
 	int	ret;
 
+	(void)env;
 	ret = 0;
 	while (cmds != NULL)
 	{
 		if (cmds->av)
 		{
-			cmds->my_env = ft_env_to_my_env(env, 0, 0);
-			if (cmds->my_env == NULL)
-			{
-				ft_error(1);
-				return (1);
-			}
-			else
-				cmds->ac = ft_tab_len(cmds->av);
+			cmds->ac = ft_tab_len(cmds->av);
 		}
 		cmds = cmds->next;
 	}

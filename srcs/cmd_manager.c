@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/20 18:44:14 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/21 13:41:53 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,6 @@ int	is_accessible(t_cmd *cmds)
 	if (cmds->av_cpy)
 		free(cmds->av_cpy);
 	cmds->av_cpy = NULL;
-	return (ret);
-}
-
-int	exec_cmd(t_cmd *cmds)
-{
-	pid_t	pid;
-	int		status;
-	int		ret;
-
-	status = 0;
-	ret = is_accessible(cmds);
-	if (ret != 0)
-		return (ret);
-	pid = fork();
-	if (pid == -1)
-		return (ft_error(8));
-	else if (pid > 0)
-	{
-		waitpid(pid, &status, 0);
-		kill(pid, SIGTERM);
-	}
-	else
-	{
-		if (execve(cmds->av[0], cmds->av, cmds->my_env) == -1)
-			ft_error(7);
-		exit(EXIT_FAILURE);
-	}
 	return (ret);
 }
 
@@ -80,13 +53,48 @@ int	builtin_manager(t_cmd *cmds, t_env *env)
 	return (ret);
 }
 
+int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
+{
+	pid_t	pid;
+	int		status;
+	int		ret;
+
+	status = 0;
+
+	if (!builtin)
+	{
+		ret = is_accessible(cmds);
+		if (ret != 0)
+			return (ret);
+	}
+	ret = 0;
+	pid = fork();
+	if (pid == -1)
+		return (ft_error(8));
+	else if (pid > 0)
+	{
+		waitpid(pid, &status, 0);
+		kill(pid, SIGTERM);
+	}
+	else
+	{
+		if (builtin)
+			exit(builtin_manager(cmds, env));
+		if (execve(cmds->av[0], cmds->av, ft_env_to_my_env(env, 0, 0)) == -1)
+			ft_error(7);
+		exit(EXIT_FAILURE);
+	}
+	return (ret);
+}
+
 int	cmd_manager(t_cmd *cmds, t_env *env)
 {
 	int	ret;
 
+	ret = 0;
 	while (cmds != NULL)
 	{
-		if (ret == 0 && cmds->av)
+		if (cmds->av)
 		{
 			ret = ft_find_exec(cmds, env);
 			if (ret != 0)
@@ -96,10 +104,7 @@ int	cmd_manager(t_cmd *cmds, t_env *env)
 			}
 			else
 			{
-				if (cmds->path && cmds->path[0] == '\0')
-					builtin_manager(cmds, env);
-				else
-					exec_cmd(cmds);
+				ret = exec_cmd(cmds, env, cmds->path && cmds->path[0] == '\0');
 			}
 		}
 		cmds = cmds->next;
