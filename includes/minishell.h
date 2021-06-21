@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:26:29 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/21 13:21:35 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/21 14:04:06 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 	CTRL C D \
 	$? signals
 	Remove ACCESS function
+	sleep 1 | sleep 1 | sleep 1
 */
 
 

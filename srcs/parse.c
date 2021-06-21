@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/21 10:45:15 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/21 13:56:15 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,10 +271,14 @@ void	end_arg(char **a, enum e_redirect_type *type, t_cmd *cmd)
 
 void	next_cmd(t_cmd **cur, bool piped)
 {
+	t_cmd *temp;
+
+	temp = *cur;
 	if (piped)
 		(*cur)->is_piped = piped;
 	(*cur)->next = blank_cmd();
 	*cur = (*cur)->next;
+	(*cur)->prev = temp;
 }
 
 /*

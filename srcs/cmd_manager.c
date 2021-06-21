@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/21 13:41:53 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/21 13:55:02 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,40 @@ int	builtin_manager(t_cmd *cmds, t_env *env)
 	return (ret);
 }
 
+int dup_pipes(int *pipe_open, t_cmd *cmd)
+{
+	if (cmd->is_piped && dup2(cmd->pipes[1], 1) < 0)
+		return (0);
+	if (cmd->prev && cmd->prev->is_piped
+		&& dup2(cmd->prev->pipes[0], 0) < 0)
+		return (0);
+	*pipe_open = 1;
+	return (1);
+}
+
+int close_pipes(int pipe_open, t_cmd *cmd)
+{
+	if (pipe_open)
+	{
+		close(cmd->pipes[1]);
+		if (!cmd->next)
+			close(cmd->pipes[0]);
+	}
+	if (cmd->prev && cmd->prev->is_piped == 1)
+		close(cmd->prev->pipes[0]);
+	return (1);
+}
+
 int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 {
 	pid_t	pid;
 	int		status;
 	int		ret;
+	int		pipe_open;
 
 	status = 0;
+	pipe_open = 0;
+
 
 	if (!builtin)
 	{
@@ -67,6 +94,14 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 		if (ret != 0)
 			return (ret);
 	}
+
+	if (cmds->is_piped == 1 || (cmds->prev && cmds->prev->is_piped == 1))
+	{
+		pipe_open = 1;
+		if (pipe(cmds->pipes))
+			return (-1);
+	}
+
 	ret = 0;
 	pid = fork();
 	if (pid == -1)
@@ -74,16 +109,22 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 	else if (pid > 0)
 	{
 		waitpid(pid, &status, 0);
-		kill(pid, SIGTERM);
+
+		close_pipes(pipe_open, cmds);
+		//if (WIFEXITED(status))
+		//	ret = WEXITSTATUS(status);
 	}
 	else
 	{
+		if (!dup_pipes(&pipe_open, cmds))
+			return (-1);
 		if (builtin)
 			exit(builtin_manager(cmds, env));
 		if (execve(cmds->av[0], cmds->av, ft_env_to_my_env(env, 0, 0)) == -1)
 			ft_error(7);
 		exit(EXIT_FAILURE);
 	}
+
 	return (ret);
 }
 
