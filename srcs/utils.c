@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 15:19:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/16 14:35:18 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/21 21:39:07 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,28 @@ void	ft_str_expand_triple(char **src, char *add1, char *add2)
 	if (*src == NULL)
 		return ;
 	ft_strexpand(src, add2);
+}
+
+void	ft_sort_string_tab(char **tab)
+{
+	int		i;
+	int		j;
+	char	*temp;
+
+	i = 0;
+	while (tab[i])
+	{
+		j = 0;
+		while (tab[j])
+		{
+			if (ft_strcmp(tab[i], tab[j]) < 0)
+			{
+				temp = tab[i];
+				tab[i] = tab[j];
+				tab[j] = temp;
+			}
+			++j;
+		}
+		++i;
+	}
 }

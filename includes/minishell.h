@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:26:29 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/21 14:04:06 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/21 21:40:08 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "libft.h"
 # include <errno.h>
 # include <curses.h>
-# include <term.h>
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -107,6 +106,7 @@ void			ft_free_env(t_env *env);
 void			ft_free_cmd(t_cmd *cmds);
 void			ft_exec_exit(t_cmd *cmds, t_env *env);
 void			ft_str_expand_triple(char **src, char *add1, char *add2);
+void			ft_sort_string_tab(char **tab);
 void			get_absolute_path(t_cmd *cmds, t_env *env);
 char			**ft_env_to_my_env(t_env *env, int size_env, int i);
 char			*ft_env_chr(t_env *env, char *var);
