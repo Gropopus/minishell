@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 15:42:59 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/21 13:20:46 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/21 23:09:09 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,17 @@ void	ft_free_cmd(t_cmd *cmds)
 void	ft_free_env(t_env *env)
 {
 	t_env	*actual;
-	t_env	*previous;
+	t_env	*next;
 
 	actual = env;
 	while (actual != NULL)
 	{
-		previous = actual;
-		actual = actual->next;
-		free(previous->var);
-		previous->var = NULL;
-		free(previous->value);
-		previous->value = NULL;
-		free(previous);
-		previous = NULL;
+		next = actual->next;
+		free(actual->var);
+		actual->var = NULL;
+		free(actual->value);
+		actual->value = NULL;
+		free(actual);
+		actual = next;
 	}
 }

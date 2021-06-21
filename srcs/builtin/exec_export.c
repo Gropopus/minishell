@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 18:05:49 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/21 21:45:17 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/21 23:07:18 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,29 @@
 void	ft_print_tab_d(char **t)
 {
 	int	i;
+	int j;
+	int f;
 
 	i = 0;
 	if (t == NULL || t[0] == NULL)
 		return ;
 	while (t[i] != NULL)
 	{
-		ft_printf("declare -x %s\n", t[i]);
+		ft_putstr_fd("declare -x ", 1);
+		j = -1;
+		f = 0;
+		while (++j < (int)ft_strlen(t[i]))
+		{
+			if (t[i][j] == '"' || t[i][j] == '\\')
+				ft_putstr_fd("\\", 1);
+			ft_putchar_fd(t[i][j], 1);
+			if (!f && t[i][j] == '=')
+			{
+				ft_putstr_fd("\"", 1);
+				f = 1;
+			}
+		}
+		ft_putstr_fd("\"\n", 1);
 		i++;
 	}
 }

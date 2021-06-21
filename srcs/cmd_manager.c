@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/21 13:55:02 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/21 22:55:57 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 	status = 0;
 	pipe_open = 0;
 
+	if (ft_strcmp(cmds->av[0], "exit") == 0)
+		builtin_manager(cmds, env);
 
 	if (!builtin)
 	{

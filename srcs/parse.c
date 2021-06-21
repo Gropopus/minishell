@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/21 13:56:15 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/21 23:03:08 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,8 +187,7 @@ t_cmd	*error_clean(t_cmd *list, char *r, char n)
 		ft_free_list(&list->file);
 		list = list->next;
 	}
-	if (n)
-		ft_syntax_error(n);
+	ft_syntax_error(n);
 	return (NULL);
 }
 
