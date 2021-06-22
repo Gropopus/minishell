@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 15:22:31 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/22 16:11:41 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,10 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
+
 	env = ft_env_cpy(&error, envp);
 	if (env == NULL)
 		return (ft_error(error));
+
 	return (ft_minishell(env, 0));
 }

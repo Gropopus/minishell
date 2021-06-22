@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 19:25:01 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/20 11:25:37 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/22 16:11:30 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_env	*ft_env_new(char *envp, unsigned int *error, int shlvl)
 		{
 			shlvl = ft_atoi(new->value) + 1;
 			free(new->value);
-			new->value = ft_strdup(ft_itoa(shlvl));
+			new->value = ft_itoa(shlvl);
 		}
 	}
 	new->next = NULL;
