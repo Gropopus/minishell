@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 18:43:34 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/22 19:07:26 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,10 @@
 	return (ret);
 }*/
 
-
 int	is_accessible(t_cmd *cmds)
 {
 	int			ret;
 	int			fd;
-
 
 	fd = open(cmds->av[0], O_RDWR);
 	ret = 0;
@@ -78,7 +76,7 @@ int	builtin_manager(t_cmd *cmds, t_env *env, bool fork)
 	return (ret);
 }
 
-int dup_pipes(int *pipe_open, t_cmd *cmd)
+int	dup_pipes(int *pipe_open, t_cmd *cmd)
 {
 	if (ft_redirection(cmd) != 0)
 		return (0);
@@ -91,7 +89,7 @@ int dup_pipes(int *pipe_open, t_cmd *cmd)
 	return (1);
 }
 
-int close_pipes(int pipe_open, t_cmd *cmd)
+int	close_pipes(int pipe_open, t_cmd *cmd)
 {
 	ft_close_fd(cmd);
 	if (pipe_open)
@@ -114,7 +112,6 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 
 	status = 0;
 	pipe_open = 0;
-
 	if (!builtin && cmds->av)
 	{
 		ret = is_accessible(cmds);
@@ -127,7 +124,6 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 		if (pipe(cmds->pipes))
 			return (-1);
 	}
-
 	ret = 0;
 	pid = fork();
 	if (pid == -1)
@@ -151,7 +147,6 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 			ft_error(9);
 		exit(EXIT_FAILURE);
 	}
-
 	return (ret);
 }
 
@@ -169,9 +164,7 @@ int	cmd_manager(t_cmd *cmds, t_env *env)
 				return (1);
 			}
 			else
-			{
 				ret = exec_cmd(cmds, env, cmds->path && cmds->path[0] == '\0');
-			}
 		cmds = cmds->next;
 	}
 	return (ret);
