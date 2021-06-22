@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 15:58:51 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/21 13:16:57 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/22 11:45:28 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ char	*ft_cpy_var(t_env *env)
 {
 	char	*str;
 	int		i;
+	int		size;
 
-	str = malloc(sizeof(char) * (ft_strlen(env->var)
-				+ ft_strlen(env->value) + 1));
+	size = sizeof(char) * (ft_strlen(env->var) + ft_strlen(env->value) + 2);
+	str = malloc(size);
 	if (str == NULL)
 		return (NULL);
 	i = ft_strlen(env->var);
 	str[i] = '=';
+	str[size - 1] = 0;
 	i++;
 	ft_memcpy(str, env->var, ft_strlen(env->var));
 	ft_memcpy(&(str[i]), env->value, ft_strlen(env->value));

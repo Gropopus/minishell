@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 18:05:49 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/21 23:14:37 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/21 23:18:45 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	ft_exec_env(t_cmd *cmds, t_env *env)
 	if (env)
 	{
 		tabenv = ft_env_to_my_env(env, 0, 0);
+		if (!tabenv)
+			return (ft_error(1));
 		ft_print_tab(tabenv);
 		ft_free_tab(tabenv);
 		return (0);
