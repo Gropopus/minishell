@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 18:05:49 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 14:08:15 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/22 15:45:38 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,53 @@
 #include "../includes/libft.h"
 #include "../includes/minishell.h"
 
-void	ft_print_tab_d(char **t)
+void	ft_print_tab_e(t_env *env)
 {
-	int	i;
+	t_env *s;
 	int j;
-	int f;
 
-	i = 0;
-	if (t == NULL || t[0] == NULL)
-		return ;
-	while (t[i] != NULL)
+	s = env;
+	while (s)
 	{
-		ft_putstr_fd("declare -x ", 1);
 		j = 0;
-		f = 0;
-		while (t[i][j])
+		ft_putstr_fd("declare -x ", 1);
+		ft_putstr_fd(s->var, 1);
+		if (s->value)
 		{
-			if (t[i][j] == '"' || t[i][j] == '\\')
-				ft_putstr_fd("\\", 1);
-			ft_putchar_fd(t[i][j], 1);
-			if (!f && t[i][j] == '=')
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd("\"", 1);
+			while (s->value[j])
 			{
-				ft_putstr_fd("\"", 1);
-				f = 1;
+				if (s->value[j] == '"' || s->value[j] == '\\')
+					ft_putstr_fd("\\", 1);
+				ft_putchar_fd(s->value[j++], 1);
 			}
-			j++;
+			ft_putstr_fd("\"", 1);
 		}
-		ft_putstr_fd("\"\n", 1);
-		i++;
+		ft_putchar_fd('\n', 1);
+		s = s->next;
 	}
 }
 
-int	ft_exec_export(t_cmd *cmds, t_env *env)
+bool is_valid_name(char *n)
+{
+	if (!n)
+		return (false);
+	if (ft_isdigit(*n))
+		return (false);
+
+	while (*n)
+	{
+		if (!ft_isalnum(*n) && *n != '_')
+			return (false);
+		n++;
+	}
+	return (true);
+}
+
+int	ft_exec_export(t_cmd *cmds, t_env *env, bool fork)
 {
 	(void)env;
-	char **tabenv;
 	char *name;
 	char *value;
 
@@ -56,12 +68,11 @@ int	ft_exec_export(t_cmd *cmds, t_env *env)
 	value = NULL;
 	if (cmds->ac < 2)
 	{
-		tabenv = ft_env_to_my_env(env, 0, 0);
-		if (!tabenv)
-			return (ft_error(1));
-		ft_sort_string_tab(tabenv);
-		ft_print_tab_d(tabenv);
-		ft_free_tab(tabenv);
+		if (fork)
+		{
+			ft_list_sort(&env);
+			ft_print_tab_e(env);
+		}
 		return (0);
 	}else if (cmds->ac >= 3){
 		name = cmds->av[1];
@@ -80,8 +91,21 @@ int	ft_exec_export(t_cmd *cmds, t_env *env)
 			value = name + i + 1;
 	}
 
-	printf("name: %s value:%s\n", name, value);
 
+	if (name && is_valid_name(name))
+	{
+		env_manager(name, value, env);
+
+		//tabenv = ft_env_to_my_env(env, 0, 0);
+		/*if (!tabenv)
+			return (ft_error(1));
+		ft_sort_string_tab(tabenv);
+		ft_print_tab_d(tabenv);
+		ft_free_tab(tabenv);*/
+
+	}else if (fork){
+		printf("%s\n", "error");
+	}
 
 	//TODO
 	return (0);

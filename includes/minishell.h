@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:26:29 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/21 21:40:08 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/22 15:35:40 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ typedef struct s_env
 int				ft_extensions(char **cmd_av, t_env *env);
 int				ft_env_str_len(char *string);
 int				ft_exec_echo(t_cmd *cmds, t_env *env);
-int				ft_exec_unset(t_cmd *cmds, t_env *env);
+int				ft_exec_unset(t_cmd *cmds, t_env *env, bool fork);
 int				ft_exec_env(t_cmd *cmds, t_env *env);
 int				ft_exec_pwd(t_cmd *cmds, t_env *env);
-int				ft_exec_cd(t_cmd *cmds, t_env *env);
-int				ft_exec_export(t_cmd *cmds, t_env *env);
+int				ft_exec_cd(t_cmd *cmds, t_env *env, bool fork);
+int				ft_exec_export(t_cmd *cmds, t_env *env, bool fork);
 int				exec_cmd(t_cmd *cmds, t_env *env, bool builtin);
 int				env_manager(char *var, char *value, t_env *env);
 int				cmd_manager(t_cmd *cmds, t_env *env);
@@ -104,9 +104,9 @@ void			ft_syntax_error(char token);
 unsigned int	ft_nice_error(unsigned int error, char *msg);
 void			ft_free_env(t_env *env);
 void			ft_free_cmd(t_cmd *cmds);
-void			ft_exec_exit(t_cmd *cmds, t_env *env);
+void			ft_exec_exit(t_cmd *cmds, t_env *env, bool fork);
 void			ft_str_expand_triple(char **src, char *add1, char *add2);
-void			ft_sort_string_tab(char **tab);
+void			ft_list_sort(t_env **begin_list);
 void			get_absolute_path(t_cmd *cmds, t_env *env);
 char			**ft_env_to_my_env(t_env *env, int size_env, int i);
 char			*ft_env_chr(t_env *env, char *var);

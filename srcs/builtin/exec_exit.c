@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 10:24:22 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/18 19:14:58 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/22 15:09:33 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 #include "../includes/libft.h"
 #include "../includes/minishell.h"
 
-void	ft_exec_exit(t_cmd *cmds, t_env *env)
+void	ft_exec_exit(t_cmd *cmds, t_env *env, bool fork)
 {
 	int	ret;
 
 	ret = 1;
-	if (cmds->ac > 2)
+	if (cmds->ac > 2 && fork)
 		ft_putstr_fd("exit: Too many arguments, extra arguments ignored\n", 2);
 	if (cmds->ac >= 2)
 	{
 		if (ft_str_is_digit(cmds->av[1]) == 1)
 			ret = ft_atoi(cmds->av[1]);
-		else if (ft_str_is_digit(cmds->av[1]) == 0)
+		else if (ft_str_is_digit(cmds->av[1]) == 0 && fork)
 			ft_putstr_fd("exit: First argument is not a digit\n", 2);
 	}
 	else
@@ -34,7 +34,8 @@ void	ft_exec_exit(t_cmd *cmds, t_env *env)
 		ft_free_cmd(cmds);
 		ft_free_env(env);
 		cmds = cmds->next;
-		ft_printf("exit\n");
+		if (fork)
+			ft_printf("exit\n");
 		exit(ret);
 	}
 }

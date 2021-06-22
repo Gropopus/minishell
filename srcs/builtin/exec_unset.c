@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 21:41:50 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/16 14:31:23 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/22 15:11:50 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	unset_env(char *var, t_env *env)
 	return (0);
 }
 
-int	ft_exec_unset(t_cmd *cmds, t_env *env)
+int	ft_exec_unset(t_cmd *cmds, t_env *env, bool fork)
 {
 	int	i;
 	int	ret;
@@ -93,7 +93,8 @@ int	ft_exec_unset(t_cmd *cmds, t_env *env)
 	}
 	else
 	{
-		ft_putstr_fd("unset : Not enough arguments.\n", 2);
+		if (fork)
+			ft_putstr_fd("unset : Not enough arguments.\n", 2);
 		ret = 1;
 	}
 	return (ret);

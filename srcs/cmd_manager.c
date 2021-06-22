@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/21 22:55:57 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/22 15:20:53 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,25 @@ int	is_accessible(t_cmd *cmds)
 	return (ret);
 }
 
-int	builtin_manager(t_cmd *cmds, t_env *env)
+int	builtin_manager(t_cmd *cmds, t_env *env, bool fork)
 {
 	int	ret;
 
 	ret = -1;
 	if (ft_strcmp(cmds->av[0], "cd") == 0)
-		ret = ft_exec_cd(cmds, env);
-	else if (ft_strcmp(cmds->av[0], "echo") == 0)
+		ret = ft_exec_cd(cmds, env, fork);
+	else if (fork && ft_strcmp(cmds->av[0], "echo") == 0)
 		ret = ft_exec_echo(cmds, env);
-	else if (ft_strcmp(cmds->av[0], "pwd") == 0)
+	else if (fork && ft_strcmp(cmds->av[0], "pwd") == 0)
 		ret = ft_exec_pwd(cmds, env);
-	else if (ft_strcmp(cmds->av[0], "env") == 0)
+	else if (fork && ft_strcmp(cmds->av[0], "env") == 0)
 		ret = ft_exec_env(cmds, env);
 	else if (ft_strcmp(cmds->av[0], "unset") == 0)
-		ret = ft_exec_unset(cmds, env);
+		ret = ft_exec_unset(cmds, env, fork);
 	else if (ft_strcmp(cmds->av[0], "exit") == 0)
-		ft_exec_exit(cmds, env);
+		ft_exec_exit(cmds, env, fork);
 	else if (ft_strcmp(cmds->av[0], "export") == 0)
-		ret = ft_exec_export(cmds, env);
+		ret = ft_exec_export(cmds, env, fork);
 	return (ret);
 }
 
@@ -87,9 +87,6 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 	status = 0;
 	pipe_open = 0;
 
-	if (ft_strcmp(cmds->av[0], "exit") == 0)
-		builtin_manager(cmds, env);
-
 	if (!builtin)
 	{
 		ret = is_accessible(cmds);
@@ -111,17 +108,18 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 	else if (pid > 0)
 	{
 		waitpid(pid, &status, 0);
-
 		close_pipes(pipe_open, cmds);
-		//if (WIFEXITED(status))
-		//	ret = WEXITSTATUS(status);
+		if (builtin)
+			builtin_manager(cmds, env, false);
+		if (WIFEXITED(status))
+			ret = WEXITSTATUS(status);
 	}
 	else
 	{
 		if (!dup_pipes(&pipe_open, cmds))
 			return (-1);
 		if (builtin)
-			exit(builtin_manager(cmds, env));
+			exit(builtin_manager(cmds, env, true));
 		if (execve(cmds->av[0], cmds->av, ft_env_to_my_env(env, 0, 0)) == -1)
 			ft_error(7);
 		exit(EXIT_FAILURE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 13:01:02 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/16 14:30:31 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/22 15:14:57 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 #include "../includes/libft.h"
 #include "../includes/minishell.h"
 
-void	ft_cd_error(char *path, int error)
+void	ft_cd_error(char *path, int error, bool fork)
 {
+	if (!fork)
+		return ;
 	if (error == ENOTDIR)
 	{
 		ft_putstr_fd("cd: ", 2);
@@ -46,7 +48,7 @@ char	*ft_env_chr(t_env *env, char *var)
 	return (NULL);
 }
 
-char	*ft_find_path(t_cmd *cmds, t_env *env)
+char	*ft_find_path(t_cmd *cmds, t_env *env, bool fork)
 {
 	int		ret;
 	char	*path;
@@ -55,7 +57,7 @@ char	*ft_find_path(t_cmd *cmds, t_env *env)
 	if (cmds->ac < 2)
 	{
 		path = ft_env_chr(env, "HOME");
-		if (path == NULL)
+		if (path == NULL && fork)
 			ft_putstr_fd("cd : HOME not set\n", 2);
 	}
 	else
@@ -63,9 +65,9 @@ char	*ft_find_path(t_cmd *cmds, t_env *env)
 		if (cmds->av[1][0] == '-' && cmds->av[1][1] == '\0')
 		{
 			path = ft_env_chr(env, "OLDPWD");
-			if (path == NULL)
+			if (path == NULL && fork)
 				ft_putstr_fd("cd : OLDPWD not set\n", 2);
-			else
+			else if (fork)
 				ft_printf("%s\n", path);
 		}
 		else
@@ -74,19 +76,19 @@ char	*ft_find_path(t_cmd *cmds, t_env *env)
 	return (path);
 }
 
-int	ft_exec_cd(t_cmd *cmds, t_env *env)
+int	ft_exec_cd(t_cmd *cmds, t_env *env, bool fork)
 {
 	int		ret;
 	char	*previous_path;
 	char	*path;
 
-	path = ft_find_path(cmds, env);
+	path = ft_find_path(cmds, env, fork);
 	if (path == NULL)
 		return (4);
 	previous_path = getcwd(NULL, 0);
 	ret = chdir(path);
 	if (ret != 0)
-		ft_cd_error(path, errno);
+		ft_cd_error(path, errno, fork);
 	else
 	{
 		if (previous_path)

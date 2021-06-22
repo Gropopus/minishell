@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 11:52:26 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/22 15:22:31 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	ft_minishell(t_env *env, int ret)
 		char *bef = "🖥  @";
 		char *mid = " ~ ";
 		char *aft = "Minishell $> ";
-
+		if (!name)
+			name = "bash";
 		char *prompt = malloc(1 + ft_strlen(bef) + ft_strlen(name) + ft_strlen(mid) + ft_strlen(aft));
 		prompt[0] = 0;
 		ft_strcat(prompt, bef);
@@ -58,7 +59,7 @@ int	ft_minishell(t_env *env, int ret)
 		ft_strcat(prompt, aft);
 		line = readline(prompt);
 		free(prompt);
-		
+
 		if (line)
 		{
 			cmds = parse(line, env);
