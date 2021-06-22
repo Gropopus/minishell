@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 18:05:49 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 15:45:34 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/22 18:36:47 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	ft_print_tab_ev(t_env *env)
 			ft_putstr_fd(s->var, 1);
 			ft_putstr_fd("=", 1);
 			ft_putstr_fd(s->value, 1);
+			ft_putchar_fd('\n', 1);
 		}
-		ft_putchar_fd('\n', 1);
 		s = s->next;
 	}
 }
