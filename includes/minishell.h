@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:26:29 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 15:35:40 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/22 16:42:42 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,10 @@ char			*ft_dup_to_equal(char *str, char c);
 char			*ft_dup_pass_equal(char *str, char c);
 t_env			*ft_env_cpy(unsigned int *error, char **envp);
 t_cmd			*parse(char *parse, t_env *env);
+/*
+**			redirections.c
+*/
+int				ft_redirection(t_cmd *cmd);
+void			ft_close_fd(t_cmd *cmd);
 
 #endif
