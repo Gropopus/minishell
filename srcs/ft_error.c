@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 20:35:58 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 11:38:52 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/22 17:22:45 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ unsigned int	ft_error(unsigned int error)
 		ft_putstr_fd("Failure in fork process\n", 2);
 	else if (error == 9)
 		ft_putstr_fd("Command not found\n", 2);
+	else if (error == 10)
+		ft_putstr_fd("Is a directory\n", 2);
 	else if (error == 127)
 		ft_putstr_fd("Syntax error\n", 2);
 	return (error);

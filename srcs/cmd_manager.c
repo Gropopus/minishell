@@ -6,15 +6,19 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 16:45:41 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/22 18:43:34 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 #include "../includes/libft.h"
 #include "../includes/minishell.h"
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
-int	is_accessible(t_cmd *cmds)
+/*int	is_accessible(t_cmd *cmds)
 {
 	int ret;
 
@@ -28,6 +32,27 @@ int	is_accessible(t_cmd *cmds)
 	if (cmds->av_cpy)
 		free(cmds->av_cpy);
 	cmds->av_cpy = NULL;
+	return (ret);
+}*/
+
+
+int	is_accessible(t_cmd *cmds)
+{
+	int			ret;
+	int			fd;
+
+
+	fd = open(cmds->av[0], O_RDWR);
+	ret = 0;
+	if (!cmds->path)
+		ret = (ft_nice_error(9, NULL));
+	else if (chdir(cmds->av[0]) == 0)
+		ret = (ft_nice_error(2, cmds->av_cpy));
+	if (cmds->av_cpy)
+		free(cmds->av_cpy);
+	cmds->av_cpy = NULL;
+	if (fd >= 0)
+		close(fd);
 	return (ret);
 }
 
@@ -90,13 +115,12 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 	status = 0;
 	pipe_open = 0;
 
-	if (!builtin)
+	if (!builtin && cmds->av)
 	{
 		ret = is_accessible(cmds);
 		if (ret != 0)
 			return (ret);
 	}
-
 	if (cmds->is_piped == 1 || (cmds->prev && cmds->prev->is_piped == 1))
 	{
 		pipe_open = 1;
@@ -124,7 +148,7 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 		if (builtin)
 			exit(builtin_manager(cmds, env, true));
 		if (execve(cmds->av[0], cmds->av, ft_env_to_my_env(env, 0, 0)) == -1)
-			ft_error(7);
+			ft_error(9);
 		exit(EXIT_FAILURE);
 	}
 
@@ -138,8 +162,6 @@ int	cmd_manager(t_cmd *cmds, t_env *env)
 	ret = 0;
 	while (cmds != NULL)
 	{
-		if (cmds->av)
-		{
 			ret = ft_find_exec(cmds, env);
 			if (ret != 0)
 			{
@@ -150,7 +172,6 @@ int	cmd_manager(t_cmd *cmds, t_env *env)
 			{
 				ret = exec_cmd(cmds, env, cmds->path && cmds->path[0] == '\0');
 			}
-		}
 		cmds = cmds->next;
 	}
 	return (ret);

@@ -6,7 +6,7 @@
 #    By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 10:50:45 by thsembel          #+#    #+#              #
-#    Updated: 2021/06/22 16:46:19 by thsembel         ###   ########.fr        #
+#    Updated: 2021/06/22 18:49:23 by thsembel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ NAME		= minishell
 
 CC			=	clang
 
-CFLAGS		= 	-Wall -Wextra -Werror -c
+CFLAGS		= 	-Wall -Wextra -Werror -c -fsanitize=address
 
 OBJS		= ${SRCS:.c=.o}
 

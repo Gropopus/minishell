@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/21 23:03:08 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/22 18:43:25 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,7 @@ void	printf_cmds(t_cmd *cur)
 		printf(" Piped: %s\n", cur->is_piped ? "YES" : "NO");
 
 		i = 0;
-		while (cur->av[i])
+		while (cur->av && cur->av[i])
 		{
 			printf("ARG[%i]: %s\n", i, cur->av[i]);
 			i++;

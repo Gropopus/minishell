@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 15:10:36 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 16:37:10 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/22 18:48:02 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ int	ft_input(t_cmd *cmd)
 		{
 			f->fd = open(f->path, O_RDONLY);
 			if (errno == EACCES)
+			{
 				return (ft_error(2));
+			}
 			else if (f->fd < 0)
 			{
 				ft_putstr_fd(" no such file or directory: ", 2);
