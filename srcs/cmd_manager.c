@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 19:07:26 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/23 14:00:52 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ int	builtin_manager(t_cmd *cmds, t_env *env, bool fork)
 
 int	dup_pipes(int *pipe_open, t_cmd *cmd)
 {
-	if (ft_redirection(cmd) != 0)
-		return (0);
+//	ft_dup_fd(cmd);
 	if (cmd->is_piped && dup2(cmd->pipes[1], 1) < 0)
 		return (0);
 	if (cmd->prev && cmd->prev->is_piped
 		&& dup2(cmd->prev->pipes[0], 0) < 0)
 		return (0);
+	ft_dup_fd(cmd);
 	*pipe_open = 1;
 	return (1);
 }
@@ -125,6 +125,8 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 			return (-1);
 	}
 	ret = 0;
+	if (ft_redirection(cmds) != 0)
+		return (-1);
 	pid = fork();
 	if (pid == -1)
 		return (ft_error(8));
