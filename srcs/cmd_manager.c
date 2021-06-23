@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/23 17:05:56 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/23 17:44:33 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,9 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 			return (-1);
 		if (builtin)
 			exit(builtin_manager(cmds, env, true));
+		if (!cmds->av[0])
+			return (-1);
+		close(cmds->pipes[0]);
 		if (execve(cmds->av[0], cmds->av, ft_env_to_my_env(env, 0, 0)) == -1)
 			ft_error(9);
 		exit(EXIT_FAILURE);
