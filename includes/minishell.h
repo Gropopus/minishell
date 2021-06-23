@@ -72,7 +72,9 @@ typedef struct s_cmd
 	char			*path;
 	char			*line;
 	bool			is_piped;
+	int				pipe_open;
 	int				pipes[2];
+	pid_t			pid;
 	t_file_list		*file;
 
 	struct s_cmd	*prev;

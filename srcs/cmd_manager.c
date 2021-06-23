@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/23 14:00:52 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/23 16:57:07 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,12 @@
 	return (ret);
 }*/
 
+
 int	is_accessible(t_cmd *cmds)
 {
 	int			ret;
 	int			fd;
+
 
 	fd = open(cmds->av[0], O_RDWR);
 	ret = 0;
@@ -76,42 +78,40 @@ int	builtin_manager(t_cmd *cmds, t_env *env, bool fork)
 	return (ret);
 }
 
-int	dup_pipes(int *pipe_open, t_cmd *cmd)
+int dup_pipes(int *pipe_open, t_cmd *cmd)
 {
-//	ft_dup_fd(cmd);
 	if (cmd->is_piped && dup2(cmd->pipes[1], 1) < 0)
 		return (0);
 	if (cmd->prev && cmd->prev->is_piped
 		&& dup2(cmd->prev->pipes[0], 0) < 0)
 		return (0);
-	ft_dup_fd(cmd);
 	*pipe_open = 1;
 	return (1);
 }
 
-int	close_pipes(int pipe_open, t_cmd *cmd)
+int close_pipes(int pipe_open, t_cmd *cmd)
 {
-	ft_close_fd(cmd);
 	if (pipe_open)
 	{
 		close(cmd->pipes[1]);
 		if (!cmd->next)
+		{
 			close(cmd->pipes[0]);
+		}
 	}
 	if (cmd->prev && cmd->prev->is_piped == 1)
+	{
 		close(cmd->prev->pipes[0]);
+	}
 	return (1);
 }
 
 int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 {
-	pid_t	pid;
-	int		status;
 	int		ret;
-	int		pipe_open;
 
-	status = 0;
-	pipe_open = 0;
+	cmds->pipe_open = 0;
+
 	if (!builtin && cmds->av)
 	{
 		ret = is_accessible(cmds);
@@ -120,28 +120,19 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 	}
 	if (cmds->is_piped == 1 || (cmds->prev && cmds->prev->is_piped == 1))
 	{
-		pipe_open = 1;
+		cmds->pipe_open = 1;
 		if (pipe(cmds->pipes))
 			return (-1);
 	}
-	ret = 0;
 	if (ft_redirection(cmds) != 0)
-		return (-1);
-	pid = fork();
-	if (pid == -1)
+		return (0);
+	ret = 0;
+	cmds->pid = fork();
+	if (cmds->pid == -1)
 		return (ft_error(8));
-	else if (pid > 0)
+	if (cmds->pid == 0)
 	{
-		waitpid(pid, &status, 0);
-		close_pipes(pipe_open, cmds);
-		if (builtin)
-			builtin_manager(cmds, env, false);
-		if (WIFEXITED(status))
-			ret = WEXITSTATUS(status);
-	}
-	else
-	{
-		if (!dup_pipes(&pipe_open, cmds))
+		if (!dup_pipes(&(cmds->pipe_open), cmds))
 			return (-1);
 		if (builtin)
 			exit(builtin_manager(cmds, env, true));
@@ -149,13 +140,17 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 			ft_error(9);
 		exit(EXIT_FAILURE);
 	}
+	close_pipes(cmds->pipe_open, cmds);
 	return (ret);
 }
 
 int	cmd_manager(t_cmd *cmds, t_env *env)
 {
 	int	ret;
+	int		status;
+	t_cmd	*list;
 
+	list = cmds;
 	ret = 0;
 	while (cmds != NULL)
 	{
@@ -166,7 +161,20 @@ int	cmd_manager(t_cmd *cmds, t_env *env)
 				return (1);
 			}
 			else
+			{
 				ret = exec_cmd(cmds, env, cmds->path && cmds->path[0] == '\0');
+			}
+		cmds = cmds->next;
+	}
+	cmds = list;
+	while (cmds)
+	{
+		status = 0;
+		waitpid(cmds->pid, &status, 0);
+		if (cmds->path && cmds->path[0] == '\0')
+			builtin_manager(cmds, env, false);
+		if (WIFEXITED(status))
+			ret = WEXITSTATUS(status);
 		cmds = cmds->next;
 	}
 	return (ret);
