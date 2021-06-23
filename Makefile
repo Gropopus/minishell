@@ -6,7 +6,7 @@
 #    By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 10:50:45 by thsembel          #+#    #+#              #
-#    Updated: 2021/06/22 18:49:23 by thsembel         ###   ########.fr        #
+#    Updated: 2021/06/23 13:35:19 by ttranche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ ${NAME}:	${OBJS}
 			@make -C ${LIB_DIR}
 			@make -C ${LIB_DIR} bonus
 			@echo "${GREEN}\nlibft.a		has been created"
-			@${CC} ${CFLAGS} -I${HEAD} ${LIBFT} -lreadline -lncurses -o ${NAME} $(OBJS)
+			@${CC} ${CFLAGS} -I${HEAD} -lreadline -lncurses -o ${NAME} $(OBJS) ${LIBFT}
 			@echo "minishell	has been created${NC}"
 
 all:		${NAME}

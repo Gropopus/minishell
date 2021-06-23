@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:26:29 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 16:42:42 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/23 13:36:06 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <errno.h>
 # include <curses.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
