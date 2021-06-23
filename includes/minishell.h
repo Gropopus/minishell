@@ -60,6 +60,7 @@ typedef struct	s_file_list
 	char			*path;
 	enum e_redirect_type	type;
 	int				fd;
+	bool			quote;
 	struct s_file_list	*next;
 }				t_file_list;
 

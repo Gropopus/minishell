@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/22 18:43:25 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/23 14:38:23 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,7 @@ void	add_arg(t_cmd *cmd, char *arg)
 	cmd->av = vnew;
 }
 
-void	add_redirection(t_cmd *cmd, char *arg, enum e_redirect_type type)
+void	add_redirection(t_cmd *cmd, char *arg, enum e_redirect_type type, bool *quote)
 {
 	t_file_list	*new;
 	t_file_list	*c;
@@ -242,7 +242,10 @@ void	add_redirection(t_cmd *cmd, char *arg, enum e_redirect_type type)
 	new->path = arg;
 	new->type = type;
 	new->next = NULL;
-
+	if (quote)
+		new->quote = *quote;
+	else
+		new->quote = false;
 	if (!cmd->file)
 		cmd->file = new;
 	else
@@ -254,14 +257,16 @@ void	add_redirection(t_cmd *cmd, char *arg, enum e_redirect_type type)
 	}
 }
 
-void	end_arg(char **a, enum e_redirect_type *type, t_cmd *cmd)
+void	end_arg(char **a, enum e_redirect_type *type, t_cmd *cmd, bool *quote)
 {
 	if (*a && **a)
 	{
 		if (!type || *type == R_NONE)
 			add_arg(cmd, *a);
 		else
-			add_redirection(cmd, *a, *type);
+			add_redirection(cmd, *a, *type, quote);
+		if (quote)
+			*quote = false;
 		*a = NULL;
 		if (type)
 			*type = R_NONE;
@@ -316,7 +321,7 @@ void	printf_cmds(t_cmd *cur)
 				rt = ">";
 			else if (c->type == RR_OUTPUT)
 				rt = ">>";
-			printf("REDIR(%s): %s\n", rt, c->path);
+			printf("REDIR(%s): %s Escaped: %s\n", rt, c->path, c->quote ? "true" : "false");
 			c = c->next;
 		}
 		cur = cur->next;
@@ -356,7 +361,7 @@ void	read_var(t_cmd *cur, char *var, char **curread, t_env *env)
 	{
 		while (parse[i] == ' ')
 		{
-			end_arg(&read, NULL, cur);
+			end_arg(&read, NULL, cur, NULL);
 			i++;
 		}
 		if (parse[i])
@@ -373,21 +378,23 @@ t_cmd	*parse(char *parse, t_env *env)
 	t_cmd					*list;
 	t_cmd					*cur;
 	enum	e_redirect_type	type = R_NONE;
+	bool					quote;
 
 	i = 0;
 	read = NULL;
 	cur = blank_cmd();
 	list = cur;
+	quote = false;
 	while (parse[i])
 	{
 		while (parse[i] == ' ')
 		{
-			end_arg(&read, &type, cur);
+			end_arg(&read, &type, cur, &quote);
 			i++;
 		}
 		if (parse[i] == ';' || parse[i] == '|')
 		{
-			end_arg(&read, &type, cur);
+			end_arg(&read, &type, cur, &quote);
 			if (cur->av == NULL)
 				return error_clean(list, read, parse[i]);
 			next_cmd(&cur, parse[i] == '|');
@@ -396,7 +403,7 @@ t_cmd	*parse(char *parse, t_env *env)
 		}
 		if (parse[i] == '<' || parse[i] == '>')
 		{
-			end_arg(&read, &type, cur);
+			end_arg(&read, &type, cur, &quote);
 			if (type != R_NONE)
 				return error_clean(list, read, parse[i]);
 			if (ft_starts_with(parse + i, "<<") && ++i)
@@ -416,6 +423,7 @@ t_cmd	*parse(char *parse, t_env *env)
 			i++;
 		else if (parse[i] == '"' || parse[i] == '\'')
 		{
+			quote |= parse[i] == '"';
 			resp = read_marks(parse + i, &i, parse[i], env);
 			if (resp == NULL)
 				return error_clean(list, read, parse[i]);
@@ -423,7 +431,7 @@ t_cmd	*parse(char *parse, t_env *env)
 			free(resp);
 			continue;
 		}
-		else if (parse[i] == '$')
+		else if (parse[i] == '$' && type != RR_INPUT)
 		{
 			int t = 0;
 			char *name = extract_var_name(parse + i, &t);
@@ -440,6 +448,6 @@ t_cmd	*parse(char *parse, t_env *env)
 	}
 	if (!read && type != R_NONE)
 		return error_clean(list, read, parse[i]);
-	end_arg(&read, &type, cur);
+	end_arg(&read, &type, cur, &quote);
 	return (list);
 }
