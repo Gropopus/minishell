@@ -6,11 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 18:05:49 by thsembel          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2021/06/22 18:58:51 by thsembel         ###   ########.fr       */
-=======
-/*   Updated: 2021/06/22 18:36:47 by ttranche         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2021/06/23 13:40:00 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
