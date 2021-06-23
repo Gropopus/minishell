@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 18:05:49 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 18:37:16 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/22 19:04:18 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 #include "../includes/libft.h"
 #include "../includes/minishell.h"
 
-void	ft_print_tab_e(t_env *env, bool fork)
+void	ft_print_tab_e(t_env *env, bool fork, int j)
 {
-	t_env *s;
-	int j;
+	t_env	*s;
 
 	if (!fork)
 		return ;
@@ -45,7 +44,7 @@ void	ft_print_tab_e(t_env *env, bool fork)
 	}
 }
 
-bool is_valid_name(char *n)
+bool	is_valid_name(char *n)
 {
 	if (!n)
 		return (false);
@@ -60,7 +59,7 @@ bool is_valid_name(char *n)
 	return (true);
 }
 
-int do_export(char *name, char *value, t_env *env, bool fork)
+int	do_export(char *name, char *value, t_env *env, bool fork)
 {
 	if (name == NULL && value == NULL)
 		return (0);
@@ -69,7 +68,8 @@ int do_export(char *name, char *value, t_env *env, bool fork)
 		env_manager(name, value, env);
 		return (0);
 	}
-	if (fork){
+	if (fork)
+	{
 		ft_putstr_fd("export: not an identifier/invalid in this context", 2);
 		if (name && *name)
 		{
@@ -83,16 +83,17 @@ int do_export(char *name, char *value, t_env *env, bool fork)
 
 int	ft_exec_export(t_cmd *cmds, t_env *env, bool fork)
 {
-	char *name;
-	int i;
-	char *value;
+	char	*name;
+	int		i;
+	char	*value;
 
 	name = NULL;
 	value = NULL;
 	i = 0;
 	if (cmds->ac < 2)
-		ft_print_tab_e(env, fork);
-	else if (cmds->ac >= 3){
+		ft_print_tab_e(env, fork, 0);
+	else if (cmds->ac >= 3)
+	{
 		name = cmds->av[1];
 		value = cmds->av[2];
 	}
@@ -100,10 +101,12 @@ int	ft_exec_export(t_cmd *cmds, t_env *env, bool fork)
 	{
 		name = ft_strdup(cmds->av[1]);
 		while (name[i])
+		{
 			if (name[i] == '=')
 				name[i] = 0;
 			else
 				i++;
+		}
 		if (cmds->av[1][i])
 			value = name + i + 1;
 	}
