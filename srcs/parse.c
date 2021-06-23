@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/23 14:38:23 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/23 14:46:22 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,7 +395,7 @@ t_cmd	*parse(char *parse, t_env *env)
 		if (parse[i] == ';' || parse[i] == '|')
 		{
 			end_arg(&read, &type, cur, &quote);
-			if (cur->av == NULL)
+			if (cur->av == NULL && cur->file == NULL)
 				return error_clean(list, read, parse[i]);
 			next_cmd(&cur, parse[i] == '|');
 			i++;
