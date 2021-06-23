@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 18:05:49 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 19:04:18 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/23 13:40:51 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,10 @@ int	ft_exec_export(t_cmd *cmds, t_env *env, bool fork)
 	{
 		name = ft_strdup(cmds->av[1]);
 		while (name[i])
-		{
 			if (name[i] == '=')
 				name[i] = 0;
 			else
 				i++;
-		}
 		if (cmds->av[1][i])
 			value = name + i + 1;
 	}
