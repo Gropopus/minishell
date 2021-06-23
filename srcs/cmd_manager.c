@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/23 16:57:07 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/23 17:05:56 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int dup_pipes(int *pipe_open, t_cmd *cmd)
 	if (cmd->prev && cmd->prev->is_piped
 		&& dup2(cmd->prev->pipes[0], 0) < 0)
 		return (0);
+	ft_dup_fd(cmd);
 	*pipe_open = 1;
 	return (1);
 }
