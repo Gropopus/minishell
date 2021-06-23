@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 16:11:41 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/23 14:11:34 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,40 @@ int	is_in_builtin(char **cmds)
 		return (0);
 }
 
+char *get_prompt(t_env *env)
+{
+	char *prompt;
+	char *name;
+	char *bef;
+	char *mid;
+	char *aft;
+
+	name = ft_env_chr(env, "USER");
+	bef = "🖥  @";
+	mid = " ~ ";
+	aft = "Minishell $> ";
+	if (!name)
+		name = "bash";
+	prompt = malloc(1 + ft_strlen(bef) + ft_strlen(name) + ft_strlen(mid) + ft_strlen(aft));
+	if (!prompt)
+		return ("$> ");
+	prompt[0] = 0;
+	ft_strcat(prompt, bef);
+	ft_strcat(prompt, name);
+	ft_strcat(prompt, mid);
+	ft_strcat(prompt, aft);
+	return (prompt);
+}
+
 int	ft_minishell(t_env *env, int ret)
 {
 	t_cmd	*cmds;
 	char	*line;
+	char *prompt;
 
 	while (1)
 	{
-		char *name = ft_env_chr(env, "USER");
-		char *bef = "🖥  @";
-		char *mid = " ~ ";
-		char *aft = "Minishell $> ";
-		if (!name)
-			name = "bash";
-		char *prompt = malloc(1 + ft_strlen(bef) + ft_strlen(name) + ft_strlen(mid) + ft_strlen(aft));
-		prompt[0] = 0;
-		ft_strcat(prompt, bef);
-		ft_strcat(prompt, name);
-		ft_strcat(prompt, mid);
-		ft_strcat(prompt, aft);
+		prompt = get_prompt(env);
 		line = readline(prompt);
 		free(prompt);
 
