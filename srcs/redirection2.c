@@ -6,11 +6,13 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 11:55:19 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/23 12:39:43 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/23 14:39:06 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+
 
 int	ft_heredoc(t_file_list *f)
 {
@@ -20,7 +22,11 @@ int	ft_heredoc(t_file_list *f)
 	{
 		line = readline("> ");
 		if (ft_strcmp(line, f->path) == 0)
-			break ;
+		{
+			printf("ici\n");
+			dup2(f->fd, 0);
+			return (1);
+		}
 		free(line);
 	}
 	free(line);
@@ -40,8 +46,9 @@ void	ft_dup_fd(t_cmd *cmd)
 		{
 			if (f->type == R_OUTPUT)
 				dup2(f->fd, 0);
-			else if (f->type == RR_INPUT)
+			if (f->type == RR_INPUT)
 				ft_heredoc(f);
+			printf("michel");
 		}
 		f = f->next;
 	}
