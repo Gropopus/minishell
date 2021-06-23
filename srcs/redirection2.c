@@ -6,7 +6,7 @@
 /*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 11:55:19 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/23 14:39:06 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/23 17:01:12 by thsembel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,7 @@ int	ft_heredoc(t_file_list *f)
 	{
 		line = readline("> ");
 		if (ft_strcmp(line, f->path) == 0)
-		{
-			printf("ici\n");
-			dup2(f->fd, 0);
 			return (1);
-		}
 		free(line);
 	}
 	free(line);
@@ -44,11 +40,10 @@ void	ft_dup_fd(t_cmd *cmd)
 			dup2(f->fd, 1);
 		else if (f->type == R_INPUT || f->type == RR_INPUT)
 		{
-			if (f->type == R_OUTPUT)
+			if (f->type == R_INPUT)
 				dup2(f->fd, 0);
 			if (f->type == RR_INPUT)
 				ft_heredoc(f);
-			printf("michel");
 		}
 		f = f->next;
 	}
