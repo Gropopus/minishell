@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/23 14:46:22 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/23 16:08:30 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ int	read_marks_2(char mark, char *parse, int *i, int *cur)
 		*cur += *i + 1;
 			return (0);
 	}
-	if (mark == '"' && parse[*i] == '\\' && (parse[*i + 1] == '\\'
+	/*if (mark == '"' && parse[*i] == '\\' && (parse[*i + 1] == '\\'
 			|| parse[*i + 1] == mark || parse[*i + 1] == '$'))
-		*i += 1;
+		*i += 1;*/
 	return (1);
 }
 
@@ -392,7 +392,9 @@ t_cmd	*parse(char *parse, t_env *env)
 			end_arg(&read, &type, cur, &quote);
 			i++;
 		}
-		if (parse[i] == ';' || parse[i] == '|')
+		if (parse[i] == ';' || parse[i] == '\\')
+			return error_clean(list, read, parse[i]);
+		if (/*parse[i] == ';' || */parse[i] == '|')
 		{
 			end_arg(&read, &type, cur, &quote);
 			if (cur->av == NULL && cur->file == NULL)
@@ -419,9 +421,9 @@ t_cmd	*parse(char *parse, t_env *env)
 			i++;
 			continue;
 		}
-		if (parse[i] == '\\' && parse[i + 1])
+		/*if (parse[i] == '\\' && parse[i + 1])
 			i++;
-		else if (parse[i] == '"' || parse[i] == '\'')
+		else */if (parse[i] == '"' || parse[i] == '\'')
 		{
 			quote |= parse[i] == '"';
 			resp = read_marks(parse + i, &i, parse[i], env);
@@ -446,7 +448,7 @@ t_cmd	*parse(char *parse, t_env *env)
 		if (parse[i])
 			read = ft_strnewcat(read, parse + i++, 1);
 	}
-	if (!read && type != R_NONE)
+	if (!read)
 		return error_clean(list, read, parse[i]);
 	end_arg(&read, &type, cur, &quote);
 	return (list);
