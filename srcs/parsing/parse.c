@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 19:14:06 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 22:31:33 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	handle_quote_vars(t_parser *p, char *parse, t_env *env, int t)
 		{
 			p->i += t;
 			read_var(p->cur, name, &p->read, env);
+			free(name);
 			return (1);
 		}
 		free(name);

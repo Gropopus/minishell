@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 22:12:03 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 22:49:29 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 		if (pipe(cmds->pipes))
 			return (-1);
 	}
-	if (ft_redirection(cmds) != 0)
+	if (ft_redirection(cmds, env) != 0)
 		return (0);
 	ret = 0;
 	cmds->pid = fork();

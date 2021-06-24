@@ -146,7 +146,7 @@ int				close_pipes(int pipe_open, t_cmd *cmd);
 /*
 **			redirections.c
 */
-int				ft_redirection(t_cmd *cmd);
+int				ft_redirection(t_cmd *cmd, t_env *env);
 void			ft_close_fd(t_cmd *cmd);
 /*
 **			redirection2.c
@@ -176,5 +176,6 @@ char			*get_var_value(char *name, t_env *env);
 char			*extract_var_name(char *parse, int *cur);
 void			read_var(t_cmd *cur, char *var, char **curread, t_env *env);
 char			*read_marks(char *parse, int *cur, char mark, t_env *env);
+char			*fill_vars(char *str, t_env *env, int i, char *read);
 
 #endif

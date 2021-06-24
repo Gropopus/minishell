@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 18:06:41 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 19:15:43 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 22:49:06 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,33 @@ char	*extract_var_name(char *parse, int *cur)
 		read = ft_strnewcat(read, parse + i++, 1);
 	}
 	*cur += i;
+	return (read);
+}
+
+char *fill_vars(char *str, t_env *env, int i, char *read)
+{
+	char	*name;
+	char	*val;
+	int		t;
+
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			t = 0;
+			name = extract_var_name(str + i, &t);
+			if (ft_strlen(name) > 0)
+			{
+				i += t;
+				val = get_var_value(name, env);
+				read = ft_strnewcat(read, val, ft_strlen(val));
+				free(name);
+				continue ;
+			}
+			free(name);
+		}
+		read = ft_strnewcat(read, str + i++, 1);
+	}
 	return (read);
 }
 
