@@ -33,16 +33,13 @@
 
 /**
 	TODO:
+	Heredoc
+	RM with CD
+	$? signals
+
+	Pas urgent:
 	When starting a shell with no SHLVL in env, it gets set to 1 by default
 	_ in env
-	Pipes
-	Redirections
-	Export
-	RM with CD
-	CTRL C D \
-	$? signals
-	Remove ACCESS function
-	sleep 1 | sleep 1 | sleep 1
 */
 
 
