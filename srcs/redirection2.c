@@ -3,20 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   redirection2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 11:55:19 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/23 17:01:12 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/24 19:41:34 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-
 int	ft_heredoc(t_file_list *f)
 {
-	char *line;
+	char	*line;
 
 	while (1)
 	{
@@ -31,7 +29,7 @@ int	ft_heredoc(t_file_list *f)
 
 void	ft_dup_fd(t_cmd *cmd)
 {
-	t_file_list *f;
+	t_file_list	*f;
 
 	f = cmd->file;
 	while (f)

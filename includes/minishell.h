@@ -25,6 +25,8 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 # define NC "\033[0m"
 # define RED "\033[0;91m"
@@ -34,8 +36,6 @@
 # define BLUE "\033[0;34m"
 # define BOLD "\033[1m"
 # define CYAN "\033[38;6;36m"
-
-//extern char	**envp;
 
 /**
 	TODO:
@@ -50,7 +50,6 @@
 	$? values
 */
 
-
 enum e_redirect_type
 {
 	R_NONE,
@@ -60,30 +59,29 @@ enum e_redirect_type
 	RR_OUTPUT
 };
 
-typedef struct	s_file_list
+typedef struct s_file_list
 {
-	char			*path;
+	char					*path;
 	enum e_redirect_type	type;
-	int				fd;
-	bool			quote;
-	struct s_file_list	*next;
+	int						fd;
+	bool					quote;
+	struct s_file_list		*next;
 }				t_file_list;
 
 typedef struct s_cmd
 {
-	int				ac;
-	char			**av;
-	char			*av_cpy;
-	char			*path;
-	char			*line;
-	bool			is_piped;
-	int				pipe_open;
-	int				pipes[2];
-	pid_t			pid;
-	t_file_list		*file;
-
-	struct s_cmd	*prev;
-	struct s_cmd	*next;
+	int						ac;
+	char					**av;
+	char					*av_cpy;
+	char					*path;
+	char					*line;
+	bool					is_piped;
+	int						pipe_open;
+	int						pipes[2];
+	pid_t					pid;
+	t_file_list				*file;
+	struct s_cmd			*prev;
+	struct s_cmd			*next;
 }				t_cmd;
 
 typedef struct s_parser
@@ -93,16 +91,15 @@ typedef struct s_parser
 	char					*resp;
 	t_cmd					*list;
 	t_cmd					*cur;
-	enum	e_redirect_type	type;
+	enum e_redirect_type	type;
 	bool					quote;
 }				t_parser;
 
-
 typedef struct s_env
 {
-	char			*var;
-	char			*value;
-	struct s_env	*next;
+	char					*var;
+	char					*value;
+	struct s_env			*next;
 }				t_env;
 
 int				ft_extensions(char **cmd_av, t_env *env);
@@ -138,6 +135,13 @@ int				setup_signals(void);
 int				disable_signals(void);
 char			*get_prompt(t_env *env);
 char			*last_error(bool set, int err);
+
+/*
+	Pipes
+*/
+int				dup_pipes(int *pipe_open, t_cmd *cmd);
+int				close_pipes(int pipe_open, t_cmd *cmd);
+
 /*
 **			redirections.c
 */
@@ -148,26 +152,28 @@ void			ft_close_fd(t_cmd *cmd);
 **/
 void			ft_dup_fd(t_cmd *cmd);
 
-void			rl_replace_line(const char *, int r);
+void			rl_replace_line(const char *line, int r);
 /*
 	Parsing
 */
 
-t_cmd	*blank_cmd(void);
-void	ft_free_list(t_file_list **list);
-t_cmd	*error_clean(t_cmd *list, char *r, char n);
-void	next_cmd(t_cmd **cur, bool piped);
-void	add_redirection(t_cmd *cmd, char *arg, enum e_redirect_type type, bool *quote);
-char	*read_marks(char *parse, int *cur, char mark, t_env *env);
-t_cmd	*parse(char *parse, t_env *env);
-void	add_arg(t_cmd *cmd, char *arg);
-void	end_arg(char **a, enum e_redirect_type *type, t_cmd *cmd, bool *quote);
-char	*ft_strnewcat(char *s, char *o, int len);
-bool	is_alpha_num(char c);
-bool	ft_starts_with(char *s, char *sta);
-char	*get_var_value(char *name, t_env *env);
-char	*extract_var_name(char *parse, int *cur);
-void	read_var(t_cmd *cur, char *var, char **curread, t_env *env);
-char	*read_marks(char *parse, int *cur, char mark, t_env *env);
+t_cmd			*blank_cmd(void);
+void			ft_free_list(t_file_list **list);
+t_cmd			*error_clean(t_cmd *list, char *r, char n);
+void			next_cmd(t_cmd **cur, bool piped);
+void			add_redirection(t_cmd *cmd, char *arg,
+					enum e_redirect_type type, bool *quote);
+char			*read_marks(char *parse, int *cur, char mark, t_env *env);
+t_cmd			*parse(char *parse, t_env *env);
+void			add_arg(t_cmd *cmd, char *arg);
+void			end_arg(char **a, enum e_redirect_type *type, t_cmd *cmd,
+					bool *quote);
+char			*ft_strnewcat(char *s, char *o, int len);
+bool			is_alpha_num(char c);
+bool			ft_starts_with(char *s, char *sta);
+char			*get_var_value(char *name, t_env *env);
+char			*extract_var_name(char *parse, int *cur);
+void			read_var(t_cmd *cur, char *var, char **curread, t_env *env);
+char			*read_marks(char *parse, int *cur, char mark, t_env *env);
 
 #endif

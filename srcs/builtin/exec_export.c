@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 18:05:49 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 13:53:07 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 19:40:36 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,28 @@
 
 void	ft_print_tab_e(t_env *env, bool fork, int j)
 {
-	t_env	*s;
-
 	if (!fork)
 		return ;
 	ft_list_sort(&env);
-	s = env;
-	while (s)
+	while (env)
 	{
 		j = 0;
 		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(s->var, 1);
-		if (s->value)
+		ft_putstr_fd(env->var, 1);
+		if (env->value)
 		{
 			ft_putstr_fd("=", 1);
 			ft_putstr_fd("\"", 1);
-			while (s->value[j])
+			while (env->value[j])
 			{
-				if (s->value[j] == '"' || s->value[j] == '\\')
+				if (env->value[j] == '"' || env->value[j] == '\\')
 					ft_putstr_fd("\\", 1);
-				ft_putchar_fd(s->value[j++], 1);
+				ft_putchar_fd(env->value[j++], 1);
 			}
 			ft_putstr_fd("\"", 1);
 		}
 		ft_putchar_fd('\n', 1);
-		s = s->next;
+		env = env->next;
 	}
 }
 
@@ -70,7 +67,8 @@ int	do_export(char *name, char *value, t_env *env, bool fork)
 	}
 	if (fork)
 	{
-		ft_putstr_fd("export: not a valid identifier/invalid in this context", 2);
+		ft_putstr_fd("export: not a valid identifier"
+			"/invalid in this context", 2);
 		if (name && *name)
 		{
 			ft_putstr_fd(": ", 2);
@@ -81,7 +79,7 @@ int	do_export(char *name, char *value, t_env *env, bool fork)
 	return (1);
 }
 
-int export(t_cmd *cmds, t_env *env, bool fork)
+int	export(t_cmd *cmds, t_env *env, bool fork)
 {
 	char	*name;
 	char	*value;
@@ -96,10 +94,12 @@ int export(t_cmd *cmds, t_env *env, bool fork)
 		name = ft_strdup(cmds->av[i]);
 		j = 0;
 		while (name[j])
+		{
 			if (name[j] == '=')
 				name[j] = 0;
 			else
 				j++;
+		}
 		if (cmds->av[i][j])
 			value = name + j + 1;
 		do_export(name, value, env, fork);

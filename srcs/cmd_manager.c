@@ -6,34 +6,13 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 15:57:29 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 19:44:44 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 #include "../includes/libft.h"
 #include "../includes/minishell.h"
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
-/*int	is_accessible(t_cmd *cmds)
-{
-	int ret;
-
-	ret = 0;
-	if (!cmds->path)
-		ret = (ft_nice_error(9, NULL));
-	else if (access(cmds->av[0], F_OK) != 0)
-		ret = (ft_nice_error(9, cmds->av_cpy));
-	else if (access(cmds->av[0], X_OK) != 0)
-		ret = (ft_nice_error(2, cmds->av_cpy));
-	if (cmds->av_cpy)
-		free(cmds->av_cpy);
-	cmds->av_cpy = NULL;
-	return (ret);
-}*/
 
 int	builtin_manager(t_cmd *cmds, t_env *env, bool fork)
 {
@@ -57,33 +36,26 @@ int	builtin_manager(t_cmd *cmds, t_env *env, bool fork)
 	return (ret);
 }
 
-int dup_pipes(int *pipe_open, t_cmd *cmd)
+int	start_child(t_cmd *cmds, t_env *env, bool builtin)
 {
-	if (cmd->is_piped && dup2(cmd->pipes[1], 1) < 0)
-		return (0);
-	if (cmd->prev && cmd->prev->is_piped
-		&& dup2(cmd->prev->pipes[0], 0) < 0)
-		return (0);
-	ft_dup_fd(cmd);
-	*pipe_open = 1;
-	return (1);
-}
-
-int close_pipes(int pipe_open, t_cmd *cmd)
-{
-	if (pipe_open)
+	if (!dup_pipes(&(cmds->pipe_open), cmds))
+		exit(EXIT_FAILURE);
+	if (builtin)
+		exit(builtin_manager(cmds, env, true));
+	if (!cmds->av[0])
+		exit(ft_nice_error(9, cmds->av_cpy));
+	if (cmds->is_piped)
+		close(cmds->pipes[0]);
+	if (execve(cmds->av[0], cmds->av, ft_env_to_my_env(env, 0, 0)) == -1)
 	{
-		close(cmd->pipes[1]);
-		if (!cmd->next)
-		{
-			close(cmd->pipes[0]);
-		}
+		if (errno == 13)
+			ft_nice_error(2, cmds->av_cpy);
+		else if (errno == 2)
+			ft_nice_error(11, cmds->av_cpy);
+		else
+			ft_nice_error(7, cmds->av_cpy);
 	}
-	if (cmd->prev && cmd->prev->is_piped == 1)
-	{
-		close(cmd->prev->pipes[0]);
-	}
-	return (1);
+	exit(EXIT_FAILURE);
 }
 
 int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
@@ -91,7 +63,6 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 	int		ret;
 
 	cmds->pipe_open = 0;
-
 	if (cmds->is_piped == 1 || (cmds->prev && cmds->prev->is_piped == 1))
 	{
 		cmds->pipe_open = 1;
@@ -106,57 +77,17 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 	if (cmds->pid == -1)
 		return (ft_error(8));
 	if (cmds->pid == 0)
-	{
-		if (!dup_pipes(&(cmds->pipe_open), cmds))
-			exit(EXIT_FAILURE);
-		if (builtin)
-			exit(builtin_manager(cmds, env, true));
-		if (!cmds->av[0])
-			exit(ft_nice_error(9, cmds->av_cpy));
-		if (cmds->is_piped)
-			close(cmds->pipes[0]);
-		if (execve(cmds->av[0], cmds->av, ft_env_to_my_env(env, 0, 0)) == -1){
-			if (errno == 13)
-				ft_nice_error(2, cmds->av_cpy);
-			else if (errno == 2)
-				ft_nice_error(11, cmds->av_cpy);
-			else
-				ft_nice_error(7, cmds->av_cpy);
-		}
-		exit(EXIT_FAILURE);
-	}
+		start_child(cmds, env, builtin);
 	setup_signals();
-
 	close_pipes(cmds->pipe_open, cmds);
 	return (ret);
 }
 
-int	cmd_manager(t_cmd *cmds, t_env *env)
+int	wait_exec(t_cmd *cmds, t_env *env)
 {
 	int	ret;
-	int		status;
-	t_cmd	*list;
+	int	status;
 
-	list = cmds;
-	ret = 0;
-	while (cmds != NULL)
-	{
-			ret = ft_find_exec(cmds, env);
-			if (ret != 0)
-			{
-				ft_nice_error(ret, NULL);
-				return (1);
-			}
-			else
-			{
-				ret = exec_cmd(cmds, env, cmds->path && cmds->path[0] == '\0');
-				if (cmds->av_cpy)
-					free(cmds->av_cpy);
-				cmds->av_cpy = NULL;
-			}
-		cmds = cmds->next;
-	}
-	cmds = list;
 	while (cmds)
 	{
 		status = 0;
@@ -168,5 +99,31 @@ int	cmd_manager(t_cmd *cmds, t_env *env)
 			last_error(true, builtin_manager(cmds, env, false));
 		cmds = cmds->next;
 	}
+	return (ret);
+}
+
+int	cmd_manager(t_cmd *cmds, t_env *env)
+{
+	int		ret;
+	t_cmd	*list;
+
+	list = cmds;
+	ret = 0;
+	while (cmds != NULL)
+	{
+		ret = ft_find_exec(cmds, env);
+		if (ret != 0)
+			return (ft_nice_error(ret, NULL));
+		else
+		{
+			ret = exec_cmd(cmds, env, cmds->path && cmds->path[0] == '\0');
+			if (cmds->av_cpy)
+				free(cmds->av_cpy);
+			cmds->av_cpy = NULL;
+		}
+		cmds = cmds->next;
+	}
+	cmds = list;
+	ret = wait_exec(list, env);
 	return (ret);
 }

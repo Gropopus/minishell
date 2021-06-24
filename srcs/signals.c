@@ -6,18 +6,16 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 18:47:16 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 13:55:30 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 19:40:55 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h"
-# include "../includes/libft.h"
-
+#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
 void	ctrl_c(int sig)
 {
 	(void)sig;
-
 	rl_on_new_line();
 	rl_redisplay();
 	ft_putstr_fd("  \b\b", 0);
@@ -30,14 +28,12 @@ void	ctrl_c(int sig)
 void	ctrl_slash(int sig)
 {
 	(void)sig;
-
 	rl_on_new_line();
 	rl_redisplay();
 	ft_putstr_fd("  \b\b", 0);
 }
 
-
-int		setup_signals(void)
+int	setup_signals(void)
 {
 	if (signal(SIGQUIT, ctrl_slash) < 0)
 		return (0);
@@ -46,7 +42,7 @@ int		setup_signals(void)
 	return (1);
 }
 
-int		disable_signals(void)
+int	disable_signals(void)
 {
 	if (signal(SIGQUIT, SIG_DFL) < 0)
 		return (0);

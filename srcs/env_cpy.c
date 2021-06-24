@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 19:25:01 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 19:11:16 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/24 19:50:38 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,8 @@ char	*ft_dup_pass_equal(char *str, char c)
 	return (dest);
 }
 
-t_env	*ft_env_new(char *envp, unsigned int *error, int shlvl)
+t_env	*ft_env_new(char *envp, unsigned int *error, int shlvl, t_env *new)
 {
-	t_env	*new;
-
-	new = (t_env *)malloc(sizeof(t_env) * 1);
 	if (new == NULL)
 		*error = 1;
 	else
@@ -138,14 +135,14 @@ t_env	*ft_env_cpy(unsigned int *error, char **envp)
 		env = init_empty_env(error);
 		return (env);
 	}
-	actual = ft_env_new(envp[0], error, 0);
+	actual = ft_env_new(envp[0], error, 0, malloc(sizeof(t_env) * 1));
 	if (actual == NULL)
 		return (NULL);
 	env = actual;
 	i = 1;
 	while (envp[i])
 	{
-		actual->next = ft_env_new(envp[i], error, 0);
+		actual->next = ft_env_new(envp[i], error, 0, malloc(sizeof(t_env) * 1));
 		actual = actual->next;
 		if (actual == NULL)
 			return (NULL);

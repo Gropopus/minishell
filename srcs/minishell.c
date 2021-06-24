@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 16:10:27 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 19:44:31 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ int	is_in_builtin(char **cmds)
 		return (0);
 }
 
-char *get_prompt(t_env *env)
+char	*get_prompt(t_env *env)
 {
-	char *prompt;
-	char *name;
-	char *bef;
-	char *mid;
-	char *aft;
+	char	*prompt;
+	char	*name;
+	char	*bef;
+	char	*mid;
+	char	*aft;
 
 	name = ft_env_chr(env, "USER");
 	bef = "🖥  " PURPLE "@";
@@ -52,7 +52,8 @@ char *get_prompt(t_env *env)
 	aft = CYAN BOLD"Minishell $> " NC;
 	if (!name)
 		name = "bash";
-	prompt = malloc(1 + ft_strlen(bef) + ft_strlen(name) + ft_strlen(mid) + ft_strlen(aft));
+	prompt = malloc(1 + ft_strlen(bef)
+			+ ft_strlen(name) + ft_strlen(mid) + ft_strlen(aft));
 	if (!prompt)
 		return ("$> ");
 	prompt[0] = 0;
@@ -63,18 +64,15 @@ char *get_prompt(t_env *env)
 	return (prompt);
 }
 
-int	ft_minishell(t_env *env, int ret)
+int	ft_minishell(t_env *env, int ret, t_cmd	*cmds, char	*line)
 {
-	t_cmd	*cmds;
-	char	*line;
-	char *prompt;
+	char	*prompt;
 
 	while (1)
 	{
 		prompt = get_prompt(env);
 		line = readline(prompt);
 		free(prompt);
-
 		if (line)
 		{
 			cmds = parse(line, env);
@@ -82,16 +80,15 @@ int	ft_minishell(t_env *env, int ret)
 			cmd_manager(cmds, env);
 		}
 		if (line && *line)
-		{
 			add_history(line);
-			free(line);
-		}
 		else
 		{
 			ft_putstr_fd("\b\bexit\n", 1);
 			ft_free_env(env);
 			return (0);
 		}
+		if (line)
+			free(line);
 	}
 	return (ret);
 }
@@ -103,12 +100,10 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-
 	if (!setup_signals())
 		return (ft_nice_error(0, NULL));
 	env = ft_env_cpy(&error, envp);
 	if (env == NULL)
 		return (ft_nice_error(1, NULL));
-
-	return (ft_minishell(env, 0));
+	return (ft_minishell(env, 0, NULL, NULL));
 }
