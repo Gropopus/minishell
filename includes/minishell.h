@@ -17,6 +17,12 @@
 # include <curses.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -131,4 +137,24 @@ void			ft_close_fd(t_cmd *cmd);
 void			ft_dup_fd(t_cmd *cmd);
 
 void			rl_replace_line(const char *, int r);
+/*
+	Parsing
+*/
+
+t_cmd	*blank_cmd(void);
+void	ft_free_list(t_file_list **list);
+t_cmd	*error_clean(t_cmd *list, char *r, char n);
+void	next_cmd(t_cmd **cur, bool piped);
+void	add_redirection(t_cmd *cmd, char *arg, enum e_redirect_type type, bool *quote);
+char	*read_marks(char *parse, int *cur, char mark, t_env *env);
+t_cmd	*parse(char *parse, t_env *env);
+void	add_arg(t_cmd *cmd, char *arg);
+void	end_arg(char **a, enum e_redirect_type *type, t_cmd *cmd, bool *quote);
+char	*ft_strnewcat(char *s, char *o, int len);
+bool	is_alpha_num(char c);
+bool	ft_starts_with(char *s, char *sta);
+char	*get_var_value(char *name, t_env *env);
+char	*extract_var_name(char *parse, int *cur);
+void	read_var(t_cmd *cur, char *var, char **curread, t_env *env);
+
 #endif

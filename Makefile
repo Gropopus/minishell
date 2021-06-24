@@ -6,7 +6,7 @@
 #    By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 10:50:45 by thsembel          #+#    #+#              #
-#    Updated: 2021/06/24 12:30:05 by ttranche         ###   ########.fr        #
+#    Updated: 2021/06/24 18:34:31 by ttranche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # **************************************************************************** #
@@ -34,11 +34,15 @@ SRCS		=	./srcs/minishell.c\
 				./srcs/builtin/exec_unset.c\
 				./srcs/builtin/exec_echo.c\
 				./srcs/builtin/exec_export.c\
-				./srcs/parse.c\
 				./srcs/signals.c\
 				./srcs/redirection.c\
 				./srcs/redirection2.c\
-				./srcs/utils.c
+				./srcs/utils.c\
+				./srcs/parsing/args.c\
+				./srcs/parsing/list_utils.c\
+				./srcs/parsing/parse.c\
+				./srcs/parsing/utils.c\
+				./srcs/parsing/vars.c\
 
 
 INCLUDES	=	./includes/libft.h\
