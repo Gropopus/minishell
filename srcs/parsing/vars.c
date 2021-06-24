@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 18:06:41 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 18:35:31 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 19:15:43 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 char	*get_var_value(char *name, t_env *env)
 {
-	char *path;
+	char	*path;
 
 	if (name[0] == '?' && !name[1])
-		return last_error(false, 0);
+		return (last_error(false, 0));
 	path = ft_env_chr(env, name);
 	if (path == NULL)
 		return ("");

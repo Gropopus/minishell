@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 18:05:15 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 18:37:18 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 19:10:58 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	add_arg(t_cmd *cmd, char *arg)
 	while (cmd->av && cmd->av[c])
 		c++;
 	i = 0;
-	vnew = malloc(sizeof(char*) * (c + 2));
+	vnew = malloc(sizeof(char *) * (c + 2));
 	if (vnew == NULL)
 		return ;
 	while (i < c)

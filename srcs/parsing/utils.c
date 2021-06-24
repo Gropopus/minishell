@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 18:01:15 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 18:35:27 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 19:15:23 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,16 @@ bool	ft_starts_with(char *s, char *sta)
 	return (true);
 }
 
-int		wildcard(char *arg, char *file)
+int	wildcard(char *arg, char *file)
 {
 	if (!*arg || !*file)
 		return (1);
-
 	if (ft_strlen(arg) > 1 && *arg == '*' && !*file)
 		return (0);
 	if (*arg == *file)
-		return wildcard(arg + 1, file + 1);
+		return (wildcard(arg + 1, file + 1));
 	if (*arg == '*')
-		return wildcard(arg + 1, file) || wildcard(arg, file + 1);
+		return (wildcard(arg + 1, file) || wildcard(arg, file + 1));
 	return (0);
 }
 /*
@@ -103,7 +102,8 @@ void	printf_cmds(t_cmd *cur)
 				rt = ">";
 			else if (c->type == RR_OUTPUT)
 				rt = ">>";
-			printf("REDIR(%s): %s Escaped: %s\n", rt, c->path, c->quote ? "true" : "false");
+			printf("REDIR(%s): %s Escaped: %s\n", rt, c->path,
+				c->quote ? "true" : "false");
 			c = c->next;
 		}
 		cur = cur->next;

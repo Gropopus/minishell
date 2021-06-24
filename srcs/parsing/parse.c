@@ -6,15 +6,17 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 19:09:49 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 19:14:06 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/libft.h"
 
-int handle_quote_vars(t_parser *p, char *parse, t_env *env)
+int	handle_quote_vars(t_parser *p, char *parse, t_env *env, int t)
 {
+	char	*name;
+
 	if (parse[p->i] == '"' || parse[p->i] == '\'')
 	{
 		p->quote |= parse[p->i] == '"';
@@ -27,8 +29,7 @@ int handle_quote_vars(t_parser *p, char *parse, t_env *env)
 	}
 	else if (parse[p->i] == '$' && p->type != RR_INPUT)
 	{
-		int t = 0;
-		char *name = extract_var_name(parse + p->i, &t);
+		name = extract_var_name(parse + p->i, &t);
 		if (ft_strlen(name) > 0)
 		{
 			p->i += t;
@@ -40,7 +41,7 @@ int handle_quote_vars(t_parser *p, char *parse, t_env *env)
 	return (0);
 }
 
-int handle_redirection(t_parser *p, char *parse)
+int	handle_redirection(t_parser *p, char *parse)
 {
 	if (parse[p->i] == '<' || parse[p->i] == '>')
 	{
@@ -51,9 +52,11 @@ int handle_redirection(t_parser *p, char *parse)
 			p->type = RR_INPUT;
 		else if (ft_starts_with(parse + p->i, ">>") && ++p->i)
 			p->type = RR_OUTPUT;
-		else if (ft_starts_with(parse + p->i, "<") && !ft_starts_with(parse + p->i + 1, ">"))
+		else if (ft_starts_with(parse + p->i, "<")
+			&& !ft_starts_with(parse + p->i + 1, ">"))
 			p->type = R_INPUT;
-		else if (ft_starts_with(parse + p->i, ">") && !ft_starts_with(parse + p->i + 1, "<"))
+		else if (ft_starts_with(parse + p->i, ">")
+			&& !ft_starts_with(parse + p->i + 1, "<"))
 			p->type = R_OUTPUT;
 		else
 			return (2);
@@ -65,7 +68,7 @@ int handle_redirection(t_parser *p, char *parse)
 
 int	handle_parse(t_parser *p, char *parse, t_env *env)
 {
-	int ret;
+	int	ret;
 
 	while (parse[p->i] == ' ')
 	{
@@ -85,7 +88,7 @@ int	handle_parse(t_parser *p, char *parse, t_env *env)
 	ret = handle_redirection(p, parse);
 	if (ret != 0)
 		return (ret);
-	ret = handle_quote_vars(p, parse, env);
+	ret = handle_quote_vars(p, parse, env, 0);
 	if (ret != 0)
 		return (ret);
 	return (0);
@@ -93,8 +96,8 @@ int	handle_parse(t_parser *p, char *parse, t_env *env)
 
 t_cmd	*parse(char *parse, t_env *env)
 {
-	t_parser p;
-	int ret;
+	t_parser	p;
+	int			ret;
 
 	p.i = 0;
 	p.read = NULL;
@@ -108,14 +111,14 @@ t_cmd	*parse(char *parse, t_env *env)
 	{
 		ret = handle_parse(&p, parse, env);
 		if (ret == 1)
-			continue;
+			continue ;
 		else if (ret == 2)
-			return error_clean(p.list, p.read, parse[p.i]);
+			return (error_clean(p.list, p.read, parse[p.i]));
 		if (parse[p.i])
 			p.read = ft_strnewcat(p.read, parse + p.i++, 1);
 	}
 	end_arg(&p.read, &p.type, p.cur, &p.quote);
 	if (p.cur->av == NULL && p.cur->file == NULL)
-		return error_clean(p.list, p.read, parse[p.i]);
+		return (error_clean(p.list, p.read, parse[p.i]));
 	return (p.list);
 }

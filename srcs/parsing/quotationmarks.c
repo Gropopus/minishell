@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 19:07:14 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 19:07:24 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 19:14:40 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	read_marks_2(t_env *env, char **read, int *i, char *parse)
 char	*read_marks(char *parse, int *cur, char mark, t_env *env)
 {
 	char	*read;
-	int i;
+	int		i;
 
 	i = 1;
 	read = malloc(1);
@@ -51,10 +51,10 @@ char	*read_marks(char *parse, int *cur, char mark, t_env *env)
 		if (parse[i] == mark)
 		{
 			*cur += i + 1;
-				return (read);
+			return (read);
 		}
 		else if (mark == '"' && read_marks_2(env, &read, &i, parse))
-			continue;
+			continue ;
 		read = ft_strnewcat(read, parse + i++, 1);
 	}
 	free(read);

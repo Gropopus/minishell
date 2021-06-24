@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 18:03:24 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 19:09:38 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 19:11:23 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_cmd	*error_clean(t_cmd *list, char *r, char n)
 
 void	next_cmd(t_cmd **cur, bool piped)
 {
-	t_cmd *temp;
+	t_cmd	*temp;
 
 	temp = *cur;
 	if (piped)
@@ -76,7 +76,8 @@ void	next_cmd(t_cmd **cur, bool piped)
 	(*cur)->prev = temp;
 }
 
-void	add_redirection(t_cmd *cmd, char *arg, enum e_redirect_type type, bool *quote)
+void	add_redirection(t_cmd *cmd, char *arg,
+			enum e_redirect_type type, bool *quote)
 {
 	t_file_list	*new;
 	t_file_list	*c;
