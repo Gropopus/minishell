@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 15:10:36 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 22:08:14 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 22:22:16 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,27 @@ void	ft_close_fd(t_cmd *cmd)
 			close(f->fd);
 		f = f->next;
 	}
+}
+
+void	ft_heredoc(t_file_list *f)
+{
+	char *line;
+
+	pipe(f->pipes);
+
+	while (1)
+	{
+		line = readline("> ");
+		if (ft_strcmp(line, f->path) == 0)
+		{
+			free(line);
+			break ;
+		}
+		write(f->pipes[1], line, ft_strlen(line));
+		write(f->pipes[1], "\n", 1);
+ 		free(line);
+	}
+	close(f->pipes[1]);
 }
 
 int	ft_input(t_cmd *cmd)
@@ -48,9 +69,7 @@ int	ft_input(t_cmd *cmd)
 		}
 		else if (f->type == RR_INPUT)
 		{
-			pipe(f->pipes);
-			write(f->pipes[1], "HI\nHI", 5);
-			close(f->pipes[1]);
+			ft_heredoc(f);
 		}
 		f = f->next;
 	}

@@ -6,18 +6,11 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 11:55:19 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 22:12:25 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 22:13:40 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	ft_heredoc(t_file_list *f)
-{
-	dup2(f->pipes[0], 0);
-	close(f->pipes[0]);
-	return (1);
-}
 
 void	ft_dup_fd(t_cmd *cmd)
 {
@@ -33,7 +26,10 @@ void	ft_dup_fd(t_cmd *cmd)
 			if (f->type == R_INPUT)
 				dup2(f->fd, 0);
 			if (f->type == RR_INPUT)
-				ft_heredoc(f);
+			{
+				dup2(f->pipes[0], 0);
+				close(f->pipes[0]);
+			}
 		}
 		f = f->next;
 	}
