@@ -6,7 +6,7 @@
 #    By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 10:50:45 by thsembel          #+#    #+#              #
-#    Updated: 2021/06/24 18:34:31 by ttranche         ###   ########.fr        #
+#    Updated: 2021/06/24 19:09:09 by ttranche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # **************************************************************************** #
@@ -43,7 +43,7 @@ SRCS		=	./srcs/minishell.c\
 				./srcs/parsing/parse.c\
 				./srcs/parsing/utils.c\
 				./srcs/parsing/vars.c\
-
+				./srcs/parsing/quotationmarks.c\
 
 INCLUDES	=	./includes/libft.h\
 				./includes/ft_printf.h\
