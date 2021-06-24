@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 14:37:53 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 15:57:29 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	builtin_manager(t_cmd *cmds, t_env *env, bool fork)
 {
 	int	ret;
 
-	ret = -1;
+	ret = 0;
 	if (ft_strcmp(cmds->av[0], "cd") == 0)
 		ret = ft_exec_cd(cmds, env, fork);
 	else if (fork && ft_strcmp(cmds->av[0], "echo") == 0)
@@ -51,7 +51,7 @@ int	builtin_manager(t_cmd *cmds, t_env *env, bool fork)
 	else if (ft_strcmp(cmds->av[0], "unset") == 0)
 		ret = ft_exec_unset(cmds, env, fork);
 	else if (ft_strcmp(cmds->av[0], "exit") == 0)
-		ft_exec_exit(cmds, env, fork);
+		ret = ft_exec_exit(cmds, env, fork);
 	else if (ft_strcmp(cmds->av[0], "export") == 0)
 		ret = ft_exec_export(cmds, env, fork);
 	return (ret);
@@ -161,10 +161,11 @@ int	cmd_manager(t_cmd *cmds, t_env *env)
 	{
 		status = 0;
 		waitpid(cmds->pid, &status, 0);
-		if (cmds->path && cmds->path[0] == '\0')
-			builtin_manager(cmds, env, false);
 		if (WIFEXITED(status))
 			ret = WEXITSTATUS(status);
+		last_error(true, ret);
+		if (cmds->path && cmds->path[0] == '\0')
+			last_error(true, builtin_manager(cmds, env, false));
 		cmds = cmds->next;
 	}
 	return (ret);

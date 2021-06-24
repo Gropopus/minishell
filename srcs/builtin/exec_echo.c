@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 18:43:07 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/16 13:50:17 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/24 15:57:04 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_echo_av(t_cmd *cmds, int flag)
 		}
 		i++;
 	}
-	return (-1);
+	return (0);
 }
 
 int	ft_exec_echo(t_cmd *cmds, t_env *env)
@@ -55,6 +55,6 @@ int	ft_exec_echo(t_cmd *cmds, t_env *env)
 		return (0);
 	else
 		if ((ft_echo_av(cmds, flag)) < 0)
-			return (-1);
+			return (1);
 	return (0);
 }

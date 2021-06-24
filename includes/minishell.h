@@ -93,6 +93,7 @@ int				ft_exec_env(t_cmd *cmds, t_env *env);
 int				ft_exec_pwd(t_cmd *cmds, t_env *env);
 int				ft_exec_cd(t_cmd *cmds, t_env *env, bool fork);
 int				ft_exec_export(t_cmd *cmds, t_env *env, bool fork);
+int				ft_exec_exit(t_cmd *cmds, t_env *env, bool fork);
 int				exec_cmd(t_cmd *cmds, t_env *env, bool builtin);
 int				env_manager(char *var, char *value, t_env *env);
 int				cmd_manager(t_cmd *cmds, t_env *env);
@@ -104,7 +105,6 @@ void			ft_syntax_error(char token);
 unsigned int	ft_nice_error(unsigned int error, char *msg);
 void			ft_free_env(t_env *env);
 void			ft_free_cmd(t_cmd *cmds);
-void			ft_exec_exit(t_cmd *cmds, t_env *env, bool fork);
 void			ft_str_expand_triple(char **src, char *add1, char *add2);
 void			ft_list_sort(t_env **begin_list);
 void			get_absolute_path(t_cmd *cmds, t_env *env);
@@ -117,6 +117,7 @@ t_cmd			*parse(char *parse, t_env *env);
 int				setup_signals(void);
 int				disable_signals(void);
 char			*get_prompt(t_env *env);
+char			*last_error(bool set, int err);
 /*
 **			redirections.c
 */

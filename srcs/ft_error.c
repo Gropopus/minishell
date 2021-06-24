@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 20:35:58 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 14:29:05 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 15:49:44 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,20 @@
 #include "../includes/libft.h"
 #include "../includes/minishell.h"
 
+char *last_error(bool set, int err)
+{
+	static char *value;
+
+	if (set)
+	{
+		if (value)
+			free(value);
+		value = ft_itoa(err);
+	}
+	else if (!value)
+		value = ft_strdup("0");
+	return (value);
+}
 
 unsigned int	ft_nice_error(unsigned int error, char *msg)
 {
@@ -24,6 +38,8 @@ unsigned int	ft_nice_error(unsigned int error, char *msg)
 		ft_putstr_fd(msg, 2);
 		ft_putstr_fd(": ", 2);
 	}
+	last_error(true, 127);
+
 	return (ft_error(error));
 }
 
@@ -34,6 +50,7 @@ void	ft_syntax_error(char token)
 	ft_putstr_fd("Syntax error near unexpected token '", 2);
 	write(2, &token, 1);
 	ft_putstr_fd("'\n", 2);
+	last_error(true, 1);
 }
 
 unsigned int	ft_error(unsigned int error)
@@ -62,7 +79,7 @@ unsigned int	ft_error(unsigned int error)
 		ft_putstr_fd("Is a directory\n", 2);
 	else if (error == 11)
 		ft_putstr_fd("No such file or directory\n", 2);
-	else if (error == 127)
+	else if (error == 12)
 		ft_putstr_fd("Syntax error\n", 2);
-	return (error);
+	return (1);
 }

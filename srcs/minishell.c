@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 12:32:27 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 16:00:00 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	ft_minishell(t_env *env, int ret)
 	while (1)
 	{
 		prompt = get_prompt(env);
-		write(1, "\r", 1);
 		line = readline(prompt);
 		free(prompt);
 
