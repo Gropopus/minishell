@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 15:10:36 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 22:53:47 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 23:12:37 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_heredoc(t_file_list *f, t_env *env)
 	{
 		line = readline("> ");
 		if (!line)
-			continue ;
+			break ;
 		if (ft_strcmp(line, f->path) == 0)
 		{
 			free(line);
