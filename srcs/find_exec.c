@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:29:58 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/23 16:35:04 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 16:22:57 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ char	*loop_get_path(t_cmd *cmds, char **splited_paths, char *bin, int i)
 		ft_strcpy(bin, splited_paths[i]);
 		ft_strcat(bin, "/");
 		ft_strcat(bin, cmds->av[0]);
-		cmds->av_cpy = ft_strdup(cmds->av[0]);
+		if (!cmds->av_cpy)
+			cmds->av_cpy = ft_strdup(cmds->av[0]);
 		fd = open(bin, O_RDONLY);
 		if (fstat(fd, &s) != -1)
 		{

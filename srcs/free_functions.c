@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 15:42:59 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/22 19:11:47 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/24 16:25:06 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 void	ft_free_cmd(t_cmd *cmds)
 {
+	while (cmds && cmds->prev != NULL)
+		cmds = cmds->prev;
 	while (cmds->next != NULL)
 	{
 		if (cmds->line)
@@ -28,11 +30,6 @@ void	ft_free_cmd(t_cmd *cmds)
 			ft_free_tab(cmds->av);
 			cmds->av = NULL;
 		}
-		/*if (cmds->my_env)
-		{
-			ft_free_tab(cmds->my_env);
-			cmds->my_env = NULL;
-		}*/
 		if (cmds->path)
 		{
 			free(cmds->path);
@@ -59,4 +56,5 @@ void	ft_free_env(t_env *env)
 		free(actual);
 		actual = next;
 	}
+	free(last_error(false, 0));
 }

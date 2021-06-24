@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 14:50:55 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 16:23:51 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,7 @@ t_cmd	*blank_cmd(void)
 	cmd->prev = NULL;
 	cmd->next = NULL;
 	cmd->path = NULL;
+	cmd->av_cpy = NULL;
 	return (cmd);
 }
 
