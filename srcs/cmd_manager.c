@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 19:44:44 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 22:12:03 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,12 @@ int	exec_cmd(t_cmd *cmds, t_env *env, bool builtin)
 	if (ft_redirection(cmds) != 0)
 		return (0);
 	ret = 0;
-	disable_signals();
 	cmds->pid = fork();
+	disable_signals(cmds->pid);
 	if (cmds->pid == -1)
 		return (ft_error(8));
 	if (cmds->pid == 0)
 		start_child(cmds, env, builtin);
-	setup_signals();
 	close_pipes(cmds->pipe_open, cmds);
 	return (ret);
 }
@@ -99,6 +98,7 @@ int	wait_exec(t_cmd *cmds, t_env *env)
 			last_error(true, builtin_manager(cmds, env, false));
 		cmds = cmds->next;
 	}
+	setup_signals();
 	return (ret);
 }
 

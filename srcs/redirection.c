@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thsembel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 15:10:36 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/23 14:39:10 by thsembel         ###   ########.fr       */
+/*   Updated: 2021/06/24 22:08:14 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ int	ft_input(t_cmd *cmd)
 			}
 		}
 		else if (f->type == RR_INPUT)
-			f->fd = 0;
+		{
+			pipe(f->pipes);
+			write(f->pipes[1], "HI\nHI", 5);
+			close(f->pipes[1]);
+		}
 		f = f->next;
 	}
 	return (0);

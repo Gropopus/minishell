@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 18:47:16 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 19:40:55 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 21:54:03 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ void	ctrl_slash(int sig)
 	ft_putstr_fd("  \b\b", 0);
 }
 
+void	ignore(int sig)
+{
+	(void)sig;
+	if (sig == SIGINT)
+		write(1, "\n", 1);
+}
+
 int	setup_signals(void)
 {
 	if (signal(SIGQUIT, ctrl_slash) < 0)
@@ -42,11 +49,19 @@ int	setup_signals(void)
 	return (1);
 }
 
-int	disable_signals(void)
+int	disable_signals(int fork)
 {
-	if (signal(SIGQUIT, SIG_DFL) < 0)
-		return (0);
-	if (signal(SIGINT, SIG_DFL) < 0)
-		return (0);
+	if (fork == 0)
+	{
+		if (signal(SIGQUIT, SIG_DFL) < 0)
+			return (0);
+		if (signal(SIGINT, SIG_DFL) < 0)
+			return (0);
+	}else{
+		if (signal(SIGQUIT, ignore) < 0)
+			return (0);
+		if (signal(SIGINT, ignore) < 0)
+			return (0);
+	}
 	return (1);
 }
