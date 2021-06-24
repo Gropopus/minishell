@@ -35,11 +35,13 @@
 	TODO:
 	Heredoc
 	RM with CD
-	$? signals
 
 	Pas urgent:
 	When starting a shell with no SHLVL in env, it gets set to 1 by default
 	_ in env
+
+	Check:
+	$? values
 */
 
 
