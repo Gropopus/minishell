@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 18:47:16 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 12:26:13 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 13:55:30 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,15 @@ int		setup_signals(void)
 	if (signal(SIGQUIT, ctrl_slash) < 0)
 		return (0);
 	if (signal(SIGINT, ctrl_c) < 0)
+		return (0);
+	return (1);
+}
+
+int		disable_signals(void)
+{
+	if (signal(SIGQUIT, SIG_DFL) < 0)
+		return (0);
+	if (signal(SIGINT, SIG_DFL) < 0)
 		return (0);
 	return (1);
 }

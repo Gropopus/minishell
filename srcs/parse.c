@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 12:20:34 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 14:12:54 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ t_cmd	*blank_cmd(void)
 	cmd->file = NULL;
 	cmd->prev = NULL;
 	cmd->next = NULL;
+	cmd->path = NULL;
 	return (cmd);
 }
 
@@ -450,8 +451,8 @@ t_cmd	*parse(char *parse, t_env *env)
 		if (parse[i])
 			read = ft_strnewcat(read, parse + i++, 1);
 	}
-	if (!read)
-		return error_clean(list, read, parse[i]);
 	end_arg(&read, &type, cur, &quote);
+	if (cur->av == NULL && cur->file == NULL)
+		return error_clean(list, read, parse[i]);
 	return (list);
 }

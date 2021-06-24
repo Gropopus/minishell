@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 18:05:49 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/23 13:40:51 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 13:53:07 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	do_export(char *name, char *value, t_env *env, bool fork)
 	}
 	if (fork)
 	{
-		ft_putstr_fd("export: not an identifier/invalid in this context", 2);
+		ft_putstr_fd("export: not a valid identifier/invalid in this context", 2);
 		if (name && *name)
 		{
 			ft_putstr_fd(": ", 2);
@@ -79,6 +79,33 @@ int	do_export(char *name, char *value, t_env *env, bool fork)
 		}
 	}
 	return (1);
+}
+
+int export(t_cmd *cmds, t_env *env, bool fork)
+{
+	char	*name;
+	char	*value;
+	int		i;
+	int		j;
+
+	i = 1;
+	while (i < cmds->ac)
+	{
+		name = NULL;
+		value = NULL;
+		name = ft_strdup(cmds->av[i]);
+		j = 0;
+		while (name[j])
+			if (name[j] == '=')
+				name[j] = 0;
+			else
+				j++;
+		if (cmds->av[i][j])
+			value = name + j + 1;
+		do_export(name, value, env, fork);
+		i++;
+	}
+	return (0);
 }
 
 int	ft_exec_export(t_cmd *cmds, t_env *env, bool fork)
@@ -91,22 +118,9 @@ int	ft_exec_export(t_cmd *cmds, t_env *env, bool fork)
 	value = NULL;
 	i = 0;
 	if (cmds->ac < 2)
+	{
 		ft_print_tab_e(env, fork, 0);
-	else if (cmds->ac >= 3)
-	{
-		name = cmds->av[1];
-		value = cmds->av[2];
+		return (0);
 	}
-	else
-	{
-		name = ft_strdup(cmds->av[1]);
-		while (name[i])
-			if (name[i] == '=')
-				name[i] = 0;
-			else
-				i++;
-		if (cmds->av[1][i])
-			value = name + i + 1;
-	}
-	return (do_export(name, value, env, fork));
+	return (export(cmds, env, fork));
 }

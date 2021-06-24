@@ -118,6 +118,7 @@ char			*ft_dup_pass_equal(char *str, char c);
 t_env			*ft_env_cpy(unsigned int *error, char **envp);
 t_cmd			*parse(char *parse, t_env *env);
 int				setup_signals(void);
+int				disable_signals(void);
 char			*get_prompt(t_env *env);
 /*
 **			redirections.c

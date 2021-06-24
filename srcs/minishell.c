@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 11:55:02 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 12:32:27 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ char *get_prompt(t_env *env)
 	char *aft;
 
 	name = ft_env_chr(env, "USER");
-	bef = "🖥  @";
-	mid = " ~ ";
-	aft = "Minishell $> ";
+	bef = "🖥  " PURPLE "@";
+	mid = NC " ~ ";
+	aft = CYAN BOLD"Minishell $> " NC;
 	if (!name)
 		name = "bash";
 	prompt = malloc(1 + ft_strlen(bef) + ft_strlen(name) + ft_strlen(mid) + ft_strlen(aft));
