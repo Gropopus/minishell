@@ -6,9 +6,9 @@
 #    By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/06 10:50:45 by thsembel          #+#    #+#              #
-#    Updated: 2021/06/23 14:25:52 by thsembel         ###   ########.fr        #
-#    Updated: 2021/06/23 13:35:19 by ttranche         ###   ########.fr        #
+#    Updated: 2021/06/24 12:30:05 by ttranche         ###   ########.fr        #
 #                                                                              #
+# **************************************************************************** #
 # **************************************************************************** #
 
 NC = \033[0m
@@ -35,6 +35,7 @@ SRCS		=	./srcs/minishell.c\
 				./srcs/builtin/exec_echo.c\
 				./srcs/builtin/exec_export.c\
 				./srcs/parse.c\
+				./srcs/signals.c\
 				./srcs/redirection.c\
 				./srcs/redirection2.c\
 				./srcs/utils.c
@@ -62,6 +63,8 @@ RM			= rm -f
 
 CFLAGS		= -Wall -Wextra -Werror -g
 
+READLINE = ./readline/libreadline.a
+
 .c.o:
 		@${CC} ${CFLAGS} -I${HEAD} -c $< -o ${<:.c=.o}
 		@echo "${GREEN}[ OK ]	${ORANGE}${<:.s=.o}${NC}"
@@ -70,7 +73,7 @@ ${NAME}:	${OBJS}
 			@make -C ${LIB_DIR}
 			@make -C ${LIB_DIR} bonus
 			@echo "${GREEN}\nlibft.a		has been created"
-			@${CC} ${CFLAGS} -I${HEAD} -lreadline -lncurses -o ${NAME} $(OBJS) ${LIBFT}
+			@${CC} ${CFLAGS} -I${HEAD} -lncurses -o ${NAME} $(OBJS) ${LIBFT} ${READLINE}
 			@echo "minishell	has been created${NC}"
 
 all:		${NAME}

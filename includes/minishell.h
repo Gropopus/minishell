@@ -117,6 +117,8 @@ char			*ft_dup_to_equal(char *str, char c);
 char			*ft_dup_pass_equal(char *str, char c);
 t_env			*ft_env_cpy(unsigned int *error, char **envp);
 t_cmd			*parse(char *parse, t_env *env);
+int				setup_signals(void);
+char			*get_prompt(t_env *env);
 /*
 **			redirections.c
 */
@@ -126,4 +128,6 @@ void			ft_close_fd(t_cmd *cmd);
 **			redirection2.c
 **/
 void			ft_dup_fd(t_cmd *cmd);
+
+void			rl_replace_line(const char *, int r);
 #endif

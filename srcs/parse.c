@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:59:40 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/23 16:08:30 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 12:20:34 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,6 +385,8 @@ t_cmd	*parse(char *parse, t_env *env)
 	cur = blank_cmd();
 	list = cur;
 	quote = false;
+	if (!parse || !*parse)
+		return (NULL);
 	while (parse[i])
 	{
 		while (parse[i] == ' ')

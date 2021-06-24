@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 11:10:44 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/23 14:11:34 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/24 11:55:02 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	ft_minishell(t_env *env, int ret)
 	while (1)
 	{
 		prompt = get_prompt(env);
+		write(1, "\r", 1);
 		line = readline(prompt);
 		free(prompt);
 
@@ -106,9 +107,11 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 
+	if (!setup_signals())
+		return (ft_nice_error(0, NULL));
 	env = ft_env_cpy(&error, envp);
 	if (env == NULL)
-		return (ft_error(error));
+		return (ft_nice_error(1, NULL));
 
 	return (ft_minishell(env, 0));
 }
