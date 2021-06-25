@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 19:29:57 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 19:41:44 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/25 02:13:23 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@ int	dup_pipes(int *pipe_open, t_cmd *cmd)
 
 int	close_pipes(int pipe_open, t_cmd *cmd)
 {
+	t_file_list *f;
+
+	f = cmd->file;
+	while (f)
+	{
+		if (f->type == RR_INPUT)
+		{
+			close(f->pipes[0]);
+			close(f->pipes[1]);
+		}
+		f = f->next;
+	}
 	if (cmd->prev && cmd->prev->is_piped == 1)
 		close(cmd->prev->pipes[0]);
 	if (!pipe_open)

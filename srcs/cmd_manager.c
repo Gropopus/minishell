@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:03:28 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 22:49:29 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/25 01:53:12 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	wait_exec(t_cmd *cmds, t_env *env)
 		last_error(true, ret);
 		if (cmds->path && cmds->path[0] == '\0')
 			last_error(true, builtin_manager(cmds, env, false));
+		//ft_free_cmd_stuff(cmds);
 		cmds = cmds->next;
 	}
 	setup_signals();
@@ -115,12 +116,7 @@ int	cmd_manager(t_cmd *cmds, t_env *env)
 		if (ret != 0)
 			return (ft_nice_error(ret, NULL));
 		else
-		{
 			ret = exec_cmd(cmds, env, cmds->path && cmds->path[0] == '\0');
-			if (cmds->av_cpy)
-				free(cmds->av_cpy);
-			cmds->av_cpy = NULL;
-		}
 		cmds = cmds->next;
 	}
 	cmds = list;

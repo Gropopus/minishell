@@ -75,7 +75,6 @@ typedef struct s_cmd
 	char					**av;
 	char					*av_cpy;
 	char					*path;
-	char					*line;
 	bool					is_piped;
 	int						pipe_open;
 	int						pipes[2];
@@ -136,7 +135,7 @@ int				setup_signals(void);
 int				disable_signals(int fork);
 char			*get_prompt(t_env *env);
 char			*last_error(bool set, int err);
-
+void			ft_free_cmd_stuff(t_cmd *cmds);
 /*
 	Pipes
 */

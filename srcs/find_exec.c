@@ -6,7 +6,7 @@
 /*   By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 17:29:58 by thsembel          #+#    #+#             */
-/*   Updated: 2021/06/24 16:22:57 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/25 01:28:50 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ void	get_absolute_path(t_cmd *cmds, t_env *env)
 		cmds->av[0] = bin;
 	}
 	else
+	{
 		free(cmds->path);
+		cmds->path = NULL;
+	}
 	if (cmds->av[0] == NULL)
 		return ;
 }
