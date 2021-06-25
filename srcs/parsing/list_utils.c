@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 18:03:24 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/25 02:20:01 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/25 02:34:48 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_cmd	*blank_cmd(void)
 	if (cmd == NULL)
 		return (NULL);
 	cmd->av = NULL;
+	cmd->ac = 0;
 	cmd->is_piped = false;
 	cmd->file = NULL;
 	cmd->prev = NULL;
@@ -60,7 +61,7 @@ t_cmd	*error_clean(t_cmd *list, char *r, char n)
 			free(list->av[i++]);
 		free(list->av);
 		ft_free_list(&list->file);
-		free(next);
+		free(list);
 		list = next;
 	}
 	ft_syntax_error(n);
