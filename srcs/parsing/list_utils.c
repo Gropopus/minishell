@@ -6,7 +6,7 @@
 /*   By: ttranche <ttranche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 18:03:24 by ttranche          #+#    #+#             */
-/*   Updated: 2021/06/24 19:11:23 by ttranche         ###   ########.fr       */
+/*   Updated: 2021/06/25 02:20:01 by ttranche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,20 @@ void	ft_free_list(t_file_list **list)
 t_cmd	*error_clean(t_cmd *list, char *r, char n)
 {
 	int	i;
+	t_cmd *next;
 
 	if (r)
 		free(r);
 	while (list)
 	{
+		next = list->next;
 		i = 0;
 		while (list->av && list->av[i])
 			free(list->av[i++]);
 		free(list->av);
 		ft_free_list(&list->file);
-		list = list->next;
+		free(next);
+		list = next;
 	}
 	ft_syntax_error(n);
 	return (NULL);
